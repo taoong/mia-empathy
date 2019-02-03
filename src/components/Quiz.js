@@ -12,7 +12,7 @@ function Quiz(props) {
         questionNumber={props.questionId + 1}
         total={props.questionTotal}
       />
-      <Question content={props.question} />
+      <Question questionContent={props.question} />
       <ul className="answerOptions">
         {props.answerOptions.map(key => (
           <AnswerOption

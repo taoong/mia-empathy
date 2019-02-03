@@ -2,11 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Question(props) {
-  return <h2 className="question">{props.content}</h2>;
+  return (
+    <div className="question">
+      <h2>{props.questionContent}</h2>
+      <img src="../images/face2.jpg" alt="Not found!" />
+    </div>
+  );
 }
 
 Question.propTypes = {
-  content: PropTypes.string.isRequired
+  questionContent: PropTypes.string.isRequired
 };
 
 export default Question;
