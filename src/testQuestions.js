@@ -1,89 +1,28 @@
 var quizQuestions = [
   {
-    question: "What is your spirit animal ? ",
-    answers: [
-      {
-        type: "Stark",
-        content: "Wolf"
-      },
-
-      {
-        type: "Lannister",
-        content: "Lion"
-      },
-      {
-        type: "Targaryen",
-        content: "Dragon"
-      }
-    ]
+    question: "What emotion does this image represent?",
+    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
+    correctAnswer: "Happiness"
   },
   {
-    question: "What do you value most ? ",
-    answers: [
-      {
-        type: "Stark",
-        content: "Loyalty"
-      },
-      {
-        type: "Lannister",
-        content: "Money"
-      },
-      {
-        type: "Targaryen",
-        content: "Power"
-      }
-    ]
+    question: "What emotion does this image represent?",
+    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
+    correctAnswer: "Satisfaction"
   },
   {
-    question: "Who's your favorite family member ?",
-    answers: [
-      {
-        type: "Stark",
-        content: "My Parent"
-      },
-      {
-        type: "Lannister",
-        content: "My Sibling"
-      },
-      {
-        type: "Targaryen",
-        content: "My Grandparent"
-      }
-    ]
+    question: "What emotion does this image represent?",
+    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
+    correctAnswer: "Happiness"
   },
   {
-    question: "Choose an element",
-    answers: [
-      {
-        type: "Stark",
-        content: "Water"
-      },
-      {
-        type: "Lannister",
-        content: "Air"
-      },
-      {
-        type: "Targaryen",
-        content: "Fire"
-      }
-    ]
+    question: "What emotion does this image represent?",
+    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
+    correctAnswer: "Surprise"
   },
   {
-    question: " Which Castle would you live in ? ",
-    answers: [
-      {
-        type: "Stark",
-        content: "Winterfell"
-      },
-      {
-        type: "Lannister",
-        content: "Casterly Rock"
-      },
-      {
-        type: "Targaryen",
-        content: "DragonStone"
-      }
-    ]
+    question: "What emotion does this image represent?",
+    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
+    correctAnswer: "Fear"
   }
 ];
 
