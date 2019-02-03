@@ -70,15 +70,18 @@ class App extends Component {
     this.setUserAnswer(event.currentTarget.value);
 
     if (this.state.questionId < quizQuestions.length) {
-      setTimeout(() => this.setNextQuestion(), 600);
+      setTimeout(() => this.setNextQuestion(), 300);
     } else {
-      setTimeout(() => this.setResults(this.getResults()), 600);
+      setTimeout(() => this.setResults(this.getResults()), 300);
     }
   };
 
   setUserAnswer(answer) {
+    var newAnswersCount = this.state.answersCount;
+    newAnswersCount[answer] += 1;
+
     this.setState({
-      answersCount: this.state.answersCount + 1,
+      answersCount: newAnswersCount,
       answer: answer
     });
   }

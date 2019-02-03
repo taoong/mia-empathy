@@ -26,7 +26,7 @@ AnswerOption.propTypes = {
   answerType: PropTypes.string.isRequired,
   answerContent: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
-  OnAnswerSelected: PropTypes.string.isRequired
+  onAnswerSelected: PropTypes.func.isRequired
 };
 
 export default AnswerOption;
