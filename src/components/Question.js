@@ -5,13 +5,17 @@ function Question(props) {
   return (
     <div className="question">
       <h2>{props.questionContent}</h2>
-      <img src="../images/face2.jpg" alt="Not found!" />
+      <img
+        src={require("../images/face" + String(props.questionId + 1) + ".jpg")}
+        alt="Not found!"
+      />
     </div>
   );
 }
 
 Question.propTypes = {
-  questionContent: PropTypes.string.isRequired
+  questionContent: PropTypes.string.isRequired,
+  questionId: PropTypes.number.isRequired
 };
 
 export default Question;

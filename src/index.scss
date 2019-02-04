@@ -44,6 +44,11 @@ body {
 .question {
   margin: 0;
   padding: 0.5rem 2.5rem 1.5rem 2.5rem;
+
+  img {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 /* AnswerOption Component */

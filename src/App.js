@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import quizQuestions from "./testQuestions";
 import Quiz from "./components/Quiz";
 import Result from "./components/Result";
-import "./App.css";
 
 class App extends Component {
   constructor(props) {
