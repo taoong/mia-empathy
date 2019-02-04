@@ -11,12 +11,12 @@ class App extends Component {
       questionId: 1,
       question: "",
       answerOptions: [],
-      answer: "",
+      selectedAnswer: "",
       answersCount: {
         Correct: 0,
         Incorrect: 0
       },
-      result: "",
+      score: "",
       finished: false
     };
   }
@@ -33,12 +33,12 @@ class App extends Component {
       question: quizQuestions[0].question,
       answerOptions: shuffledAnswerOptions[0],
       questionId: 0,
-      answer: "",
+      selectedAnswer: "",
       answersCount: {
         Correct: 0,
         Incorrect: 0
       },
-      result: "",
+      score: "",
       finished: false
     });
   };
@@ -68,7 +68,7 @@ class App extends Component {
       setTimeout(
         () =>
           this.setState({
-            result: this.state.answersCount["Correct"],
+            score: this.state.answersCount["Correct"],
             finished: true
           }),
         600
@@ -86,7 +86,7 @@ class App extends Component {
 
     this.setState({
       answersCount: newAnswersCount,
-      answer: answer
+      selectedAnswer: answer
     });
   }
 
@@ -96,14 +96,14 @@ class App extends Component {
       questionId: questionId,
       question: quizQuestions[questionId].question,
       answerOptions: quizQuestions[questionId].answers,
-      answer: ""
+      selectedAnswer: ""
     });
   }
 
   renderQuiz() {
     return (
       <Quiz
-        selectedAnswer={this.state.answer}
+        selectedAnswer={this.state.selectedAnswer}
         answerOptions={this.state.answerOptions}
         questionId={this.state.questionId}
         question={this.state.question}
@@ -116,7 +116,7 @@ class App extends Component {
   renderResult() {
     return (
       <Result
-        quizResult={this.state.result}
+        quizResult={this.state.score}
         restartQuiz={this.restartQuiz}
         total={quizQuestions.length}
       />
