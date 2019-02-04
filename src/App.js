@@ -12,11 +12,8 @@ class App extends Component {
       question: "",
       answerOptions: [],
       selectedAnswer: "",
-      answersCount: {
-        Correct: 0,
-        Incorrect: 0
-      },
-      score: "",
+      answers: [],
+      score: 0,
       finished: false
     };
   }
@@ -34,11 +31,8 @@ class App extends Component {
       answerOptions: shuffledAnswerOptions[0],
       questionId: 0,
       selectedAnswer: "",
-      answersCount: {
-        Correct: 0,
-        Incorrect: 0
-      },
-      score: "",
+      answers: [],
+      score: 0,
       finished: false
     });
   };
@@ -68,7 +62,6 @@ class App extends Component {
       setTimeout(
         () =>
           this.setState({
-            score: this.state.answersCount["Correct"],
             finished: true
           }),
         600
@@ -77,16 +70,17 @@ class App extends Component {
   };
 
   setUserAnswer(answer) {
-    var newAnswersCount = this.state.answersCount;
     if (answer === quizQuestions[this.state.questionId].correctAnswer) {
-      newAnswersCount["Correct"] += 1;
-    } else {
-      newAnswersCount["Incorrect"] += 1;
+      this.setState(state => ({
+        score: state.score + 1
+      }));
     }
 
+    var newAnswerArray = this.state.answers;
+    newAnswerArray.push(answer);
     this.setState({
-      answersCount: newAnswersCount,
-      selectedAnswer: answer
+      selectedAnswer: answer,
+      answers: newAnswerArray
     });
   }
 
@@ -119,6 +113,7 @@ class App extends Component {
         quizResult={this.state.score}
         restartQuiz={this.restartQuiz}
         total={quizQuestions.length}
+        answers={this.state.answers}
       />
     );
   }
