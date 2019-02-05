@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import quizQuestions from "./testQuestions";
 import Quiz from "./components/Quiz";
 import Result from "./components/Result";
+import firebase from "./Firebase";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
+    this.users = firebase.firestore().collection("users");
     this.state = {
-      questionId: 1,
+      questionId: 0,
       question: "",
       answerOptions: [],
       selectedAnswer: "",
@@ -35,6 +37,18 @@ class App extends Component {
       score: 0,
       finished: false
     });
+
+    this.users
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+        });
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+      });
   };
 
   shuffleArray(array) {
