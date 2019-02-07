@@ -7,19 +7,25 @@ class Question extends Component {
     super(props);
 
     this.state = {
-      imageUrl: "",
-      relativeImageUrl: ""
+      imageUrl: ""
     };
     this.storageRef = firebase.storage().ref();
   }
 
+  componentDidUpdate() {
+    this.updateImage();
+  }
+
   componentDidMount() {
+    this.updateImage();
+  }
+
+  updateImage() {
     let currentComponent = this;
     this.storageRef
       .child(this.props.imageUrl)
       .getDownloadURL()
       .then(function(url) {
-        console.log(url);
         currentComponent.setState({ imageUrl: url });
       })
       .catch(function(error) {
@@ -31,7 +37,6 @@ class Question extends Component {
     return (
       <div className="question">
         <h2>{this.props.questionContent}</h2>
-
         {this.state.imageUrl ? (
           <img src={this.state.imageUrl} alt="Not found!" />
         ) : null}
