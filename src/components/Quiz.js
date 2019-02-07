@@ -15,6 +15,7 @@ function Quiz(props) {
       <Question
         questionContent={props.question}
         questionId={props.questionId}
+        imageUrl={props.imageUrl}
       />
       <ul className="answerOptions">
         {props.answerOptions.map(key => (

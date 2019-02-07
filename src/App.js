@@ -42,7 +42,6 @@ class App extends Component {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
           console.log(doc.id, " => ", doc.data());
         });
       })
@@ -116,6 +115,7 @@ class App extends Component {
         questionId={this.state.questionId}
         question={this.state.question}
         questionTotal={quizQuestions.length}
+        imageUrl={quizQuestions[this.state.questionId].imageUrl}
         onAnswerSelected={this.handleAnswerSelected}
       />
     );
