@@ -38,7 +38,7 @@ class Question extends Component {
       <div className="question">
         <h2>{this.props.questionContent}</h2>
         {this.state.imageUrl ? (
-          <img src={this.state.imageUrl} alt="Not found!" />
+          <img src={require("../" + this.props.imageUrl)} alt="Not found!" />
         ) : null}
       </div>
     );

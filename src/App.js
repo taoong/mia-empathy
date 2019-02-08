@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Identification from "./components/Identification";
 import quizQuestions from "./testQuestions";
 import Quiz from "./components/Quiz";
 import Result from "./components/Result";
@@ -10,7 +11,8 @@ class App extends Component {
 
     this.users = firebase.firestore().collection("users");
     this.state = {
-      questionId: 0,
+      userId: "",
+      questionId: -1,
       question: "",
       answerOptions: [],
       selectedAnswer: "",
@@ -31,7 +33,7 @@ class App extends Component {
     this.setState({
       question: quizQuestions[0].question,
       answerOptions: shuffledAnswerOptions[0],
-      questionId: 0,
+      questionId: -1,
       selectedAnswer: "",
       answers: [],
       score: 0,
@@ -107,6 +109,14 @@ class App extends Component {
     });
   }
 
+  setUserId(id) {
+    this.setState({ userId: id });
+  }
+
+  renderIdentification() {
+    return <Identification setUserId={this.setUserId} />;
+  }
+
   renderQuiz() {
     return (
       <Quiz
@@ -132,12 +142,21 @@ class App extends Component {
     );
   }
 
+  renderApp() {
+    if (this.state.questionId === -1) {
+      this.setState({ questionId: 0 });
+      return this.renderIdentification();
+    } else {
+      if (this.state.finished) {
+        return this.renderResult();
+      } else {
+        return this.renderQuiz();
+      }
+    }
+  }
+
   render() {
-    return (
-      <div className="App">
-        {this.state.finished ? this.renderResult() : this.renderQuiz()}
-      </div>
-    );
+    return <div className="App">{this.renderApp()}</div>;
   }
 }
 
