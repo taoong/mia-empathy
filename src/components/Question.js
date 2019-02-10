@@ -13,11 +13,11 @@ class Question extends Component {
   }
 
   componentDidUpdate() {
-    this.updateImage();
+    //this.updateImage();
   }
 
   componentDidMount() {
-    this.updateImage();
+    //this.updateImage();
   }
 
   updateImage() {

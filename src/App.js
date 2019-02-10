@@ -109,9 +109,9 @@ class App extends Component {
     });
   }
 
-  setUserId(id) {
-    this.setState({ userId: id });
-  }
+  setUserId = id => {
+    this.setState({ userId: id, questionId: 0 });
+  };
 
   renderIdentification() {
     return <Identification setUserId={this.setUserId} />;
@@ -144,7 +144,6 @@ class App extends Component {
 
   renderApp() {
     if (this.state.questionId === -1) {
-      this.setState({ questionId: 0 });
       return this.renderIdentification();
     } else {
       if (this.state.finished) {
