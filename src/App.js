@@ -11,6 +11,8 @@ class App extends Component {
 
     this.users = firebase.firestore().collection("users");
     this.state = {
+      quizId: "001",
+      quizType: "pre",
       userId: "",
       questionId: -1,
       question: "",
@@ -74,6 +76,26 @@ class App extends Component {
     if (this.state.questionId !== quizQuestions.length - 1) {
       setTimeout(() => this.setNextQuestion(), 600);
     } else {
+      let userRef = this.users
+        .doc(this.state.userId)
+        .collection("responses")
+        .doc(this.state.quizId);
+      if (this.state.quizType === "pre") {
+        userRef.set(
+          {
+            pre: this.state.answers
+          },
+          { merge: true }
+        );
+      } else {
+        userRef.set(
+          {
+            post: this.state.answers
+          },
+          { merge: true }
+        );
+      }
+
       setTimeout(
         () =>
           this.setState({
@@ -97,6 +119,7 @@ class App extends Component {
       selectedAnswer: answer,
       answers: newAnswerArray
     });
+    console.log(this.state.answers);
   }
 
   setNextQuestion() {

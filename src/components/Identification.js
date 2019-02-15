@@ -18,32 +18,45 @@ class Identification extends Component {
 
   handleSubmit = () => {
     let currentComponent = this;
-    this.users
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          if (doc.id === currentComponent.state.userId) {
+    if (this.state.userId) {
+      let userRef = this.users.doc(this.state.userId);
+      userRef
+        .get()
+        .then(function(doc) {
+          if (doc.exists) {
             currentComponent.props.setUserId(currentComponent.state.userId);
+          } else {
+            alert("User ID doesn't exist");
           }
+        })
+        .catch(function(error) {
+          console.log("Error getting User ID:", error);
+          alert("Error getting User ID");
         });
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
-      });
-
-    alert("This user ID has not been registered!");
+    } else {
+      alert("User ID input can't be blank!");
+    }
   };
 
   render() {
     return (
       <div className="identification">
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round" />
+        </label>
         <h2>User ID:</h2>
         <input
           type="text"
           value={this.state.userId}
           onChange={this.handleChange}
         />
-        <input type="submit" value="submit" onClick={this.handleSubmit} />
+        <input
+          className="button"
+          type="submit"
+          value="submit"
+          onClick={this.handleSubmit}
+        />
       </div>
     );
   }
