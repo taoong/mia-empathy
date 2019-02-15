@@ -136,8 +136,17 @@ class App extends Component {
     this.setState({ userId: id, questionId: 0 });
   };
 
+  setQuizType = quizType => {
+    this.setState({ quizType: quizType });
+  };
+
   renderIdentification() {
-    return <Identification setUserId={this.setUserId} />;
+    return (
+      <Identification
+        setUserId={this.setUserId}
+        setQuizType={this.setQuizType}
+      />
+    );
   }
 
   renderQuiz() {

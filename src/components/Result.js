@@ -2,17 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Result(props) {
+  const answers = props.answers.map(answer => <li>{answer}</li>);
   return (
-    <div className="result">
-      <h4>
+    <div className="result card-form">
+      <h2>
         You scored{" "}
         <strong>
           {props.quizResult}/{props.total}
         </strong>
         !
-      </h4>
-      <h4>{props.answers}</h4>
-      <button onClick={props.restartQuiz}>Retake quiz</button>
+      </h2>
+      <h4>You answered:</h4>
+      <ul>{answers}</ul>
+      <button className="button" onClick={props.restartQuiz}>
+        Retake quiz
+      </button>
     </div>
   );
 }

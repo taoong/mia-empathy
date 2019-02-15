@@ -1,11 +1,14 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Avenir", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h4 {
+  font-weight: 500;
 }
 
 .container {
@@ -22,9 +25,46 @@ body {
   }
 }
 
+.card-form {
+  background-color: rgba(0, 0, 0, 0.02);
+  margin: 10vh auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  width: 300px;
+  border: 1px rgba(0, 0, 0, 0.2) solid;
+  border-radius: 4px;
+}
+
+.button {
+  display: inline-block;
+  text-align: center;
+  height: 40px;
+  padding: 0 16px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-family: "Avenir";
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
 /* ----- Result Component ----- */
 .result {
   padding: 1.5rem 2.5rem;
+
+  h4 {
+    margin: 0 auto 0 1em;
+    align-self: flex-start;
+  }
+
+  ul {
+    text-align: left;
+    margin-bottom: 32px;
+  }
 }
 
 /* ----- Quiz Component ----- */
@@ -105,86 +145,45 @@ body {
 
 /* ----- Identification Component ----- */
 .identification {
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  text-align: center;
-  justify-content: center;
-  width: 60vw;
-
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+  .intro {
+    margin: 16px;
+    h2 {
+      margin-bottom: 8px;
+    }
+    h4 {
+      margin-top: 0;
+    }
   }
 
-  /* Hide default HTML checkbox */
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  .radioButtons {
+    display: flex;
+
+    input[type="radio"] {
+      margin: auto 32px auto 8px;
+    }
   }
 
-  /* The slider */
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
-  }
-
-  input:checked + .slider {
-    background-color: #2196f3;
-  }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196f3;
-  }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
+  .id {
+    align-self: flex-start;
+    margin-bottom: 0px;
   }
 
   input[type="text"] {
+    margin: 4px 0 24px 0;
+    font-size: 16px;
     width: 100%;
-    padding: 12px 8px;
-    margin: 8px 0;
+    height: 40px;
+    padding: 8px 8px;
     box-sizing: border-box;
     border-radius: 4px;
+    border: 1px rgba(0, 0, 0, 0.2) solid;
+
+    &:focus {
+      border: 1px rgb(39, 92, 240) solid;
+    }
   }
 
   .button {
-    font-family: "Avenir";
-    border-radius: 4px;
+    align-self: flex-end;
   }
 }
