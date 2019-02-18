@@ -5,46 +5,40 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 class Admin extends Component {
   state = { isSignedIn: false };
 
-  // Configure FirebaseUI.
   uiConfig = {
-    // Popup signin flow rather than redirect flow.
     signInFlow: "popup",
-    // We will display Google and Facebook as auth providers.
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.EmailAuthProvider.PROVIDER_ID
     ],
     callbacks: {
-      // Avoid redirects after sign-in.
       signInSuccessWithAuthResult: () => false
     }
   };
 
-  // Listen to the Firebase Auth state and set the local state.
   componentDidMount() {
     this.unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged(user => this.setState({ isSignedIn: !!user }));
   }
 
-  // Make sure we un-register Firebase observers when the component unmounts.
   componentWillUnmount() {
     this.unregisterAuthObserver();
   }
 
-  render() {
-    if (!this.state.isSignedIn) {
-      return (
-        <div>
-          <h1>My App</h1>
-          <p>Please sign-in:</p>
-          <StyledFirebaseAuth
-            uiConfig={this.uiConfig}
-            firebaseAuth={firebase.auth()}
-          />
-        </div>
-      );
-    }
+  renderSignIn() {
+    return (
+      <div className="card-form">
+        <h1>Mia Empathy Tool Admin Sign-in</h1>
+        <StyledFirebaseAuth
+          uiConfig={this.uiConfig}
+          firebaseAuth={firebase.auth()}
+        />
+      </div>
+    );
+  }
+
+  renderAdmin() {
     return (
       <div>
         <h1>Mia Empathy Tool</h1>
@@ -55,6 +49,14 @@ class Admin extends Component {
         <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
       </div>
     );
+  }
+
+  render() {
+    if (!this.state.isSignedIn) {
+      return <div>{this.renderSignIn()}</div>;
+    } else {
+      return <div>{this.renderAdmin()}</div>;
+    }
   }
 }
 
