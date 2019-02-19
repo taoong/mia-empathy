@@ -41,17 +41,6 @@ class App extends Component {
       score: 0,
       finished: false
     });
-
-    this.users
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          console.log(doc.id, " => ", doc.data());
-        });
-      })
-      .catch(function(error) {
-        console.log("Error getting documents: ", error);
-      });
   };
 
   shuffleArray(array) {
@@ -119,7 +108,6 @@ class App extends Component {
       selectedAnswer: answer,
       answers: newAnswerArray
     });
-    console.log(this.state.answers);
   }
 
   setNextQuestion() {
