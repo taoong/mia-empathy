@@ -2,7 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function Result(props) {
-  const answers = props.answers.map(answer => <li>{answer}</li>);
+  const answers = props.answers.map((answer, key) => (
+    <li key={key}>{answer}</li>
+  ));
   return (
     <div className="result card-form">
       <h2>

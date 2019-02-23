@@ -7,7 +7,7 @@ class Notfound extends Component {
       <div style={{ margin: "50px" }}>
         <h1>Sorry, this page can't be found!</h1>
         <Link to="/">
-          <h3>Click here to return to the empathy quiz</h3>
+          <h3>Click here to go to the empathy quiz</h3>
         </Link>
       </div>
     );

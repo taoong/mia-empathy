@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./App";
 import Admin from "./components/Admin";
+import Sessions from "./components/Sessions";
+import Quizzes from "./components/Quizzes";
 import Notfound from "./components/Notfound";
 import * as serviceWorker from "./serviceWorker";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
@@ -13,6 +15,8 @@ const routing = (
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/admin" component={Admin} />
+        <Route path="/admin/sessions" component={Sessions} />
+        <Route path="/admin/quizzes" component={Quizzes} />
         <Route component={Notfound} />
       </Switch>
     </div>
