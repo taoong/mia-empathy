@@ -9,7 +9,7 @@ class Nav extends Component {
           <img
             src={require("../images/mia-logo.jpg")}
             className="nav-logo"
-            alt="alsdjflalskdjf"
+            alt="logo"
           />
         </Link>
 
