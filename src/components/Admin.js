@@ -6,6 +6,7 @@ import { Route } from "react-router-dom";
 import AdminHome from "./AdminHome";
 import Sessions from "./Sessions";
 import Quizzes from "./Quizzes";
+import Loading from "./Loading";
 
 class Admin extends Component {
   state = { user: null, isSignedIn: false, verified: false, loading: true };
@@ -26,7 +27,7 @@ class Admin extends Component {
     this.unregisterAuthObserver = firebase
       .auth()
       .onAuthStateChanged(user =>
-        this.setState({ user: user, isSignedIn: !!user })
+        this.setState({ user: user, isSignedIn: !!user, loading: false })
       );
   }
 
@@ -45,8 +46,11 @@ class Admin extends Component {
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          currentComponent.setState({ verified: true, loading: false });
+          currentComponent.setState({ verified: true });
         });
+      })
+      .then(() => {
+        currentComponent.setState({ loading: false });
       })
       .catch(function(error) {
         console.log("Could not verify admin: ", error);
@@ -60,6 +64,10 @@ class Admin extends Component {
       this.verify();
       return <div>{this.renderUnverified()}</div>;
     }
+  }
+
+  renderLoading() {
+    return <Loading />;
   }
 
   renderSignIn() {
@@ -76,11 +84,7 @@ class Admin extends Component {
 
   renderUnverified() {
     if (this.state.loading) {
-      return (
-        <div>
-          <h1>Loading</h1>
-        </div>
-      );
+      return <Loading />;
     } else {
       return (
         <div className="card-form">
@@ -98,21 +102,30 @@ class Admin extends Component {
   }
 
   renderAdmin() {
-    return (
-      <div className="admin">
-        <Nav signout={this.signOut} />
-        <Route exact path={this.props.match.path} component={AdminHome} />
-        <Route
-          path={`${this.props.match.path}/sessions`}
-          component={Sessions}
-        />
-        <Route path={`${this.props.match.path}/quizzes`} component={Quizzes} />
-      </div>
-    );
+    if (this.state.loading) {
+      return <Loading />;
+    } else {
+      return (
+        <div>
+          <Nav signout={this.signOut} />
+          <Route exact path={this.props.match.path} component={AdminHome} />
+          <Route
+            path={`${this.props.match.path}/sessions`}
+            component={Sessions}
+          />
+          <Route
+            path={`${this.props.match.path}/quizzes`}
+            component={Quizzes}
+          />
+        </div>
+      );
+    }
   }
 
   render() {
-    if (!this.state.isSignedIn || !this.state.verified) {
+    if (this.state.loading) {
+      return <div>{this.renderLoading()}</div>;
+    } else if (!this.state.isSignedIn || !this.state.verified) {
       return <div>{this.handleInvalidUser()}</div>;
     } else {
       return <div>{this.renderAdmin()}</div>;
