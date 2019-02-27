@@ -5,7 +5,7 @@ class Nav extends Component {
   render() {
     return (
       <nav className="nav">
-        <Link to="/" className="nav-brand">
+        <Link to="/admin" className="nav-brand">
           <img
             src={require("../images/mia-logo.jpg")}
             className="nav-logo"
@@ -16,12 +16,12 @@ class Nav extends Component {
         <div className="nav-right">
           <ul className="nav-item-wrapper">
             <li className="nav-item">
-              <Link className="nav-link" to="./sessions">
+              <Link className="nav-link" to="/admin/sessions">
                 Sessions
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to=".//quizzes">
+              <Link className="nav-link" to="/admin/quizzes">
                 Quizzes
               </Link>
             </li>

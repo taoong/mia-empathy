@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import firebase from "../Firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Nav from "./Nav";
+import { Route } from "react-router-dom";
+import AdminHome from "./AdminHome";
+import Sessions from "./Sessions";
+import Quizzes from "./Quizzes";
 
 class Admin extends Component {
   state = { user: null, isSignedIn: false, verified: false, loading: true };
@@ -93,19 +97,16 @@ class Admin extends Component {
     }
   }
 
-  renderLoading() {}
-
   renderAdmin() {
-    console.log("Rendered admin");
     return (
       <div className="admin">
         <Nav signout={this.signOut} />
-        <h1>Mia Empathy Tool</h1>
-        <p>
-          Welcome {firebase.auth().currentUser.displayName}! You are now
-          signed-in!
-        </p>
-        <button onClick={() => this.signOut()}>Sign-out</button>
+        <Route exact path={this.props.match.path} component={AdminHome} />
+        <Route
+          path={`${this.props.match.path}/sessions`}
+          component={Sessions}
+        />
+        <Route path={`${this.props.match.path}/quizzes`} component={Quizzes} />
       </div>
     );
   }
