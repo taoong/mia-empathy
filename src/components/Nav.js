@@ -13,23 +13,21 @@ class Nav extends Component {
           />
         </Link>
 
-        <div className="nav-right">
-          <ul className="nav-item-wrapper">
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/sessions">
-                Sessions
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/admin/quizzes">
-                Quizzes
-              </Link>
-            </li>
-            <li className="nav-item">
-              <button onClick={this.props.signout}>Sign Out</button>
-            </li>
-          </ul>
-        </div>
+        <ul>
+          <li>
+            <Link className="nav-link" to="/admin/sessions">
+              Sessions
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to="/admin/quizzes">
+              Quizzes
+            </Link>
+          </li>
+          <li>
+            <button onClick={this.props.signout}>Sign Out</button>
+          </li>
+        </ul>
       </nav>
     );
   }

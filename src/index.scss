@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Avenir", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "system-ui", "Avenir", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -196,20 +196,49 @@ h4 {
 
   .nav-brand img {
     height: 100%;
+    width: 60px;
   }
 
-  .nav-right {
-  }
-
-  .nav-item-wrapper {
+  ul {
     display: flex;
     flex-direction: row;
+    margin-left: auto;
 
     li {
       list-style: none;
-      text-decoration: none;
       margin: 0 16px;
       font-weight: 500;
+
+      a {
+        vertical-align: middle;
+        text-decoration: none;
+        border-bottom: 1px solid black;
+        border-bottom-color: rgba(0, 0, 0, 0);
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          border-bottom-color: rgba(0, 0, 0, 1);
+        }
+
+        &:visited {
+          color: black;
+        }
+      }
+
+      button {
+        margin: 0 32px;
+        padding: 0;
+        border: none;
+        vertical-align: middle;
+        font-weight: 500;
+        font-size: 16px;
+        color: black;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          color: peru;
+        }
+      }
     }
   }
 }
