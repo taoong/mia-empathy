@@ -24,11 +24,14 @@ class Admin extends Component {
   };
 
   componentDidMount() {
-    this.unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged(user =>
-        this.setState({ user: user, isSignedIn: !!user, loading: false })
-      );
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      this.setState({ user: user, isSignedIn: !!user });
+      if (user != null) {
+        this.verify();
+      } else {
+        this.setState({ isSignedIn: false, verified: false, loading: false });
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -41,20 +44,22 @@ class Admin extends Component {
 
   verify = () => {
     const currentComponent = this;
-    this.admins
-      .where("email", "==", firebase.auth().currentUser.email)
-      .get()
-      .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-          currentComponent.setState({ verified: true });
+    if (firebase.auth().currentUser != null) {
+      this.admins
+        .where("email", "==", firebase.auth().currentUser.email)
+        .get()
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+            currentComponent.setState({ verified: true });
+          });
+        })
+        .then(() => {
+          currentComponent.setState({ loading: false });
+        })
+        .catch(function(error) {
+          console.log("Could not verify admin: ", error);
         });
-      })
-      .then(() => {
-        currentComponent.setState({ loading: false });
-      })
-      .catch(function(error) {
-        console.log("Could not verify admin: ", error);
-      });
+    }
   };
 
   handleInvalidUser() {
@@ -89,8 +94,11 @@ class Admin extends Component {
       return (
         <div className="card-form">
           <h3>
-            Your email ({firebase.auth().currentUser.email}) has not been
-            verified!
+            Your email (
+            {firebase.auth().currentUser
+              ? firebase.auth().currentUser.email
+              : ""}
+            ) has not been verified!
           </h3>
           <h5>
             Please contact taoong@berkeley.edu if you think this is a mistake.
