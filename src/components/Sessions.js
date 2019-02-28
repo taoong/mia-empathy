@@ -1,9 +1,57 @@
 import React, { Component } from "react";
+import firebase from "../Firebase";
 class Sessions extends Component {
+  state = { sessions: [] };
+  sessionRef = firebase.firestore().collection("sessions");
+
+  componentDidMount = () => {
+    let currentComponent = this;
+    this.sessionRef.get().then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        currentComponent.setState(prevState => ({
+          sessions: [...prevState.sessions, doc]
+        }));
+      });
+    });
+  };
+
+  addSession() {
+    console.log("Add session");
+  }
+
+  getDateTime(timestamp) {
+    const date = timestamp.toDate();
+    const year = date.getFullYear().toString();
+    const month = date.getMonth().toString();
+    const day = date.getDate().toString();
+    const hours = date.getHours().toString();
+    const minutes = date.getMinutes().toString();
+    return `${month}/${day}/${year}  -  ${hours}:${minutes}`;
+  }
+
+  renderSessionRows() {
+    if (this.state.sessions.length > 0) {
+      const sessions = this.state.sessions.map((session, index) => (
+        <tr key={index}>
+          <td>{session.id}</td>
+          <td>{session.data().organization}</td>
+          <td>{this.getDateTime(session.data().datetime)}</td>
+          <td>{session.data().users.length}</td>
+        </tr>
+      ));
+      return sessions;
+    }
+  }
+
   render() {
+    const sessions = this.renderSessionRows();
+
     return (
       <div className="sessions">
-        <h1>Sessions</h1>
+        <div className="header-div">
+          <h1>Sessions</h1>
+          <button onClick={this.addSession}>&#10010;</button>
+        </div>
         <table>
           <tbody>
             <tr>
@@ -12,18 +60,7 @@ class Sessions extends Component {
               <th>Scheduled Date/Time</th>
               <th>No. Participants</th>
             </tr>
-            <tr>
-              <td>123</td>
-              <td>Berkeley High</td>
-              <td>1 January 2019, 3:30PM</td>
-              <td>50</td>
-            </tr>
-            <tr>
-              <td>123</td>
-              <td>Berkeley High</td>
-              <td>1 January 2019, 3:30PM</td>
-              <td>50</td>
-            </tr>
+            {sessions}
           </tbody>
         </table>
       </div>

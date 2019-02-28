@@ -103,7 +103,7 @@ class Admin extends Component {
           <h5>
             Please contact taoong@berkeley.edu if you think this is a mistake.
           </h5>
-          <button onClick={() => firebase.auth().signOut()}>Sign-out</button>
+          <button onClick={this.signOut}>Sign-out</button>
         </div>
       );
     }
