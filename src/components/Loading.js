@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 class Loading extends Component {
   render() {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="loading">
+        <h1>Loading...</h1>
+      </div>
+    );
   }
 }
 export default Loading;
