@@ -46,7 +46,6 @@ h4 {
   padding: 0 16px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  font-family: "Avenir";
   font-weight: 700;
   font-size: 14px;
   border-radius: 4px;
@@ -190,6 +189,11 @@ h4 {
   .button {
     align-self: flex-end;
   }
+}
+
+/* ----- Navbar Component ----- */
+.loading {
+  margin: 64px;
 }
 
 /* ----- Navbar Component ----- */

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import firebase from "../Firebase";
 class Sessions extends Component {
   state = { sessions: [] };
