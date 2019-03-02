@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import firebase from "../Firebase";
+
 class Sessions extends Component {
   state = { sessions: [] };
   sessionRef = firebase.firestore().collection("sessions");
@@ -15,10 +16,6 @@ class Sessions extends Component {
       });
     });
   };
-
-  addSession() {
-    console.log("Add session");
-  }
 
   getDateTime(timestamp) {
     const date = timestamp.toDate();
@@ -51,7 +48,9 @@ class Sessions extends Component {
       <div className="sessions">
         <div className="header-div">
           <h1>Sessions</h1>
-          <button onClick={this.addSession}>&#10010;</button>
+          <Link to={`${this.props.match.url}/new`} className="add-button">
+            <button onClick={this.addSession}>&#10010;</button>
+          </Link>
         </div>
         <table>
           <tbody>

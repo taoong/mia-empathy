@@ -9,7 +9,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 const routing = (
   <Router>
-    <div>
+    <div id="router">
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/admin" component={Admin} />

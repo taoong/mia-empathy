@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Route, Link } from "react-router-dom";
 import firebase from "../Firebase";
+import NewQuiz from "./NewQuiz";
 class Quizzes extends Component {
   state = { quizzes: [] };
   quizzesRef = firebase.firestore().collection("quizzes");
@@ -40,7 +42,10 @@ class Quizzes extends Component {
       <div className="quizzes">
         <div className="header-div">
           <h1>Quizzes</h1>
-          <button onClick={this.addQuiz}>&#10010;</button>
+
+          <Link to={`${this.props.match.url}/new`} className="add-button">
+            <button onClick={this.addQuiz}>&#10010;</button>
+          </Link>
         </div>
         <table>
           <tbody>
@@ -53,6 +58,7 @@ class Quizzes extends Component {
             {quizzes}
           </tbody>
         </table>
+        <Route path={`${this.props.match.path}/new`} component={NewQuiz} />
       </div>
     );
   }

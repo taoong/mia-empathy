@@ -5,7 +5,9 @@ import Nav from "./Nav";
 import { Route } from "react-router-dom";
 import AdminHome from "./AdminHome";
 import Sessions from "./Sessions";
+import NewSession from "./NewSession";
 import Quizzes from "./Quizzes";
+import NewQuiz from "./NewQuiz";
 import Loading from "./Loading";
 
 class Admin extends Component {
@@ -114,16 +116,26 @@ class Admin extends Component {
       return <Loading />;
     } else {
       return (
-        <div>
+        <div id="admin">
           <Nav signout={this.signOut} />
           <Route exact path={this.props.match.path} component={AdminHome} />
           <Route
+            exact
             path={`${this.props.match.path}/sessions`}
             component={Sessions}
           />
           <Route
+            path={`${this.props.match.path}/sessions/new`}
+            component={NewSession}
+          />
+          <Route
+            exact
             path={`${this.props.match.path}/quizzes`}
             component={Quizzes}
+          />
+          <Route
+            path={`${this.props.match.path}/quizzes/new`}
+            component={NewQuiz}
           />
         </div>
       );
