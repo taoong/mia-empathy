@@ -43,6 +43,7 @@ h4 {
   display: inline-block;
   text-align: center;
   height: 40px;
+  margin: 16px 0;
   padding: 0 16px;
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
@@ -180,10 +181,6 @@ h4 {
     box-sizing: border-box;
     border-radius: 4px;
     border: 1px rgba(0, 0, 0, 0.2) solid;
-
-    &:focus {
-      border: 1px rgb(39, 92, 240) solid;
-    }
   }
 
   .button {
@@ -339,8 +336,30 @@ h4 {
   margin: 48px;
 
   .header-div {
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
+    display: flex;
+
+    .add-button {
+      width: 24px;
+      height: 24px;
+      margin: auto 8px 0;
+      padding: 0;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.5);
+      border-radius: 100px;
+      border: 2px rgba(0, 0, 0, 0.5) solid;
+
+      &:hover {
+        background-color: rgba(15, 66, 237, 0.1);
+      }
+
+      &:active {
+        background-color: rgba(15, 66, 237, 0.3);
+      }
+
+      &:focus {
+        outline: 0;
+      }
+    }
   }
 
   .form-field-container {
@@ -359,11 +378,12 @@ h4 {
 
   .form-label {
     margin-bottom: 0;
+    margin-top: 8px;
   }
 
-  input[type="text"],
+  input,
   select {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: rgba(0, 0, 0, 0.01);
     margin: 8px 0 24px 0;
     padding: 8px 8px;
     font-size: 16px;
@@ -372,9 +392,60 @@ h4 {
     box-sizing: border-box;
     border-radius: 4px;
     border: 1px rgba(0, 0, 0, 0.2) solid;
+  }
 
-    &:focus {
-      border: 1px rgb(39, 92, 240) solid;
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+
+    .modal-main {
+      position: fixed;
+      background: white;
+      width: 60%;
+      height: auto;
+      padding: 32px 32px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      h2 {
+        margin-bottom: 32px;
+      }
+
+      .close-button {
+        width: 36px;
+        height: 36px;
+        margin-left: auto;
+        padding: 0;
+        font-size: 16px;
+        color: rgba(0, 0, 0, 0.5);
+        border-radius: 100px;
+        border: 2px rgba(0, 0, 0, 0.5) solid;
+
+        &:hover {
+          background-color: rgba(15, 66, 237, 0.1);
+        }
+
+        &:active {
+          background-color: rgba(15, 66, 237, 0.3);
+        }
+
+        &:focus {
+          outline: 0;
+        }
+      }
     }
+  }
+
+  .display-block {
+    display: block;
+  }
+
+  .display-none {
+    display: none;
   }
 }
