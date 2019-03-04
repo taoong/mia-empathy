@@ -34,7 +34,7 @@ class Sessions extends Component {
           <td>{session.id}</td>
           <td>{session.data().organization}</td>
           <td>{this.getDateTime(session.data().datetime)}</td>
-          <td>{session.data().users.length}</td>
+          <td>{session.data().participants.length}</td>
         </tr>
       ));
       return sessions;

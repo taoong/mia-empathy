@@ -68,11 +68,6 @@ class NewSession extends Component {
   };
 
   addParticipant = () => {
-    console.log(this.state.participantFirstName);
-    console.log(this.state.participantLastName);
-    console.log(this.state.participantAge);
-    console.log(this.state.participantGender);
-    console.log(this.state.participantRace);
     if (
       !this.state.participantFirstName ||
       !this.state.participantLastName ||
@@ -84,13 +79,23 @@ class NewSession extends Component {
       return;
     }
 
-    this.setState({
+    let newParticipant = {
+      firstname: this.state.participantFirstName,
+      lastname: this.state.participantLastName,
+      age: this.state.participantAge,
+      gender: this.state.participantGender,
+      race: this.state.participantRace
+    };
+
+    this.setState(prevState => ({
+      participants: [...prevState.participants, newParticipant],
       participantFirstName: "",
       participantLastName: "",
       participantAge: "",
       participantGender: "",
       participantRace: ""
-    });
+    }));
+
     this.hideModal();
   };
 
@@ -121,6 +126,10 @@ class NewSession extends Component {
   }
 
   render() {
+    const participants = this.state.participants.map((p, key) => (
+      <div key={key}>{p.firstname + " " + p.lastname}</div>
+    ));
+
     return (
       <div className="new-form">
         <div className="header-div">
@@ -167,6 +176,7 @@ class NewSession extends Component {
                 &#10010;
               </button>
             </div>
+            {participants}
           </div>
         </div>
         <button className="button" onClick={this.addSession}>
