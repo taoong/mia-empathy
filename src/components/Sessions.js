@@ -45,7 +45,7 @@ class Sessions extends Component {
     const sessions = this.renderSessionRows();
 
     return (
-      <div className="sessions">
+      <div id="sessions">
         <div className="header-div">
           <h1>Sessions</h1>
           <Link to={`${this.props.match.url}/new`} className="add-button">

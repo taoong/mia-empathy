@@ -39,7 +39,7 @@ class Quizzes extends Component {
     const quizzes = this.renderQuizRows();
 
     return (
-      <div className="quizzes">
+      <div id="quizzes">
         <div className="header-div">
           <h1>Quizzes</h1>
 

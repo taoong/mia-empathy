@@ -195,8 +195,12 @@ h4 {
 
 /* ----- Navbar Component ----- */
 .nav {
+  position: sticky;
   display: flex;
   flex-direction: row;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 60px;
 
   .nav-brand img {
@@ -247,9 +251,10 @@ h4 {
 }
 
 /* ----- Sessions/Quizzes Component ----- */
-.sessions,
-.quizzes {
-  margin: 48px;
+#admin-home,
+#sessions,
+#quizzes {
+  margin: 32px 64px;
 
   .header-div {
     display: flex;
@@ -333,7 +338,7 @@ h4 {
 
 /* ----- New Session/Quiz Component ----- */
 .new-form {
-  margin: 48px;
+  margin: 32px 64px;
 
   .header-div {
     display: flex;
@@ -364,15 +369,18 @@ h4 {
 
   .form-field-container {
     display: flex;
+    flex-wrap: wrap;
   }
 
   .form-left,
   .form-right {
     flex: 1;
     margin-right: 64px;
+    min-width: 250px;
 
     &.secondary {
       margin-right: 16px;
+      min-width: 150px;
     }
   }
 
@@ -394,6 +402,13 @@ h4 {
     border: 1px rgba(0, 0, 0, 0.2) solid;
   }
 
+  .react-datepicker-wrapper {
+    width: 100%;
+    .react-datepicker__input-container {
+      width: 100%;
+    }
+  }
+
   .modal {
     position: fixed;
     top: 0;
@@ -405,7 +420,8 @@ h4 {
     .modal-main {
       position: fixed;
       background: white;
-      width: 60%;
+      width: 40%;
+      min-width: 400px;
       height: auto;
       padding: 32px 32px;
       top: 50%;

@@ -1,20 +1,24 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import firebase from "../Firebase";
 import Modal from "./Modal";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 class NewSession extends Component {
   state = {
     organization: "",
     type: "",
-    date: "",
-    time: "",
+    datetime: new Date(),
     participants: [],
     showParticipantModal: false,
+    participantId: 1,
     participantFirstName: "",
     participantLastName: "",
     participantAge: "",
     participantGender: "",
-    participantRace: ""
+    participantRace: "",
+    goBack: false
   };
   newSessionRef = firebase
     .firestore()
@@ -31,12 +35,8 @@ class NewSession extends Component {
     this.setState({ type: event.target.value });
   };
 
-  setDate = event => {
-    this.setState({ date: event.target.value });
-  };
-
-  setTime = event => {
-    this.setState({ time: event.target.value });
+  setDatetime = datetime => {
+    this.setState({ datetime: datetime });
   };
 
   setParticipantFirstName = event => {
@@ -67,6 +67,13 @@ class NewSession extends Component {
     this.setState({ showParticipantModal: false });
   };
 
+  processId(id) {
+    id = "00" + id.toString();
+    let length = id.length;
+    id = id.substring(length - 3, length);
+    return id;
+  }
+
   addParticipant = () => {
     if (
       !this.state.participantFirstName ||
@@ -80,6 +87,7 @@ class NewSession extends Component {
     }
 
     let newParticipant = {
+      id: this.processId(this.state.participantId),
       firstname: this.state.participantFirstName,
       lastname: this.state.participantLastName,
       age: this.state.participantAge,
@@ -89,6 +97,7 @@ class NewSession extends Component {
 
     this.setState(prevState => ({
       participants: [...prevState.participants, newParticipant],
+      participantId: prevState.participantId + 1,
       participantFirstName: "",
       participantLastName: "",
       participantAge: "",
@@ -99,36 +108,36 @@ class NewSession extends Component {
     this.hideModal();
   };
 
-  addSession() {
-    if (
-      !this.state.organization ||
-      !this.state.type ||
-      !this.state.date ||
-      !this.state.time
-    ) {
+  addSession = () => {
+    if (!this.state.organization || !this.state.type || !this.state.datetime) {
       alert("All form fields must be filled out!");
       return;
     }
+    const currentComponent = this;
     this.newSessionRef
       .set({
-        organization: this.state.organization,
-        type: this.state.type,
-        date: this.state.date,
-        time: this.state.time,
-        participants: this.state.participants
+        organization: currentComponent.state.organization,
+        type: currentComponent.state.type,
+        datetime: currentComponent.state.datetime,
+        participants: currentComponent.state.participants
       })
       .then(function() {
-        console.log("Document successfully written!");
+        alert("Session added!");
+        currentComponent.setState({ goBack: true });
       })
       .catch(function(error) {
         console.error("Error writing document: ", error);
       });
-  }
+  };
 
   render() {
     const participants = this.state.participants.map((p, key) => (
-      <div key={key}>{p.firstname + " " + p.lastname}</div>
+      <div key={key}>{p.id + ": " + p.firstname + " " + p.lastname}</div>
     ));
+
+    if (this.state.goBack === true) {
+      return <Redirect to="../sessions" />;
+    }
 
     return (
       <div className="new-form">
@@ -150,28 +159,22 @@ class NewSession extends Component {
               <option value="child">Child</option>
               <option value="mixed">Mixed</option>
             </select>
-            <div className="form-field-container">
-              <div className="form-left secondary">
-                <h4 className="form-label">Date</h4>
-                <input
-                  type="text"
-                  value={this.state.date}
-                  onChange={this.setDate}
-                />
-              </div>
-              <div className="form-right secondary">
-                <h4 className="form-label">Time</h4>
-                <input
-                  type="text"
-                  value={this.state.time}
-                  onChange={this.setTime}
-                />
-              </div>
-            </div>
+            <h4 className="form-label">Date and Time</h4>
+            <DatePicker
+              selected={this.state.datetime}
+              onChange={this.setDatetime}
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              dateFormat="MMMM d, yyyy h:mm aa"
+              timeCaption="time"
+            />
           </div>
           <div className="form-right">
             <div className="header-div">
-              <h4 className="form-label">Participants</h4>
+              <h4 className="form-label">
+                Participants ({participants.length})
+              </h4>
               <button className="add-button" onClick={this.showModal}>
                 &#10010;
               </button>
@@ -206,23 +209,30 @@ class NewSession extends Component {
               />
             </div>
           </div>
-          <h4 className="form-label">Age</h4>
-          <input
-            type="number"
-            value={this.state.participantAge}
-            onChange={this.setParticipantAge}
-          />
-          <h4 className="form-label">Gender</h4>
-          <select
-            name="type"
-            value={this.state.participantGender}
-            onChange={this.setParticipantGender}
-          >
-            <option value="" style={{ display: "none" }} />
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-          </select>
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Age</h4>
+              <input
+                type="number"
+                value={this.state.participantAge}
+                onChange={this.setParticipantAge}
+              />
+            </div>
+            <div className="form-left secondary">
+              <h4 className="form-label">Gender</h4>
+              <select
+                name="type"
+                value={this.state.participantGender}
+                onChange={this.setParticipantGender}
+              >
+                <option value="" style={{ display: "none" }} />
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
           <h4 className="form-label">Race</h4>
           <select
             name="type"
