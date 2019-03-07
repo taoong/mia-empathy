@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import firebase from "../Firebase";
 import Modal from "./Modal";
+import Participant from "./Participant";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -108,6 +109,17 @@ class NewSession extends Component {
     this.hideModal();
   };
 
+  deleteParticipant = id => {
+    var newArray = [...this.state.participants];
+    newArray = newArray.filter(p => p.id !== id);
+    var newId = 1;
+    newArray.forEach(participant => {
+      participant.id = this.processId(newId);
+      newId += 1;
+    });
+    this.setState({ participants: newArray, participantId: newId });
+  };
+
   addSession = () => {
     if (!this.state.organization || !this.state.type || !this.state.datetime) {
       alert("All form fields must be filled out!");
@@ -132,7 +144,13 @@ class NewSession extends Component {
 
   render() {
     const participants = this.state.participants.map((p, key) => (
-      <div key={key}>{p.id + ": " + p.firstname + " " + p.lastname}</div>
+      <Participant
+        key={key}
+        id={p.id}
+        name={p.firstname + " " + p.lastname}
+        age={p.age}
+        delete={this.deleteParticipant}
+      />
     ));
 
     if (this.state.goBack === true) {
