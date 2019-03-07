@@ -128,32 +128,41 @@ class NewSession extends Component {
       return;
     }
     const currentComponent = this;
-
-    this.state.participants.forEach(p => {
-      this.participantRef
-        .add(p)
-        .then(function(docRef) {
-          console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        });
+    var references = [];
+    var getRefs = new Promise((resolve, reject) => {
+      this.state.participants.forEach((participant, index) => {
+        this.participantRef
+          .add(participant)
+          .then(function(docRef) {
+            references.push(docRef);
+            console.log("Document written with ID: ", docRef.id);
+            if (index === currentComponent.state.participants.length - 1) {
+              resolve();
+            }
+          })
+          .catch(function(error) {
+            console.error("Error adding document: ", error);
+            reject();
+          });
+      });
     });
 
-    this.newSessionRef
-      .set({
-        organization: currentComponent.state.organization,
-        type: currentComponent.state.type,
-        datetime: currentComponent.state.datetime,
-        participants: currentComponent.state.participants
-      })
-      .then(function() {
-        alert("Session added!");
-        currentComponent.setState({ goBack: true });
-      })
-      .catch(function(error) {
-        console.error("Error writing document: ", error);
-      });
+    getRefs.then(() => {
+      this.newSessionRef
+        .set({
+          organization: currentComponent.state.organization,
+          type: currentComponent.state.type,
+          datetime: currentComponent.state.datetime,
+          participants: references
+        })
+        .then(function() {
+          alert("Session added!");
+          currentComponent.setState({ goBack: true });
+        })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
+    });
   };
 
   render() {
