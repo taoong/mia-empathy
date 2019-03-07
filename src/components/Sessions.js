@@ -19,12 +19,13 @@ class Sessions extends Component {
 
   getDateTime(timestamp) {
     const date = timestamp.toDate();
-    const year = date.getFullYear().toString();
-    const month = date.getMonth().toString();
-    const day = date.getDate().toString();
-    const hours = date.getHours().toString();
-    const minutes = date.getMinutes().toString();
-    return `${month}/${day}/${year}  -  ${hours}:${minutes}`;
+    return date.toLocaleString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
   }
 
   renderSessionRows() {
