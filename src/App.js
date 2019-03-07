@@ -9,11 +9,11 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.users = firebase.firestore().collection("users");
+    this.participants = firebase.firestore().collection("participants");
     this.state = {
       quizId: "001",
       quizType: "pre",
-      userId: "",
+      participantId: "",
       questionId: -1,
       question: "",
       answerOptions: [],
@@ -60,24 +60,24 @@ class App extends Component {
   }
 
   handleAnswerSelected = event => {
-    this.setUserAnswer(event.currentTarget.value);
+    this.setParticipantAnswer(event.currentTarget.value);
 
     if (this.state.questionId !== quizQuestions.length - 1) {
       setTimeout(() => this.setNextQuestion(), 600);
     } else {
-      let userRef = this.users
-        .doc(this.state.userId)
+      let participantRef = this.participants
+        .doc(this.state.participantId)
         .collection("responses")
         .doc(this.state.quizId);
       if (this.state.quizType === "pre") {
-        userRef.set(
+        participantRef.set(
           {
             pre: this.state.answers
           },
           { merge: true }
         );
       } else {
-        userRef.set(
+        participantRef.set(
           {
             post: this.state.answers
           },
@@ -95,7 +95,7 @@ class App extends Component {
     }
   };
 
-  setUserAnswer(answer) {
+  setParticipantAnswer(answer) {
     if (answer === quizQuestions[this.state.questionId].correctAnswer) {
       this.setState(state => ({
         score: state.score + 1
@@ -120,8 +120,8 @@ class App extends Component {
     });
   }
 
-  setUserId = id => {
-    this.setState({ userId: id, questionId: 0 });
+  setParticipantId = id => {
+    this.setState({ participantId: id, questionId: 0 });
   };
 
   setQuizType = quizType => {
@@ -131,7 +131,7 @@ class App extends Component {
   renderIdentification() {
     return (
       <Identification
-        setUserId={this.setUserId}
+        setParticipantId={this.setParticipantId}
         setQuizType={this.setQuizType}
       />
     );

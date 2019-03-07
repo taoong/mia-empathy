@@ -28,10 +28,9 @@ class Sessions extends Component {
   }
 
   renderSessionRows() {
-    if (this.state.sessions.length > 0) {
+    if (this.state.sessions != null && this.state.sessions.length > 0) {
       const sessions = this.state.sessions.map((session, index) => (
         <tr key={index}>
-          <td>{session.id}</td>
           <td>{session.data().organization}</td>
           <td>{this.getDateTime(session.data().datetime)}</td>
           <td>{session.data().participants.length}</td>
@@ -55,7 +54,6 @@ class Sessions extends Component {
         <table>
           <tbody>
             <tr>
-              <th>ID</th>
               <th>Organization Name</th>
               <th>Scheduled Date/Time</th>
               <th>No. Participants</th>

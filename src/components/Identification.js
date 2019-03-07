@@ -7,41 +7,43 @@ class Identification extends Component {
     super(props);
 
     this.state = {
-      userId: "",
+      participantId: "",
       quizType: ""
     };
-    this.users = firebase.firestore().collection("users");
+    this.participants = firebase.firestore().collection("participants");
   }
 
   setQuizType = event => {
     this.setState({ quizType: event.target.value });
   };
 
-  setUserId = event => {
-    this.setState({ userId: event.target.value });
+  setParticipantId = event => {
+    this.setState({ participantId: event.target.value });
   };
 
   handleSubmit = () => {
     let currentComponent = this;
-    if (!this.state.userId) {
-      alert("User ID input can't be blank!");
+    if (!this.state.participantId) {
+      alert("Participant ID input can't be blank!");
     } else if (!this.state.quizType) {
       alert("Before/after input can't be blank!");
     } else {
-      let userRef = this.users.doc(this.state.userId);
-      userRef
+      let participantRef = this.participants.doc(this.state.participantId);
+      participantRef
         .get()
         .then(function(doc) {
           if (doc.exists) {
-            currentComponent.props.setUserId(currentComponent.state.userId);
+            currentComponent.props.setParticipantId(
+              currentComponent.state.participantId
+            );
             currentComponent.props.setQuizType(currentComponent.state.quizType);
           } else {
-            alert("User ID doesn't exist");
+            alert("Participant ID doesn't exist");
           }
         })
         .catch(function(error) {
-          console.log("Error getting User ID:", error);
-          alert("Error getting User ID");
+          console.log("Error getting Participant ID:", error);
+          alert("Error getting Participant ID");
         });
     }
   };
@@ -69,11 +71,11 @@ class Identification extends Component {
             onChange={this.setQuizType}
           />
         </div>
-        <h4 className="id">User ID:</h4>
+        <h4 className="id">Participant ID:</h4>
         <input
           type="text"
-          value={this.state.userId}
-          onChange={this.setUserId}
+          value={this.state.participantId}
+          onChange={this.setParticipantId}
         />
         <button className="button" onClick={this.handleSubmit}>
           Start Quiz
@@ -84,7 +86,7 @@ class Identification extends Component {
 }
 
 Identification.propTypes = {
-  setUserId: PropTypes.func.isRequired,
+  setParticipantId: PropTypes.func.isRequired,
   setQuizType: PropTypes.func.isRequired
 };
 

@@ -25,6 +25,7 @@ class NewSession extends Component {
     .firestore()
     .collection("sessions")
     .doc();
+  participantRef = firebase.firestore().collection("participants");
 
   componentDidMount = () => {};
 
@@ -93,7 +94,8 @@ class NewSession extends Component {
       lastname: this.state.participantLastName,
       age: this.state.participantAge,
       gender: this.state.participantGender,
-      race: this.state.participantRace
+      race: this.state.participantRace,
+      session: this.newSessionRef.id
     };
 
     this.setState(prevState => ({
@@ -126,6 +128,18 @@ class NewSession extends Component {
       return;
     }
     const currentComponent = this;
+
+    this.state.participants.forEach(p => {
+      this.participantRef
+        .add(p)
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+    });
+
     this.newSessionRef
       .set({
         organization: currentComponent.state.organization,
