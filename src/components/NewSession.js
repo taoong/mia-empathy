@@ -217,10 +217,12 @@ class NewSession extends Component {
       <div className="new-form">
         <div className="header-div">
           <h1>{this.state.editing ? "Edit" : "New"} Session</h1>
-          <i
-            className="fa fa-trash-o delete-button"
-            onClick={this.showDeleteModal}
-          />
+          {this.state.editing ? (
+            <i
+              className="fa fa-trash-o delete-button"
+              onClick={this.showDeleteModal}
+            />
+          ) : null}
         </div>
         <div className="form-field-container">
           <div className="form-left">
