@@ -28,10 +28,14 @@ class Sessions extends Component {
     });
   }
 
+  editSession = id => {
+    this.props.history.push(`${this.props.match.url}/edit/${id}`);
+  };
+
   renderSessionRows() {
     if (this.state.sessions != null && this.state.sessions.length > 0) {
       const sessions = this.state.sessions.map((session, index) => (
-        <tr key={index}>
+        <tr key={index} onClick={() => this.editSession(session.id)}>
           <td>{session.data().organization}</td>
           <td>{this.getDateTime(session.data().datetime)}</td>
           <td>{session.data().participants.length}</td>

@@ -19,15 +19,64 @@ class NewSession extends Component {
     participantAge: "",
     participantGender: "",
     participantRace: "",
-    goBack: false
+    goBack: false,
+    editing: false,
+    originalParticipants: []
   };
-  newSessionRef = firebase
+  sessionRef = firebase
     .firestore()
     .collection("sessions")
     .doc();
   participantRef = firebase.firestore().collection("participants");
 
-  componentDidMount = () => {};
+  componentDidMount = () => {
+    if (this.props.match.params.id) {
+      let currentComponent = this;
+      this.sessionRef = firebase
+        .firestore()
+        .collection("sessions")
+        .doc(this.props.match.params.id);
+      var participants = [];
+      let fetchParticipants = new Promise((resolve, reject) => {
+        this.sessionRef
+          .get()
+          .then(session => {
+            var participantsRefs = session.data().participants;
+            participantsRefs.forEach((ref, index) => {
+              ref.get().then(participant => {
+                participants.push(participant.data());
+                if (index === participantsRefs.length - 1) {
+                  resolve();
+                }
+              });
+            });
+          })
+          .catch(error => {
+            console.log(error);
+            reject();
+          });
+      });
+
+      fetchParticipants.then(() => {
+        this.sessionRef
+          .get()
+          .then(doc => {
+            currentComponent.setState({
+              organization: doc.data().organization,
+              type: doc.data().type,
+              datetime: doc.data().datetime.toDate(),
+              participants: participants,
+              participantId: participants.length + 1,
+              editing: true,
+              originalParticipants: participants.slice(0)
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      });
+    }
+  };
 
   setOrganization = event => {
     this.setState({ organization: event.target.value });
@@ -95,7 +144,7 @@ class NewSession extends Component {
       age: this.state.participantAge,
       gender: this.state.participantGender,
       race: this.state.participantRace,
-      session: this.newSessionRef.id
+      session: this.sessionRef.id
     };
 
     this.setState(prevState => ({
@@ -135,7 +184,6 @@ class NewSession extends Component {
           .add(participant)
           .then(function(docRef) {
             references.push(docRef);
-            console.log("Document written with ID: ", docRef.id);
             if (index === currentComponent.state.participants.length - 1) {
               resolve();
             }
@@ -148,7 +196,7 @@ class NewSession extends Component {
     });
 
     getRefs.then(() => {
-      this.newSessionRef
+      this.sessionRef
         .set({
           organization: currentComponent.state.organization,
           type: currentComponent.state.type,
@@ -156,7 +204,9 @@ class NewSession extends Component {
           participants: references
         })
         .then(function() {
-          alert("Session added!");
+          currentComponent.state.editing
+            ? alert("Session updated!")
+            : alert("Session added!");
           currentComponent.setState({ goBack: true });
         })
         .catch(function(error) {
@@ -177,13 +227,15 @@ class NewSession extends Component {
     ));
 
     if (this.state.goBack === true) {
-      return <Redirect to="../sessions" />;
+      return (
+        <Redirect to={this.state.editing ? "../../sessions" : "../sessions"} />
+      );
     }
 
     return (
       <div className="new-form">
         <div className="header-div">
-          <h1>New Session</h1>
+          <h1>{this.state.editing ? "Edit" : "New"} Session</h1>
         </div>
         <div className="form-field-container">
           <div className="form-left">
@@ -224,7 +276,7 @@ class NewSession extends Component {
           </div>
         </div>
         <button className="button" onClick={this.addSession}>
-          Add Session
+          {this.state.editing ? "Update" : "Add"} Session
         </button>
         <Modal
           show={this.state.showParticipantModal}

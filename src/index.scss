@@ -32,7 +32,7 @@ h4 {
 }
 
 .card-form {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: $grey-2;
   margin: 10vh auto;
   padding: 32px;
   display: flex;
@@ -295,7 +295,7 @@ h4 {
   table {
     width: 100%;
     padding: 16px;
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: $grey-2;
     border-radius: 10px;
     border-collapse: collapse;
     border-spacing: 0;

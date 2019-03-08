@@ -129,6 +129,10 @@ class Admin extends Component {
             component={NewSession}
           />
           <Route
+            path={`${this.props.match.path}/sessions/edit/:id`}
+            component={NewSession}
+          />
+          <Route
             exact
             path={`${this.props.match.path}/quizzes`}
             component={Quizzes}
