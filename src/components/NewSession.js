@@ -13,6 +13,7 @@ class NewSession extends Component {
     datetime: new Date(),
     participants: [],
     showParticipantModal: false,
+    showDeleteModal: false,
     participantId: 1,
     participantFirstName: "",
     participantLastName: "",
@@ -36,45 +37,22 @@ class NewSession extends Component {
         .firestore()
         .collection("sessions")
         .doc(this.props.match.params.id);
-      var participants = [];
-      let fetchParticipants = new Promise((resolve, reject) => {
-        this.sessionRef
-          .get()
-          .then(session => {
-            var participantsRefs = session.data().participants;
-            participantsRefs.forEach((ref, index) => {
-              ref.get().then(participant => {
-                participants.push(participant.data());
-                if (index === participantsRefs.length - 1) {
-                  resolve();
-                }
-              });
-            });
-          })
-          .catch(error => {
-            console.log(error);
-            reject();
-          });
-      });
 
-      fetchParticipants.then(() => {
-        this.sessionRef
-          .get()
-          .then(doc => {
-            currentComponent.setState({
-              organization: doc.data().organization,
-              type: doc.data().type,
-              datetime: doc.data().datetime.toDate(),
-              participants: participants,
-              participantId: participants.length + 1,
-              editing: true,
-              originalParticipants: participants.slice(0)
-            });
-          })
-          .catch(error => {
-            console.log(error);
+      this.sessionRef
+        .get()
+        .then(doc => {
+          currentComponent.setState({
+            organization: doc.data().organization,
+            type: doc.data().type,
+            datetime: doc.data().datetime.toDate(),
+            participants: doc.data().participants,
+            participantId: doc.data().participants.length + 1,
+            editing: true
           });
-      });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   };
 
@@ -110,12 +88,20 @@ class NewSession extends Component {
     this.setState({ participantRace: event.target.value });
   };
 
-  showModal = () => {
+  showParticipantModal = () => {
     this.setState({ showParticipantModal: true });
   };
 
-  hideModal = () => {
+  hideParticipantModal = () => {
     this.setState({ showParticipantModal: false });
+  };
+
+  showDeleteModal = () => {
+    this.setState({ showDeleteModal: true });
+  };
+
+  hideDeleteModal = () => {
+    this.setState({ showDeleteModal: false });
   };
 
   processId(id) {
@@ -157,7 +143,7 @@ class NewSession extends Component {
       participantRace: ""
     }));
 
-    this.hideModal();
+    this.hideParticipantModal();
   };
 
   deleteParticipant = id => {
@@ -177,42 +163,37 @@ class NewSession extends Component {
       return;
     }
     const currentComponent = this;
-    var references = [];
-    var getRefs = new Promise((resolve, reject) => {
-      this.state.participants.forEach((participant, index) => {
-        this.participantRef
-          .add(participant)
-          .then(function(docRef) {
-            references.push(docRef);
-            if (index === currentComponent.state.participants.length - 1) {
-              resolve();
-            }
-          })
-          .catch(function(error) {
-            console.error("Error adding document: ", error);
-            reject();
-          });
-      });
-    });
 
-    getRefs.then(() => {
-      this.sessionRef
-        .set({
-          organization: currentComponent.state.organization,
-          type: currentComponent.state.type,
-          datetime: currentComponent.state.datetime,
-          participants: references
-        })
-        .then(function() {
-          currentComponent.state.editing
-            ? alert("Session updated!")
-            : alert("Session added!");
-          currentComponent.setState({ goBack: true });
-        })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
-    });
+    this.sessionRef
+      .set({
+        organization: currentComponent.state.organization,
+        type: currentComponent.state.type,
+        datetime: currentComponent.state.datetime,
+        participants: currentComponent.state.participants
+      })
+      .then(function() {
+        currentComponent.state.editing
+          ? alert("Session updated!")
+          : alert("Session added!");
+        currentComponent.setState({ goBack: true });
+      })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  deleteSession = () => {
+    let currentComponent = this;
+    this.hideDeleteModal();
+    this.sessionRef
+      .delete()
+      .then(() => {
+        alert("Session deleted!");
+        currentComponent.setState({ goBack: true });
+      })
+      .catch(error => {
+        alert("Error deleting session: ", error);
+      });
   };
 
   render() {
@@ -236,6 +217,10 @@ class NewSession extends Component {
       <div className="new-form">
         <div className="header-div">
           <h1>{this.state.editing ? "Edit" : "New"} Session</h1>
+          <i
+            className="fa fa-trash-o delete-button"
+            onClick={this.showDeleteModal}
+          />
         </div>
         <div className="form-field-container">
           <div className="form-left">
@@ -268,7 +253,10 @@ class NewSession extends Component {
               <h4 className="form-label">
                 Participants ({participants.length})
               </h4>
-              <button className="add-button" onClick={this.showModal}>
+              <button
+                className="add-button"
+                onClick={this.showParticipantModal}
+              >
                 &#10010;
               </button>
             </div>
@@ -280,8 +268,9 @@ class NewSession extends Component {
         </button>
         <Modal
           show={this.state.showParticipantModal}
-          handleClose={this.hideModal}
+          handleClose={this.hideParticipantModal}
           handleSubmit={this.addParticipant}
+          submitText={"Submit"}
         >
           <h2>Add Participant</h2>
           <div className="form-field-container">
@@ -345,6 +334,15 @@ class NewSession extends Component {
             </option>
             <option value="two or more">Two or More Races</option>
           </select>
+        </Modal>
+        <Modal
+          show={this.state.showDeleteModal}
+          handleClose={this.hideDeleteModal}
+          handleSubmit={this.deleteSession}
+          submitText={"Delete Session"}
+        >
+          <h3>Are you sure you want to delete this session?</h3>
+          <h5>This action cannot be undone.</h5>
         </Modal>
       </div>
     );

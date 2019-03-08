@@ -13,7 +13,7 @@ function Modal(props) {
         </button>
         <div>{props.children}</div>
         <button className="button" onClick={props.handleSubmit}>
-          Submit
+          {props.submitText}
         </button>
       </section>
     </div>
@@ -23,6 +23,7 @@ function Modal(props) {
 Modal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  submitText: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.array.isRequired
 };
