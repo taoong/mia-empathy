@@ -10,7 +10,9 @@ class App extends Component {
     super(props);
 
     this.participants = firebase.firestore().collection("participants");
+    this.sessionsRef = firebase.firestore().collection("sessions");
     this.state = {
+      session: null,
       quizId: "001",
       quizType: "pre",
       participantId: "",
@@ -26,6 +28,21 @@ class App extends Component {
 
   componentWillMount() {
     this.restartQuiz();
+    this.getCurrentSession();
+  }
+
+  getCurrentSession() {
+    let currentComponent = this;
+    this.sessionsRef
+      .where("datetime", "<", new Date())
+      .orderBy("datetime", "desc")
+      .limit(1)
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(function(doc) {
+          currentComponent.setState({ session: doc });
+        });
+      });
   }
 
   restartQuiz = () => {
@@ -131,6 +148,7 @@ class App extends Component {
   renderIdentification() {
     return (
       <Identification
+        session={this.state.session}
         setParticipantId={this.setParticipantId}
         setQuizType={this.setQuizType}
       />

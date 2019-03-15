@@ -21,6 +21,17 @@ class Identification extends Component {
     this.setState({ participantId: event.target.value });
   };
 
+  getDateTime(timestamp) {
+    const date = timestamp.toDate();
+    return date.toLocaleString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
   handleSubmit = () => {
     let currentComponent = this;
     if (!this.state.participantId) {
@@ -48,13 +59,22 @@ class Identification extends Component {
     }
   };
 
+  renderSessionDetails = () => {
+    if (this.props.session) {
+      let session = this.props.session.data();
+      return (
+        <div>
+          <h2>{session.organization}</h2>
+          <h4>{this.getDateTime(session.datetime)}</h4>
+        </div>
+      );
+    }
+  };
+
   render() {
     return (
       <div className="identification card-form">
-        <div className="intro">
-          <h2>Sign in</h2>
-          <h4>to start the quiz</h4>
-        </div>
+        <div className="intro">{this.renderSessionDetails()}</div>
         <div className="radioButtons">
           <label>Before Exhibit</label>
           <input
