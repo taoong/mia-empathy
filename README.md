@@ -1,6 +1,10 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+
+# Minneapolis Institude of Art (Mia) Empathy Tool
+
+This tool is built for Mia to use to measure empathy in participants. Administrators of the tool can manage session participant data and export it for further analyses.
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
