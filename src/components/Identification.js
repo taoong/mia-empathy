@@ -10,7 +10,10 @@ class Identification extends Component {
       participantId: "",
       quizType: ""
     };
-    this.participants = firebase.firestore().collection("participants");
+
+    this.participantsRef = firebase.firestore().collection("participants");
+    this.responsesRef = firebase.firestore().collection("responses");
+    this.sessionsRef = firebase.firestore().collection("sessions");
   }
 
   setQuizType = event => {
@@ -33,28 +36,48 @@ class Identification extends Component {
   }
 
   handleSubmit = () => {
-    let currentComponent = this;
     if (!this.state.participantId) {
       alert("Participant ID input can't be blank!");
     } else if (!this.state.quizType) {
       alert("Before/after input can't be blank!");
     } else {
-      let participantRef = this.participants.doc(this.state.participantId);
-      participantRef
-        .get()
-        .then(function(doc) {
-          if (doc.exists) {
-            currentComponent.props.setParticipantId(
-              currentComponent.state.participantId
+      var participant = null;
+      let promise = new Promise((resolve, reject) => {
+        this.props.session.data().participants.forEach(p => {
+          if (p.id === this.state.participantId) {
+            participant = p;
+            resolve();
+          }
+        });
+        reject();
+      });
+      promise
+        .then(() => {
+          if (this.state.quizType === "post") {
+            let responseRef = this.responsesRef.doc(
+              this.props.session.id + this.state.participantId
             );
-            currentComponent.props.setQuizType(currentComponent.state.quizType);
+            responseRef
+              .get()
+              .then(doc => {
+                if (doc.data().pre) {
+                  this.props.setParticipant(participant);
+                  this.props.setQuizType(this.state.quizType);
+                }
+              })
+              .catch(() => {
+                alert(
+                  "This Participant ID hasn't completed the before exhibit test yet!"
+                );
+                return;
+              });
           } else {
-            alert("Participant ID doesn't exist");
+            this.props.setParticipant(participant);
+            this.props.setQuizType(this.state.quizType);
           }
         })
-        .catch(function(error) {
-          console.log("Error getting Participant ID:", error);
-          alert("Error getting Participant ID");
+        .catch(() => {
+          alert("This Participant ID doesn't exist!");
         });
     }
   };
@@ -106,7 +129,7 @@ class Identification extends Component {
 }
 
 Identification.propTypes = {
-  setParticipantId: PropTypes.func.isRequired,
+  setParticipant: PropTypes.func.isRequired,
   setQuizType: PropTypes.func.isRequired
 };
 

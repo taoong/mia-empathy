@@ -9,13 +9,14 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.participants = firebase.firestore().collection("participants");
+    this.responses = firebase.firestore().collection("responses");
     this.sessionsRef = firebase.firestore().collection("sessions");
     this.state = {
       session: null,
+      sessionId: null,
       quizId: "001",
-      quizType: "pre",
-      participantId: "",
+      quizType: "",
+      participant: null,
       questionId: -1,
       question: "",
       answerOptions: [],
@@ -40,7 +41,7 @@ class App extends Component {
       .get()
       .then(snapshot => {
         snapshot.forEach(function(doc) {
-          currentComponent.setState({ session: doc });
+          currentComponent.setState({ session: doc, sessionId: doc.id });
         });
       });
   }
@@ -82,24 +83,25 @@ class App extends Component {
     if (this.state.questionId !== quizQuestions.length - 1) {
       setTimeout(() => this.setNextQuestion(), 600);
     } else {
-      let participantRef = this.participants
-        .doc(this.state.participantId)
-        .collection("responses")
-        .doc(this.state.quizId);
+      let responseRef = this.responses.doc(
+        this.state.sessionId + this.state.participant.id
+      );
       if (this.state.quizType === "pre") {
-        participantRef.set(
-          {
-            pre: this.state.answers
-          },
-          { merge: true }
-        );
+        responseRef.set({
+          firstname: this.state.participant.firstname,
+          lastname: this.state.participant.lastname,
+          age: this.state.participant.age,
+          gender: this.state.participant.gender,
+          race: this.state.participant.race,
+          session: this.state.sessionId,
+          quiz: this.state.quizId,
+          datetime: new Date(),
+          pre: this.state.answers
+        });
       } else {
-        participantRef.set(
-          {
-            post: this.state.answers
-          },
-          { merge: true }
-        );
+        responseRef.update({
+          post: this.state.answers
+        });
       }
 
       setTimeout(
@@ -137,8 +139,8 @@ class App extends Component {
     });
   }
 
-  setParticipantId = id => {
-    this.setState({ participantId: id, questionId: 0 });
+  setParticipant = p => {
+    this.setState({ participant: p, questionId: 0 });
   };
 
   setQuizType = quizType => {
@@ -149,7 +151,7 @@ class App extends Component {
     return (
       <Identification
         session={this.state.session}
-        setParticipantId={this.setParticipantId}
+        setParticipant={this.setParticipant}
         setQuizType={this.setQuizType}
       />
     );
