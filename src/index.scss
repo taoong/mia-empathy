@@ -2,7 +2,9 @@ $grey-1: rgba(0, 0, 0, 0.01);
 $grey-2: rgba(0, 0, 0, 0.02);
 $grey-3: rgba(0, 0, 0, 0.1);
 $grey-4: rgba(0, 0, 0, 0.2);
+$disabled-text: #999;
 $red-1: rgba(200, 20, 0, 0.8);
+$red-2: rgba(130, 20, 0, 0.2);
 
 body {
   margin: 0;
@@ -368,6 +370,16 @@ h4 {
       border-radius: 100px;
       border: 2px rgba(0, 0, 0, 0.5) solid;
 
+      &:disabled {
+        background-color: $grey-4;
+        color: $disabled-text;
+        border: 2px $disabled-text solid;
+
+        &:hover {
+          background-color: $red-2;
+        }
+      }
+
       &:hover {
         background-color: rgba(15, 66, 237, 0.1);
       }
@@ -415,6 +427,11 @@ h4 {
     box-sizing: border-box;
     border-radius: 4px;
     border: 2px rgba(0, 0, 0, 0.2) solid;
+
+    &:disabled {
+      background-color: $grey-3;
+      color: $disabled-text;
+    }
   }
 
   .react-datepicker-wrapper {
