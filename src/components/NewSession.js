@@ -21,7 +21,6 @@ class NewSession extends Component {
     participantGender: "",
     participantRace: "",
     goBack: false,
-    editing: false,
     originalParticipants: []
   };
   sessionRef = firebase
@@ -46,8 +45,7 @@ class NewSession extends Component {
             type: doc.data().type,
             datetime: doc.data().datetime.toDate(),
             participants: doc.data().participants,
-            participantId: doc.data().participants.length + 1,
-            editing: true
+            participantId: doc.data().participants.length + 1
           });
         })
         .catch(error => {
@@ -172,7 +170,7 @@ class NewSession extends Component {
         participants: currentComponent.state.participants
       })
       .then(function() {
-        currentComponent.state.editing
+        currentComponent.props.match.params.id
           ? alert("Session updated!")
           : alert("Session added!");
         currentComponent.setState({ goBack: true });
@@ -209,15 +207,17 @@ class NewSession extends Component {
 
     if (this.state.goBack === true) {
       return (
-        <Redirect to={this.state.editing ? "../../sessions" : "../sessions"} />
+        <Redirect
+          to={this.props.match.params.id ? "../../sessions" : "../sessions"}
+        />
       );
     }
 
     return (
       <div className="new-form">
         <div className="header-div">
-          <h1>{this.state.editing ? "Edit" : "New"} Session</h1>
-          {this.state.editing ? (
+          <h1>{this.props.match.params.id ? "Edit" : "New"} Session</h1>
+          {this.props.match.params.id ? (
             <i
               className="fa fa-trash-o delete-button"
               onClick={this.showDeleteModal}
@@ -266,7 +266,7 @@ class NewSession extends Component {
           </div>
         </div>
         <button className="button" onClick={this.addSession}>
-          {this.state.editing ? "Update" : "Add"} Session
+          {this.props.match.params.id ? "Update" : "Add"} Session
         </button>
         <Modal
           show={this.state.showParticipantModal}
