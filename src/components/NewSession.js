@@ -204,6 +204,7 @@ class NewSession extends Component {
         name={p.firstname + " " + p.lastname}
         age={p.age}
         delete={this.deleteParticipant}
+        disabled={this.state.disabled}
       />
     ));
 
