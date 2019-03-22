@@ -83,15 +83,21 @@ class Identification extends Component {
   };
 
   renderSessionDetails = () => {
+    var session = null;
     if (this.props.session) {
-      let session = this.props.session.data();
-      return (
-        <div>
-          <h2>{session.organization}</h2>
-          <h4>{this.getDateTime(session.datetime)}</h4>
-        </div>
-      );
+      session = this.props.session.data();
     }
+
+    return (
+      <div>
+        <h2>
+          {this.props.session ? session.organization : "Loading session..."}
+        </h2>
+        <h4>
+          {this.props.session ? this.getDateTime(session.datetime) : <br />}
+        </h4>
+      </div>
+    );
   };
 
   render() {
