@@ -19,6 +19,7 @@ class App extends Component {
       participant: null,
       questionId: -1,
       question: "",
+      questionType: "",
       answerOptions: [],
       selectedAnswer: "",
       answers: [],
@@ -134,6 +135,7 @@ class App extends Component {
     this.setState({
       questionId: questionId,
       question: quizQuestions[questionId].question,
+      questionType: quizQuestions[questionId].type,
       answerOptions: quizQuestions[questionId].answers,
       selectedAnswer: ""
     });
@@ -164,6 +166,7 @@ class App extends Component {
         answerOptions={this.state.answerOptions}
         questionId={this.state.questionId}
         question={this.state.question}
+        questionType={this.state.questionType}
         questionTotal={quizQuestions.length}
         imageUrl={quizQuestions[this.state.questionId].imageUrl}
         onAnswerSelected={this.handleAnswerSelected}

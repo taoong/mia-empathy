@@ -33,6 +33,13 @@ class Question extends Component {
       });
   }
 
+  formatQuestion = (type, question) => {
+    let answerType,
+      questionType = type.split("-");
+    console.log(answerType);
+    console.log(questionType);
+  };
+
   render() {
     return (
       <div className="question">
@@ -47,6 +54,7 @@ class Question extends Component {
 
 Question.propTypes = {
   questionContent: PropTypes.string.isRequired,
+  questionType: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
   imageUrl: PropTypes.string.isRequired
 };

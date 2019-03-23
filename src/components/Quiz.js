@@ -14,6 +14,7 @@ function Quiz(props) {
       />
       <Question
         questionContent={props.question}
+        questionType={props.questionType}
         questionId={props.questionId}
         imageUrl={props.imageUrl}
       />
