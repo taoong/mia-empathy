@@ -34,15 +34,16 @@ class Question extends Component {
   }
 
   formatQuestion = (type, question) => {
-    let answerType,
-      questionType = type.split("-");
-    console.log(answerType);
-    console.log(questionType);
+    console.log(type);
   };
 
   render() {
     return (
       <div className="question">
+        {this.formatQuestion(
+          this.props.questionType,
+          this.props.questionContent
+        )}
         <h2>{this.props.questionContent}</h2>
         {this.props.imageUrl ? (
           <img src={require("../" + this.props.imageUrl)} alt="Not found!" />

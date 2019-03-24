@@ -53,8 +53,8 @@ class App extends Component {
     );
     this.setState({
       question: quizQuestions[0].question,
-      answerOptions: shuffledAnswerOptions[0],
       questionId: -1,
+      answerOptions: shuffledAnswerOptions[0],
       selectedAnswer: "",
       answers: [],
       score: 0,
@@ -142,7 +142,11 @@ class App extends Component {
   }
 
   setParticipant = p => {
-    this.setState({ participant: p, questionId: 0 });
+    this.setState({
+      participant: p,
+      questionId: 0,
+      questionType: quizQuestions[0].type
+    });
   };
 
   setQuizType = quizType => {
