@@ -21,6 +21,8 @@ class Question extends Component {
   }
 
   updateImage() {
+    // TODO: Figure out if Firebase Storage is an option for uploading photos, else just
+    // work with images directly from the project folder
     let currentComponent = this;
     this.storageRef
       .child(this.props.imageUrl)
@@ -34,7 +36,17 @@ class Question extends Component {
   }
 
   formatQuestion = (type, question) => {
-    console.log(type);
+    // TODO: Handle perspective question types using props.questionContent
+    if (type !== "perspective") {
+      let answerType = type.split("-")[0];
+      let questionType = type.split("-")[1];
+      return (
+        <h2>
+          Match the <strong>{answerType}</strong> to the{" "}
+          <strong>{questionType}</strong>
+        </h2>
+      );
+    }
   };
 
   render() {
@@ -44,7 +56,6 @@ class Question extends Component {
           this.props.questionType,
           this.props.questionContent
         )}
-        <h2>{this.props.questionContent}</h2>
         {this.props.imageUrl ? (
           <img src={require("../" + this.props.imageUrl)} alt="Not found!" />
         ) : null}
