@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
-import firebase from "../Firebase";
+import firebase from "../../Firebase";
 import NewQuiz from "./NewQuiz";
 class Quizzes extends Component {
   state = { quizzes: [] };

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import firebase from "../Firebase";
-import Modal from "./Modal";
+import firebase from "../../Firebase";
+import Modal from "../other/Modal";
 import Participant from "./Participant";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
-class NewSession extends Component {
+class NewQuiz extends Component {
   state = {
     organization: "",
     type: "",
@@ -242,17 +240,6 @@ class NewSession extends Component {
               <option value="child">Child</option>
               <option value="mixed">Mixed</option>
             </select>
-            <h4 className="form-label">Date and Time</h4>
-            <DatePicker
-              disabled={this.state.participants.length && this.state.disabled}
-              selected={this.state.datetime}
-              onChange={this.setDatetime}
-              showTimeSelect
-              timeFormat="HH:mm"
-              timeIntervals={15}
-              dateFormat="MMMM d, yyyy h:mm aa"
-              timeCaption="time"
-            />
           </div>
           <div className="form-right">
             <div className="header-div">
@@ -355,4 +342,4 @@ class NewSession extends Component {
     );
   }
 }
-export default NewSession;
+export default NewQuiz;

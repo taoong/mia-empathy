@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import firebase from "../Firebase";
+import firebase from "../../Firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Nav from "./Nav";
 import { Route } from "react-router-dom";
@@ -8,7 +8,7 @@ import Sessions from "./Sessions";
 import NewSession from "./NewSession";
 import Quizzes from "./Quizzes";
 import NewQuiz from "./NewQuiz";
-import Loading from "./Loading";
+import Loading from "../other/Loading";
 
 class Admin extends Component {
   state = { user: null, isSignedIn: false, verified: false, loading: true };

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import firebase from "../Firebase";
+import firebase from "../../Firebase";
 
 class Identification extends Component {
   constructor(props) {

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import Identification from "./components/Identification";
-import quizQuestions from "./testQuestions";
-import Quiz from "./components/Quiz";
-import Result from "./components/Result";
-import firebase from "./Firebase";
+import Identification from "./Identification";
+import quizQuestions from "../../testQuestions";
+import Quiz from "./Quiz";
+import Result from "./Result";
+import firebase from "../../Firebase";
 
 class App extends Component {
   constructor(props) {

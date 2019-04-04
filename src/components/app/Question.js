@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import firebase from "../Firebase";
+import firebase from "../../Firebase";
 
 class Question extends Component {
   constructor(props) {
@@ -57,7 +57,7 @@ class Question extends Component {
           this.props.questionContent
         )}
         {this.props.imageUrl ? (
-          <img src={require("../" + this.props.imageUrl)} alt="Not found!" />
+          <img src={require("../../" + this.props.imageUrl)} alt="Not found!" />
         ) : null}
       </div>
     );
