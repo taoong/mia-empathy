@@ -53,7 +53,7 @@ class Sessions extends Component {
         <div className="header-div">
           <h1>Sessions</h1>
           <Link to={`${this.props.match.url}/new`} className="add-button">
-            <button onClick={this.addSession}>&#10010;</button>
+            <button>&#10010;</button>
           </Link>
         </div>
         <table>

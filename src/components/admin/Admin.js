@@ -141,6 +141,10 @@ class Admin extends Component {
             path={`${this.props.match.path}/quizzes/new`}
             component={NewQuiz}
           />
+          <Route
+            path={`${this.props.match.path}/quizzes/edit/:id`}
+            component={NewQuiz}
+          />
         </div>
       );
     }

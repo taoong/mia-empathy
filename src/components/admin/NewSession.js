@@ -28,7 +28,6 @@ class NewSession extends Component {
     .firestore()
     .collection("sessions")
     .doc();
-  participantRef = firebase.firestore().collection("participants");
 
   componentDidMount = () => {
     if (this.props.match.params.id) {
@@ -244,7 +243,9 @@ class NewSession extends Component {
             </select>
             <h4 className="form-label">Date and Time</h4>
             <DatePicker
-              disabled={this.state.participants.length && this.state.disabled}
+              disabled={
+                this.state.participants.length > 0 && this.state.disabled
+              }
               selected={this.state.datetime}
               onChange={this.setDatetime}
               showTimeSelect

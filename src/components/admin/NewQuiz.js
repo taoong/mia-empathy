@@ -2,50 +2,50 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import firebase from "../../Firebase";
 import Modal from "../other/Modal";
-import Participant from "./Participant";
+import Question from "./Question";
 
 class NewQuiz extends Component {
   state = {
-    organization: "",
-    type: "",
-    datetime: new Date(),
-    participants: [],
-    showParticipantModal: false,
+    name: "",
+    audienceType: "",
+    questionType: "",
+    answerType: "",
+    questions: [],
+    showQuestionModal: false,
     showDeleteModal: false,
-    participantId: 1,
-    participantFirstName: "",
-    participantLastName: "",
-    participantAge: "",
-    participantGender: "",
-    participantRace: "",
-    goBack: false,
-    originalParticipants: [],
-    disabled: false
+    questionId: 1,
+    question: "",
+    questionAnswer1: "",
+    questionAnswer2: "",
+    questionAnswer3: "",
+    questionAnswer4: "",
+    questionCorrectAnswer: "",
+    goBack: false
   };
-  sessionRef = firebase
+
+  quizRef = firebase
     .firestore()
-    .collection("sessions")
+    .collection("quizzes")
     .doc();
-  participantRef = firebase.firestore().collection("participants");
 
   componentDidMount = () => {
     if (this.props.match.params.id) {
       let currentComponent = this;
-      this.sessionRef = firebase
+      this.quizRef = firebase
         .firestore()
-        .collection("sessions")
+        .collection("quizzes")
         .doc(this.props.match.params.id);
 
-      this.sessionRef
+      this.quizRef
         .get()
         .then(doc => {
           currentComponent.setState({
-            organization: doc.data().organization,
-            type: doc.data().type,
-            datetime: doc.data().datetime.toDate(),
-            participants: doc.data().participants,
-            participantId: doc.data().participants.length + 1,
-            disabled: doc.data().datetime.toDate() < new Date()
+            name: doc.data().name,
+            audienceType: doc.data().audienceType,
+            questionType: doc.data().type.split("-")[0],
+            answerType: doc.data().type.split("-")[1],
+            questions: doc.data().questions,
+            questionId: doc.data().questions.length + 1
           });
         })
         .catch(error => {
@@ -54,44 +54,52 @@ class NewQuiz extends Component {
     }
   };
 
-  setOrganization = event => {
-    this.setState({ organization: event.target.value });
+  setName = event => {
+    this.setState({ name: event.target.value });
   };
 
-  setType = event => {
-    this.setState({ type: event.target.value });
+  setAudienceType = event => {
+    this.setState({ audienceType: event.target.value });
   };
 
-  setDatetime = datetime => {
-    this.setState({ datetime: datetime });
+  setQuestionType = event => {
+    this.setState({ questionType: event.target.value });
   };
 
-  setParticipantFirstName = event => {
-    this.setState({ participantFirstName: event.target.value });
+  setAnswerType = event => {
+    this.setState({ answerType: event.target.value });
   };
 
-  setParticipantLastName = event => {
-    this.setState({ participantLastName: event.target.value });
+  setQuestion = event => {
+    this.setState({ question: event.target.value });
   };
 
-  setParticipantAge = event => {
-    this.setState({ participantAge: event.target.value });
+  setQuestionAnswer1 = event => {
+    this.setState({ questionAnswer1: event.target.value });
   };
 
-  setParticipantGender = event => {
-    this.setState({ participantGender: event.target.value });
+  setQuestionAnswer2 = event => {
+    this.setState({ questionAnswer2: event.target.value });
   };
 
-  setParticipantRace = event => {
-    this.setState({ participantRace: event.target.value });
+  setQuestionAnswer3 = event => {
+    this.setState({ questionAnswer3: event.target.value });
   };
 
-  showParticipantModal = () => {
-    this.setState({ showParticipantModal: true });
+  setQuestionAnswer4 = event => {
+    this.setState({ questionAnswer4: event.target.value });
   };
 
-  hideParticipantModal = () => {
-    this.setState({ showParticipantModal: false });
+  setCorrectAnswer = event => {
+    this.setState({ questionCorrectAnswer: event.target.value });
+  };
+
+  showQuestionModal = () => {
+    this.setState({ showQuestionModal: true });
+  };
+
+  hideQuestionsModal = () => {
+    this.setState({ showQuestionModal: false });
   };
 
   showDeleteModal = () => {
@@ -109,70 +117,83 @@ class NewQuiz extends Component {
     return id;
   }
 
-  addParticipant = () => {
+  addQuestion = () => {
     if (
-      !this.state.participantFirstName ||
-      !this.state.participantLastName ||
-      !this.state.participantAge ||
-      !this.state.participantGender ||
-      !this.state.participantRace
+      !this.state.question ||
+      !this.state.questionAnswer1 ||
+      !this.state.questionAnswer2 ||
+      !this.state.questionAnswer3 ||
+      !this.state.questionAnswer4 ||
+      !this.state.questionCorrectAnswer
     ) {
       alert("All form fields must be filled out!");
       return;
     }
 
-    let newParticipant = {
-      id: this.processId(this.state.participantId),
-      firstname: this.state.participantFirstName,
-      lastname: this.state.participantLastName,
-      age: this.state.participantAge,
-      gender: this.state.participantGender,
-      race: this.state.participantRace,
-      session: this.sessionRef.id
+    let newQuestion = {
+      id: this.state.questionId,
+      question: this.state.question,
+      answers: [
+        this.state.questionAnswer1,
+        this.state.questionAnswer2,
+        this.state.questionAnswer3,
+        this.state.questionAnswer4
+      ],
+      correctAnswer: this.state.questionCorrectAnswer
     };
 
     this.setState(prevState => ({
-      participants: [...prevState.participants, newParticipant],
-      participantId: prevState.participantId + 1,
-      participantFirstName: "",
-      participantLastName: "",
-      participantAge: "",
-      participantGender: "",
-      participantRace: ""
+      questions: [...prevState.questions, newQuestion],
+      questionId: prevState.questionId + 1,
+      question: "",
+      questionAnswer1: "",
+      questionAnswer2: "",
+      questionAnswer3: "",
+      questionAnswer4: "",
+      questionCorrectAnswer: ""
     }));
 
-    this.hideParticipantModal();
+    this.hideQuestionsModal();
   };
 
-  deleteParticipant = id => {
-    var newArray = [...this.state.participants];
-    newArray = newArray.filter(p => p.id !== id);
+  deleteQuestion = id => {
+    var newArray = [...this.state.questions];
+    newArray = newArray.filter(q => q.id !== id);
     var newId = 1;
-    newArray.forEach(participant => {
-      participant.id = this.processId(newId);
+    newArray.forEach(question => {
+      question.id = newId;
       newId += 1;
     });
-    this.setState({ participants: newArray, participantId: newId });
+    this.setState({ questions: newArray, questionId: newId });
   };
 
-  addSession = () => {
-    if (!this.state.organization || !this.state.type || !this.state.datetime) {
+  addQuiz = () => {
+    if (
+      !this.state.name ||
+      !this.state.audienceType ||
+      !this.state.questionType ||
+      !this.state.answerType ||
+      !this.state.questions
+    ) {
       alert("All form fields must be filled out!");
       return;
     }
     const currentComponent = this;
 
-    this.sessionRef
+    this.quizRef
       .set({
-        organization: currentComponent.state.organization,
-        type: currentComponent.state.type,
-        datetime: currentComponent.state.datetime,
-        participants: currentComponent.state.participants
+        name: currentComponent.state.name,
+        audienceType: currentComponent.state.audienceType,
+        type:
+          currentComponent.state.questionType +
+          "-" +
+          currentComponent.state.answerType,
+        questions: currentComponent.state.questions
       })
       .then(function() {
         currentComponent.props.match.params.id
-          ? alert("Session updated!")
-          : alert("Session added!");
+          ? alert("Quiz updated!")
+          : alert("Quiz added!");
         currentComponent.setState({ goBack: true });
       })
       .catch(function(error) {
@@ -180,36 +201,35 @@ class NewQuiz extends Component {
       });
   };
 
-  deleteSession = () => {
+  deleteQuiz = () => {
     let currentComponent = this;
     this.hideDeleteModal();
-    this.sessionRef
+    this.quizRef
       .delete()
       .then(() => {
-        alert("Session deleted!");
+        alert("Quiz deleted!");
         currentComponent.setState({ goBack: true });
       })
       .catch(error => {
-        alert("Error deleting session: ", error);
+        alert("Error deleting quiz: ", error);
       });
   };
 
   render() {
-    const participants = this.state.participants.map((p, key) => (
-      <Participant
+    const questions = this.state.questions.map((q, key) => (
+      <Question
         key={key}
-        id={p.id}
-        name={p.firstname + " " + p.lastname}
-        age={p.age}
-        delete={this.deleteParticipant}
-        disabled={this.state.disabled}
+        id={q.id}
+        question={q.question}
+        correctAnswer={q.correctAnswer}
+        delete={this.deleteQuestion}
       />
     ));
 
     if (this.state.goBack === true) {
       return (
         <Redirect
-          to={this.props.match.params.id ? "../../sessions" : "../sessions"}
+          to={this.props.match.params.id ? "../../quizzes" : "../quizzes"}
         />
       );
     }
@@ -217,7 +237,7 @@ class NewQuiz extends Component {
     return (
       <div className="new-form">
         <div className="header-div">
-          <h1>{this.props.match.params.id ? "Edit" : "New"} Session</h1>
+          <h1>{this.props.match.params.id ? "Edit" : "New"} Quiz</h1>
           {this.props.match.params.id ? (
             <i
               className="fa fa-trash-o delete-button"
@@ -227,115 +247,132 @@ class NewQuiz extends Component {
         </div>
         <div className="form-field-container">
           <div className="form-left">
-            <h4 className="form-label">Organization Name</h4>
+            <h4 className="form-label">Quiz Name</h4>
             <input
               type="text"
-              value={this.state.organization}
-              onChange={this.setOrganization}
+              value={this.state.name}
+              onChange={this.setName}
             />
-            <h4 className="form-label">Type</h4>
-            <select name="type" value={this.state.type} onChange={this.setType}>
+            <h4 className="form-label">Audience Type</h4>
+            <select
+              name="type"
+              value={this.state.audienceType}
+              onChange={this.setAudienceType}
+            >
               <option value="" style={{ display: "none" }} />
               <option value="adult">Adult</option>
               <option value="child">Child</option>
               <option value="mixed">Mixed</option>
             </select>
+            <h4 className="form-label">Question Type</h4>
+            <select
+              name="type"
+              value={this.state.questionType}
+              onChange={this.setQuestionType}
+            >
+              <option value="" style={{ display: "none" }} />
+              <option value="text">Text</option>
+              <option value="face">Face</option>
+              <option value="body">Body</option>
+              <option value="sound">Sound</option>
+              <option value="drawing">Drawing</option>
+              <option value="story">Story</option>
+            </select>
+            <h4 className="form-label">Answer Type</h4>
+            <select
+              name="type"
+              value={this.state.answerType}
+              onChange={this.setAnswerType}
+            >
+              <option value="" style={{ display: "none" }} />
+              <option value="text">Text</option>
+              <option value="face">Face</option>
+              <option value="body">Body</option>
+              <option value="sound">Sound</option>
+              <option value="drawing">Drawing</option>
+              <option value="story">Story</option>
+            </select>
           </div>
           <div className="form-right">
             <div className="header-div">
-              <h4 className="form-label">
-                Participants ({participants.length})
-              </h4>
+              <h4 className="form-label">Questions ({questions.length})</h4>
               <button
                 className="add-button"
-                onClick={this.showParticipantModal}
-                disabled={this.state.disabled}
+                onClick={this.showQuestionModal}
+                disabled={!this.state.questionType || !this.state.answerType}
               >
                 &#10010;
               </button>
             </div>
-            {participants}
+            {questions}
           </div>
         </div>
-        <button className="button" onClick={this.addSession}>
-          {this.props.match.params.id ? "Update" : "Add"} Session
+        <button className="button" onClick={this.addQuiz}>
+          {this.props.match.params.id ? "Update" : "Add"} Quiz
         </button>
         <Modal
-          show={this.state.showParticipantModal}
-          handleClose={this.hideParticipantModal}
-          handleSubmit={this.addParticipant}
+          show={this.state.showQuestionModal}
+          handleClose={this.hideQuestionsModal}
+          handleSubmit={this.addQuestion}
           submitText={"Submit"}
         >
-          <h2>Add Participant</h2>
+          <h2>Add Question</h2>
+          <h4 className="form-label">Question</h4>
+          <input
+            type="text"
+            value={this.state.question}
+            onChange={this.setQuestion}
+          />
           <div className="form-field-container">
             <div className="form-left secondary">
-              <h4 className="form-label">First Name</h4>
+              <h4 className="form-label">Answer 1</h4>
               <input
                 type="text"
-                value={this.state.participantFirstName}
-                onChange={this.setParticipantFirstName}
+                value={this.state.questionAnswer1}
+                onChange={this.setQuestionAnswer1}
               />
             </div>
             <div className="form-left secondary">
-              <h4 className="form-label">Last Name</h4>
+              <h4 className="form-label">Answer 2</h4>
               <input
                 type="text"
-                value={this.state.participantLastName}
-                onChange={this.setParticipantLastName}
+                value={this.state.questionAnswer2}
+                onChange={this.setQuestionAnswer2}
               />
             </div>
           </div>
           <div className="form-field-container">
             <div className="form-left secondary">
-              <h4 className="form-label">Age</h4>
+              <h4 className="form-label">Answer 3</h4>
               <input
-                type="number"
-                value={this.state.participantAge}
-                onChange={this.setParticipantAge}
+                type="text"
+                value={this.state.questionAnswer3}
+                onChange={this.setQuestionAnswer3}
               />
             </div>
             <div className="form-left secondary">
-              <h4 className="form-label">Gender</h4>
-              <select
-                name="type"
-                value={this.state.participantGender}
-                onChange={this.setParticipantGender}
-              >
-                <option value="" style={{ display: "none" }} />
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
+              <h4 className="form-label">Answer 4</h4>
+              <input
+                type="text"
+                value={this.state.questionAnswer4}
+                onChange={this.setQuestionAnswer4}
+              />
             </div>
           </div>
-
-          <h4 className="form-label">Race</h4>
-          <select
-            name="type"
-            value={this.state.participantRace}
-            onChange={this.setParticipantRace}
-          >
-            <option value="" style={{ display: "none" }} />
-            <option value="hispanic">Hispanic/Latino</option>
-            <option value="white">White (not Hispanic/Latino)</option>
-            <option value="black">Black or African American</option>
-            <option value="pacific islander">
-              Native Hawaiian or Other Pacific Islander
-            </option>
-            <option value="asian">Asian</option>
-            <option value="american indian">
-              American Indian or Alaskan Native
-            </option>
-            <option value="two or more">Two or More Races</option>
-          </select>
+          <h4 className="form-label">Correct Answer</h4>
+          <input
+            type="text"
+            value={this.state.questionCorrectAnswer}
+            onChange={this.setCorrectAnswer}
+          />
         </Modal>
         <Modal
           show={this.state.showDeleteModal}
           handleClose={this.hideDeleteModal}
-          handleSubmit={this.deleteSession}
-          submitText={"Delete Session"}
+          handleSubmit={this.deleteQuiz}
+          submitText={"Delete Quiz"}
         >
-          <h3>Are you sure you want to delete this session?</h3>
+          <h3>Are you sure you want to delete this quiz?</h3>
           <h5>This action cannot be undone.</h5>
         </Modal>
       </div>

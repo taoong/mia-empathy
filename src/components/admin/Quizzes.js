@@ -17,18 +17,28 @@ class Quizzes extends Component {
     });
   };
 
-  addQuiz() {
-    console.log("Add quiz");
-  }
+  editQuiz = id => {
+    this.props.history.push(`${this.props.match.url}/edit/${id}`);
+  };
+
+  uppercaseFirst = audience => {
+    return audience.charAt(0).toUpperCase() + audience.slice(1);
+  };
+
+  processTypeString = type => {
+    let question = type.split("-")[0];
+    let answer = type.split("-")[1];
+    return this.uppercaseFirst(question) + " to " + this.uppercaseFirst(answer);
+  };
 
   renderQuizRows() {
     if (this.state.quizzes.length > 0) {
       const quizzes = this.state.quizzes.map((quiz, index) => (
-        <tr key={index}>
+        <tr key={index} onClick={() => this.editQuiz(quiz.id)}>
           <td>{quiz.id}</td>
           <td>{quiz.data().name}</td>
-          <td>{quiz.data().audience}</td>
-          <td>{quiz.data().type}</td>
+          <td>{this.uppercaseFirst(quiz.data().audienceType)}</td>
+          <td>{this.processTypeString(quiz.data().type)}</td>
         </tr>
       ));
       return quizzes;
@@ -44,7 +54,7 @@ class Quizzes extends Component {
           <h1>Quizzes</h1>
 
           <Link to={`${this.props.match.url}/new`} className="add-button">
-            <button onClick={this.addQuiz}>&#10010;</button>
+            <button>&#10010;</button>
           </Link>
         </div>
         <table>
