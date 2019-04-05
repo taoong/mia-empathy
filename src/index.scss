@@ -111,7 +111,7 @@ h4 {
 /* ----- AnswerOption Component ----- */
 
 .answerOptions {
-  padding-left: 40vw;
+  padding-left: calc(50vw - 75px);
   .answerOption {
     .radioCustomButton {
       opacity: 0;
@@ -145,9 +145,9 @@ h4 {
 
     .radioCustomButton:checked ~ .radioCustomLabel:before {
       content: "";
-      background: #8bc53f url(./svg/icon-check.svg) no-repeat;
+      background: black url(./svg/icon-check.svg) no-repeat;
       background-size: 27px;
-      border-color: #8bc53f;
+      border-color: black;
     }
   }
 }
