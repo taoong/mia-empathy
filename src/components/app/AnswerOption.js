@@ -11,7 +11,6 @@ class AnswerOption extends Component {
   }
 
   render() {
-    console.log(this.props.color[1]);
     return (
       <li className="answerOption">
         <input

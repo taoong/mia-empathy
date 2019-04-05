@@ -80,10 +80,17 @@ h4 {
 }
 
 /* ----- Quiz Component ----- */
-.answerOptions {
+.quiz {
   margin: 0;
   padding: 0;
   list-style: none;
+
+  img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 40px auto;
+  }
 }
 
 /* ----- QuestionCount Component ----- */
@@ -95,13 +102,8 @@ h4 {
 /* ----- Question Component ----- */
 .question {
   margin: 0 auto;
-  padding: 0.5rem 2.5rem 1.5rem 2.5rem;
+  padding: 0;
   text-align: center;
-
-  img {
-    width: 200px;
-    height: 200px;
-  }
 
   strong {
     font-size: 32px;
@@ -112,6 +114,7 @@ h4 {
 
 .answerOptions {
   padding-left: calc(50vw - 75px);
+  list-style: none;
   .answerOption {
     .radioCustomButton {
       opacity: 0;

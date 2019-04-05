@@ -16,7 +16,6 @@ function Quiz(props) {
         questionContent={props.question}
         questionType={props.questionType}
         questionId={props.questionId}
-        imageUrl={props.imageUrl}
         color={props.color}
       />
       <ul className="answerOptions">
@@ -30,6 +29,9 @@ function Quiz(props) {
           />
         ))}
       </ul>
+      {props.imageUrl ? (
+        <img src={require("../../" + props.imageUrl)} alt="Not found!" />
+      ) : null}
     </div>
   );
 }

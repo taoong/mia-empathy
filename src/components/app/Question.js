@@ -58,9 +58,6 @@ class Question extends Component {
           this.props.questionContent,
           this.props.color
         )}
-        {this.props.imageUrl ? (
-          <img src={require("../../" + this.props.imageUrl)} alt="Not found!" />
-        ) : null}
       </div>
     );
   }
@@ -70,7 +67,6 @@ Question.propTypes = {
   questionContent: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
-  imageUrl: PropTypes.string.isRequired,
   color: PropTypes.array.isRequired
 };
 
