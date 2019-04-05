@@ -24,7 +24,8 @@ class App extends Component {
       selectedAnswer: "",
       answers: [],
       score: 0,
-      finished: false
+      finished: false,
+      kiosk: false
     };
   }
 
@@ -185,6 +186,7 @@ class App extends Component {
         restartQuiz={this.restartQuiz}
         total={quizQuestions.length}
         answers={this.state.answers}
+        kiosk={this.state.kiosk}
       />
     );
   }

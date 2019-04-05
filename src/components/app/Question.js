@@ -35,15 +35,26 @@ class Question extends Component {
       });
   }
 
-  formatQuestion = (type, question) => {
+  randomColor() {
+    let colors = [
+      ["#DE405D", "#E58FA0"],
+      ["#2848D0", "#A7D8ED"],
+      ["#489630", "#B7DC56"],
+      ["#EF7F3A", "#F8CD76"],
+      ["#FBE14C", "#FCEE98"]
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  formatQuestion = (type, question, color) => {
     // TODO: Handle perspective question types using props.questionContent
     if (type !== "perspective") {
-      let answerType = type.split("-")[0];
-      let questionType = type.split("-")[1];
+      let questionType = type.split("-")[0];
+      let answerType = type.split("-")[1];
       return (
         <h2>
-          Match the <strong>{answerType}</strong> to the{" "}
-          <strong>{questionType}</strong>
+          Match the <strong style={{ color: color[0] }}>{answerType}</strong> to
+          the <strong style={{ color: color[0] }}>{questionType}</strong>
         </h2>
       );
     }
@@ -54,7 +65,8 @@ class Question extends Component {
       <div className="question">
         {this.formatQuestion(
           this.props.questionType,
-          this.props.questionContent
+          this.props.questionContent,
+          this.randomColor()
         )}
         {this.props.imageUrl ? (
           <img src={require("../../" + this.props.imageUrl)} alt="Not found!" />
