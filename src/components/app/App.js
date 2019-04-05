@@ -25,7 +25,8 @@ class App extends Component {
       answers: [],
       score: 0,
       finished: false,
-      kiosk: false
+      kiosk: false,
+      color: this.randomColor()
     };
   }
 
@@ -138,7 +139,8 @@ class App extends Component {
       question: quizQuestions[questionId].question,
       questionType: quizQuestions[questionId].type,
       answerOptions: quizQuestions[questionId].answers,
-      selectedAnswer: ""
+      selectedAnswer: "",
+      color: this.randomColor()
     });
   }
 
@@ -152,6 +154,17 @@ class App extends Component {
 
   setQuizType = quizType => {
     this.setState({ quizType: quizType });
+  };
+
+  randomColor = () => {
+    let colors = [
+      ["#DE405D", "#E58FA0"],
+      ["#2848D0", "#A7D8ED"],
+      ["#489630", "#B7DC56"],
+      ["#EF7F3A", "#F8CD76"],
+      ["#FBE14C", "#FCEE98"]
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
   };
 
   renderIdentification() {
@@ -175,6 +188,7 @@ class App extends Component {
         questionTotal={quizQuestions.length}
         imageUrl={quizQuestions[this.state.questionId].imageUrl}
         onAnswerSelected={this.handleAnswerSelected}
+        color={this.state.color}
       />
     );
   }

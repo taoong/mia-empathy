@@ -17,6 +17,7 @@ function Quiz(props) {
         questionType={props.questionType}
         questionId={props.questionId}
         imageUrl={props.imageUrl}
+        color={props.color}
       />
       <ul className="answerOptions">
         {props.answerOptions.map(key => (
@@ -25,6 +26,7 @@ function Quiz(props) {
             answerContent={key}
             selectedAnswer={props.selectedAnswer}
             onAnswerSelected={props.onAnswerSelected}
+            color={props.color}
           />
         ))}
       </ul>
@@ -38,7 +40,8 @@ Quiz.propTypes = {
   question: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
   questionTotal: PropTypes.number.isRequired,
-  onAnswerSelected: PropTypes.func.isRequired
+  onAnswerSelected: PropTypes.func.isRequired,
+  color: PropTypes.array.isRequired
 };
 
 export default Quiz;

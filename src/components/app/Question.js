@@ -35,27 +35,17 @@ class Question extends Component {
       });
   }
 
-  randomColor() {
-    let colors = [
-      ["#DE405D", "#E58FA0"],
-      ["#2848D0", "#A7D8ED"],
-      ["#489630", "#B7DC56"],
-      ["#EF7F3A", "#F8CD76"],
-      ["#FBE14C", "#FCEE98"]
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
   formatQuestion = (type, question, color) => {
     // TODO: Handle perspective question types using props.questionContent
     if (type !== "perspective") {
       let questionType = type.split("-")[0];
       let answerType = type.split("-")[1];
       return (
-        <h2>
-          Match the <strong style={{ color: color[0] }}>{answerType}</strong> to
-          the <strong style={{ color: color[0] }}>{questionType}</strong>
-        </h2>
+        <h3>
+          select the <strong style={{ color: color[0] }}>{answerType}</strong>{" "}
+          that best matches the{" "}
+          <strong style={{ color: color[0] }}>{questionType}</strong>
+        </h3>
       );
     }
   };
@@ -66,7 +56,7 @@ class Question extends Component {
         {this.formatQuestion(
           this.props.questionType,
           this.props.questionContent,
-          this.randomColor()
+          this.props.color
         )}
         {this.props.imageUrl ? (
           <img src={require("../../" + this.props.imageUrl)} alt="Not found!" />
@@ -80,7 +70,8 @@ Question.propTypes = {
   questionContent: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
-  imageUrl: PropTypes.string.isRequired
+  imageUrl: PropTypes.string.isRequired,
+  color: PropTypes.array.isRequired
 };
 
 export default Question;

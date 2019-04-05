@@ -11,6 +11,7 @@ class AnswerOption extends Component {
   }
 
   render() {
+    console.log(this.props.color[1]);
     return (
       <li className="answerOption">
         <input
@@ -22,6 +23,7 @@ class AnswerOption extends Component {
           value={this.props.answerContent}
           disabled={this.props.selectedAnswer}
           onChange={this.props.onAnswerSelected}
+          style={{ border: "2px solid " + this.props.color[1] }}
         />
 
         <label className="radioCustomLabel" htmlFor={this.props.answerContent}>
@@ -35,7 +37,8 @@ class AnswerOption extends Component {
 AnswerOption.propTypes = {
   answerContent: PropTypes.string.isRequired,
   selectedAnswer: PropTypes.string.isRequired,
-  onAnswerSelected: PropTypes.func.isRequired
+  onAnswerSelected: PropTypes.func.isRequired,
+  color: PropTypes.array.isRequired
 };
 
 export default AnswerOption;
