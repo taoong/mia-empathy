@@ -46,6 +46,9 @@ class App extends Component {
         snapshot.forEach(function(doc) {
           currentComponent.setState({ session: doc, sessionId: doc.id });
         });
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 
@@ -80,7 +83,22 @@ class App extends Component {
     return array;
   }
 
+  playSound = sound => {
+    let audio = new Audio(require("../../sounds/ahh.mp3"));
+    let playPromise = audio.play();
+    if (playPromise !== null) {
+      playPromise
+        .then(() => {
+          console.log("played");
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   handleAnswerSelected = event => {
+    this.playSound(event.currentTarget.value);
     this.setParticipantAnswer(event.currentTarget.value);
 
     if (this.state.questionId !== quizQuestions.length - 1) {
