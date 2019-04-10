@@ -8,11 +8,12 @@ class AnswerOption extends Component {
     this.state = {
       checked: false
     };
+
+    this.audio = new Audio(require("../../" + this.props.answerContent));
   }
 
-  playSound = sound => {
-    let audio = new Audio(require("../../" + sound));
-    let playPromise = audio.play();
+  playSound = () => {
+    let playPromise = this.audio.play();
     if (playPromise !== null) {
       playPromise
         .then(() => {
@@ -24,27 +25,32 @@ class AnswerOption extends Component {
     }
   };
 
-  onChangeSelect = event => {
-    this.playSound(event.currentTarget.value);
+  onAnswerSelected = event => {
+    this.playSound();
     this.props.onAnswerSelected(event);
   };
 
   renderFaceOption = () => {
     return (
       <li className="answerOption">
-        <input
-          type="radio"
+        <button
           className="radioCustomButton"
           name="radioGroup"
-          checked={this.props.answerContent === this.props.selectedAnswer}
           id={this.props.answerContent}
           value={this.props.answerContent}
-          onChange={this.props.onAnswerSelected}
-          style={{ border: "2px solid " + this.props.color[1] }}
+          onClick={this.props.onAnswerSelected}
+          style={{
+            border: "8px solid " + this.props.color[0],
+            background: require("../../" + this.props.answerContent),
+            backgroundColor:
+              this.props.answerContent === this.props.selectedAnswer
+                ? this.props.color[1]
+                : "#FFF"
+          }}
         />
 
         <label className="radioCustomLabel" htmlFor={this.props.answerContent}>
-          {this.props.answerContent}
+          {/* {this.props.answerContent} */}
         </label>
       </li>
     );
@@ -53,19 +59,23 @@ class AnswerOption extends Component {
   renderVoiceOption = () => {
     return (
       <li className="answerOption">
-        <input
-          type="radio"
-          className="radioCustomButton"
+        <button
+          className="radioCustomButton voice-option"
           name="radioGroup"
-          checked={this.props.answerContent === this.props.selectedAnswer}
           id={this.props.answerContent}
           value={this.props.answerContent}
-          onChange={this.onChangeSelect}
-          style={{ border: "2px solid " + this.props.color[1] }}
+          onClick={this.onAnswerSelected}
+          style={{
+            border: "8px solid " + this.props.color[0],
+            backgroundColor:
+              this.props.answerContent === this.props.selectedAnswer
+                ? this.props.color[1]
+                : "#FFF"
+          }}
         />
 
         <label className="radioCustomLabel" htmlFor={this.props.answerContent}>
-          {this.props.answerContent}
+          {/* {this.props.answerContent} */}
         </label>
       </li>
     );

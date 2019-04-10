@@ -11,6 +11,22 @@ function Quiz(props) {
     let answerType = props.questionType.split("-")[1];
     return [questionType, answerType];
   }
+
+  function playSound() {
+    console.log(props.question);
+    let audio = new Audio(require("../../" + props.question));
+    let playPromise = audio.play();
+    if (playPromise !== null) {
+      playPromise
+        .then(() => {
+          console.log("played");
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+
   return (
     <div className="quiz">
       <QuestionCount
@@ -35,11 +51,29 @@ function Quiz(props) {
           />
         ))}
       </ul>
-      {props.imageUrl ? (
-        <img src={require("../../" + props.imageUrl)} alt="Not found!" />
+      {getTypes(props)[0] === "face" ||
+      getTypes(props)[0] === "illustration" ? (
+        <img
+          src={require("../../" + props.question)}
+          alt="Not found!"
+          className="question-image"
+        />
+      ) : null}
+      {getTypes(props)[0] === "voice" ? (
+        <button
+          onClick={playSound}
+          className="question-sound"
+          style={{ border: "24px solid " + props.color[0] }}
+        />
       ) : null}
       {props.selectedAnswer ? (
-        <button onClick={props.nextQuestion}>Continue</button>
+        <button
+          className="next-question"
+          style={{ border: "3px solid " + props.color[0] }}
+          onClick={props.nextQuestion}
+        >
+          Continue
+        </button>
       ) : null}
     </div>
   );

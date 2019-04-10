@@ -65,6 +65,8 @@ class App extends Component {
       score: 0,
       finished: false
     });
+
+    this.setNextQuestion();
   };
 
   shuffleArray(array) {
@@ -198,7 +200,6 @@ class App extends Component {
         question={this.state.question}
         questionType={this.state.questionType}
         questionTotal={quizQuestions.length}
-        imageUrl={quizQuestions[this.state.questionId].imageUrl}
         onAnswerSelected={this.handleAnswerSelected}
         nextQuestion={this.setNextQuestion}
         color={this.state.color}
