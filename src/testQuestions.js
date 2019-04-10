@@ -34,7 +34,7 @@ var quizQuestions = [
   },
   {
     type: "illustration-voice",
-    question: "images/face4.jpg",
+    question: "./Stimuli/Illustrations/awe.png",
     answers: [
       "./Stimuli/Bursts/Bursts/Allen/010.mp3",
       "./Stimuli/Bursts/Bursts/Allen/011.mp3",
@@ -45,15 +45,27 @@ var quizQuestions = [
   },
   {
     type: "story-face",
-    question: "images/face5.jpg",
-    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
-    correctAnswer: "Fear"
+    question:
+      "Your team won a soccer game, focus on how happy and proud you’d feel! How do you think the losing team feels?",
+    answers: [
+      "./Stimuli/EI Quiz/Sadness.jpg",
+      "./Stimuli/EI Quiz/Pain.jpg",
+      "./Stimuli/EI Quiz/Flirtatiousness.jpg",
+      "./Stimuli/EI Quiz/Fear.jpg"
+    ],
+    correctAnswer: "./Stimuli/EI Quiz/Sadness.jpg"
   },
   {
     type: "story-voice",
-    question: "images/face5.jpg",
-    answers: ["Happiness", "Satisfaction", "Surprise", "Fear"],
-    correctAnswer: "Fear"
+    question:
+      "You failed a test but your friend got an A. How do you think your friend feels about their grade?",
+    answers: [
+      "./Stimuli/Bursts/Bursts/Katherine/133.mp3",
+      "./Stimuli/Bursts/Bursts/Katherine/132.mp3",
+      "./Stimuli/Bursts/Bursts/Katherine/131.mp3",
+      "./Stimuli/Bursts/Bursts/Katherine/130.mp3"
+    ],
+    correctAnswer: "./Stimuli/Bursts/Bursts/Katherine/133.mp3"
   }
 ];
 
