@@ -6,6 +6,11 @@ import QuestionCount from "./QuestionCount";
 import AnswerOption from "./AnswerOption";
 
 function Quiz(props) {
+  function getTypes(props) {
+    let questionType = props.questionType.split("-")[0];
+    let answerType = props.questionType.split("-")[1];
+    return [questionType, answerType];
+  }
   return (
     <div className="quiz">
       <QuestionCount
@@ -19,10 +24,11 @@ function Quiz(props) {
         color={props.color}
       />
       <ul className="answerOptions">
-        {props.answerOptions.map(key => (
+        {props.answerOptions.map(answer => (
           <AnswerOption
-            key={key}
-            answerContent={key}
+            key={answer}
+            answerType={getTypes(props)[1]}
+            answerContent={answer}
             selectedAnswer={props.selectedAnswer}
             onAnswerSelected={props.onAnswerSelected}
             color={props.color}
@@ -31,6 +37,9 @@ function Quiz(props) {
       </ul>
       {props.imageUrl ? (
         <img src={require("../../" + props.imageUrl)} alt="Not found!" />
+      ) : null}
+      {props.selectedAnswer ? (
+        <button onClick={props.nextQuestion}>Continue</button>
       ) : null}
     </div>
   );
@@ -42,7 +51,9 @@ Quiz.propTypes = {
   question: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
   questionTotal: PropTypes.number.isRequired,
+  questionType: PropTypes.string.isRequired,
   onAnswerSelected: PropTypes.func.isRequired,
+  nextQuestion: PropTypes.func.isRequired,
   color: PropTypes.array.isRequired
 };
 

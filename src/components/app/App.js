@@ -98,11 +98,36 @@ class App extends Component {
   };
 
   handleAnswerSelected = event => {
-    this.playSound(event.currentTarget.value);
     this.setParticipantAnswer(event.currentTarget.value);
+    //return;
+  };
 
+  setParticipantAnswer(answer) {
+    if (answer === quizQuestions[this.state.questionId].correctAnswer) {
+      this.setState(state => ({
+        score: state.score + 1
+      }));
+    }
+
+    var newAnswerArray = this.state.answers;
+    newAnswerArray.push(answer);
+    this.setState({
+      selectedAnswer: answer,
+      answers: newAnswerArray
+    });
+  }
+
+  setNextQuestion = () => {
     if (this.state.questionId !== quizQuestions.length - 1) {
-      setTimeout(() => this.setNextQuestion(), 600);
+      const questionId = this.state.questionId + 1;
+      this.setState({
+        questionId: questionId,
+        question: quizQuestions[questionId].question,
+        questionType: quizQuestions[questionId].type,
+        answerOptions: quizQuestions[questionId].answers,
+        selectedAnswer: "",
+        color: this.randomColor()
+      });
     } else {
       let responseRef = this.responses.doc(
         this.state.sessionId + this.state.participant.id
@@ -125,42 +150,11 @@ class App extends Component {
         });
       }
 
-      setTimeout(
-        () =>
-          this.setState({
-            finished: true
-          }),
-        600
-      );
+      this.setState({
+        finished: true
+      });
     }
   };
-
-  setParticipantAnswer(answer) {
-    if (answer === quizQuestions[this.state.questionId].correctAnswer) {
-      this.setState(state => ({
-        score: state.score + 1
-      }));
-    }
-
-    var newAnswerArray = this.state.answers;
-    newAnswerArray.push(answer);
-    this.setState({
-      selectedAnswer: answer,
-      answers: newAnswerArray
-    });
-  }
-
-  setNextQuestion() {
-    const questionId = this.state.questionId + 1;
-    this.setState({
-      questionId: questionId,
-      question: quizQuestions[questionId].question,
-      questionType: quizQuestions[questionId].type,
-      answerOptions: quizQuestions[questionId].answers,
-      selectedAnswer: "",
-      color: this.randomColor()
-    });
-  }
 
   setParticipant = p => {
     this.setState({
@@ -206,6 +200,7 @@ class App extends Component {
         questionTotal={quizQuestions.length}
         imageUrl={quizQuestions[this.state.questionId].imageUrl}
         onAnswerSelected={this.handleAnswerSelected}
+        nextQuestion={this.setNextQuestion}
         color={this.state.color}
       />
     );
