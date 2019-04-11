@@ -8,7 +8,7 @@ class Identification extends Component {
 
     this.state = {
       participantId: "",
-      quizType: ""
+      quizType: "pre"
     };
 
     this.participantsRef = firebase.firestore().collection("participants");
@@ -41,6 +41,10 @@ class Identification extends Component {
     } else if (!this.state.quizType) {
       alert("Before/after input can't be blank!");
     } else {
+      // TO REMOVE:
+      this.props.setParticipant(null);
+      this.props.setQuizType(this.state.quizType);
+      return;
       var participant = null;
       let promise = new Promise((resolve, reject) => {
         this.props.session.data().participants.forEach(p => {
@@ -105,14 +109,14 @@ class Identification extends Component {
       <div className="identification card-form">
         <div className="intro">{this.renderSessionDetails()}</div>
         <div className="radioButtons">
-          <label>Before Exhibit</label>
+          <label>Before</label>
           <input
             type="radio"
             name="quiztype"
             value="pre"
             onChange={this.setQuizType}
           />
-          <label>After Exhibit</label>
+          <label>After</label>
           <input
             type="radio"
             name="quiztype"

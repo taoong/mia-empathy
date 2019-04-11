@@ -65,9 +65,6 @@ class App extends Component {
       score: 0,
       finished: false
     });
-
-    // TO REMOVE:
-    this.setNextQuestion();
   };
 
   shuffleArray(array) {
@@ -119,22 +116,10 @@ class App extends Component {
       });
     } else {
       // TO REMOVE:
-      if (
-        this.state.questionId === quizQuestions.length - 1 &&
-        this.state.finished
-      ) {
-        this.setState({
-          questionId: 0,
-          question: quizQuestions[0].question,
-          questionType: quizQuestions[0].type,
-          selectedAnswer: "",
-          color: this.randomColor()
-        });
-      } else {
-        this.setState({
-          finished: true
-        });
-      }
+      this.setState({
+        finished: true
+      });
+
       return;
 
       // let responseRef = this.responses.doc(
