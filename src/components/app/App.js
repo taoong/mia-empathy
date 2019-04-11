@@ -91,6 +91,7 @@ class App extends Component {
   };
 
   setParticipantAnswer(answer) {
+    // TO MODIFY:
     if (answer === quizQuestions[this.state.questionId].correctAnswer) {
       this.setState(state => ({
         score: state.score + 1
