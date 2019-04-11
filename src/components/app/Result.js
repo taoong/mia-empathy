@@ -5,23 +5,19 @@ function Result(props) {
   const answers = props.answers.map((answer, key) => (
     <li key={key}>{answer}</li>
   ));
-  if (props.kiosk === true) {
-    var score = (
-      <div>
-        <h2>
-          You scored{" "}
-          <strong>
-            {props.quizResult}/{props.total}
-          </strong>
-          !
-        </h2>
-        <h4>You answered:</h4>
-        <ul>{answers}</ul>
-      </div>
-    );
-  } else {
-    score = null;
-  }
+  var score = props.kiosk ? (
+    <div>
+      <h2>
+        You scored{" "}
+        <strong>
+          {props.quizResult}/{props.total}
+        </strong>
+        !
+      </h2>
+      <h4>You answered:</h4>
+      <ul>{answers}</ul>
+    </div>
+  ) : null;
   return (
     <div className="result card-form">
       <h2>You've finished the quiz!</h2>

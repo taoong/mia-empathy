@@ -66,6 +66,7 @@ class App extends Component {
       finished: false
     });
 
+    // TO REMOVE:
     this.setNextQuestion();
   };
 
@@ -85,23 +86,8 @@ class App extends Component {
     return array;
   }
 
-  playSound = sound => {
-    let audio = new Audio(require("../../sounds/ahh.mp3"));
-    let playPromise = audio.play();
-    if (playPromise !== null) {
-      playPromise
-        .then(() => {
-          console.log("played");
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  };
-
   handleAnswerSelected = event => {
     this.setParticipantAnswer(event.currentTarget.value);
-    //return;
   };
 
   setParticipantAnswer(answer) {
@@ -131,30 +117,49 @@ class App extends Component {
         color: this.randomColor()
       });
     } else {
-      let responseRef = this.responses.doc(
-        this.state.sessionId + this.state.participant.id
-      );
-      if (this.state.quizType === "pre") {
-        responseRef.set({
-          firstname: this.state.participant.firstname,
-          lastname: this.state.participant.lastname,
-          age: this.state.participant.age,
-          gender: this.state.participant.gender,
-          race: this.state.participant.race,
-          session: this.state.sessionId,
-          quiz: this.state.quizId,
-          datetime: new Date(),
-          pre: this.state.answers
+      // TO REMOVE:
+      if (
+        this.state.questionId === quizQuestions.length - 1 &&
+        this.state.finished
+      ) {
+        this.setState({
+          questionId: 0,
+          question: quizQuestions[0].question,
+          questionType: quizQuestions[0].type,
+          selectedAnswer: "",
+          color: this.randomColor()
         });
       } else {
-        responseRef.update({
-          post: this.state.answers
+        this.setState({
+          finished: true
         });
       }
+      return;
 
-      this.setState({
-        finished: true
-      });
+      // let responseRef = this.responses.doc(
+      //   this.state.sessionId + this.state.participant.id
+      // );
+      // if (this.state.quizType === "pre") {
+      //   responseRef.set({
+      //     firstname: this.state.participant.firstname,
+      //     lastname: this.state.participant.lastname,
+      //     age: this.state.participant.age,
+      //     gender: this.state.participant.gender,
+      //     race: this.state.participant.race,
+      //     session: this.state.sessionId,
+      //     quiz: this.state.quizId,
+      //     datetime: new Date(),
+      //     pre: this.state.answers
+      //   });
+      // } else {
+      //   responseRef.update({
+      //     post: this.state.answers
+      //   });
+      // }
+
+      // this.setState({
+      //   finished: true
+      // });
     }
   };
 
