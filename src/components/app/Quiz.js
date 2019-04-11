@@ -64,15 +64,14 @@ function Quiz(props) {
           style={{ border: "24px solid " + props.color[0] }}
         />
       ) : null}
-      {props.selectedAnswer ? (
-        <button
-          className="next-question"
-          style={{ border: "3px solid " + props.color[0] }}
-          onClick={props.nextQuestion}
-        >
-          Continue
-        </button>
-      ) : null}
+
+      <button
+        className="next-question"
+        style={{ border: "3px solid " + props.color[0] }}
+        onClick={props.nextQuestion}
+      >
+        Continue
+      </button>
     </div>
   );
 }
