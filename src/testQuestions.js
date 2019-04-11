@@ -63,7 +63,7 @@ var quizQuestions = [
       "Stimuli/Bursts/Bursts/Katherine/133.mp3",
       "Stimuli/Bursts/Bursts/Katherine/078.mp3",
       "Stimuli/Bursts/Bursts/Katherine/046.mp3",
-      "Stimuli/Bursts/Bursts/Katherine/019.mp3"
+      "Stimuli/Bursts/Bursts/Katherine/018.mp3"
     ],
     correctAnswer: "Stimuli/Bursts/Bursts/Katherine/133.mp3"
   }
