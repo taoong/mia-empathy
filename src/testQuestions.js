@@ -3,16 +3,16 @@ var quizQuestions = [
     type: "voice-face",
     question: "Stimuli/Bursts/Bursts/VENEC/0278.mp3",
     answers: [
-      "Stimuli/EI Quiz/Disgust.jpg",
-      "Stimuli/EI Quiz/Embarassment.jpg",
-      "Stimuli/EI Quiz/Fear.jpg",
-      "Stimuli/EI Quiz/Interest.jpg"
+      "Stimuli/EI Quiz/disgust.png",
+      "Stimuli/EI Quiz/politeness.png",
+      "Stimuli/EI Quiz/fear.png",
+      "Stimuli/EI Quiz/interest.png"
     ],
-    correctAnswer: "Stimuli/EI Quiz/Disgust.jpg"
+    correctAnswer: "Stimuli/EI Quiz/disgust.png"
   },
   {
     type: "face-voice",
-    question: "Stimuli/EI Quiz/desire.jpg",
+    question: "Stimuli/EI Quiz/desire.png",
     answers: [
       "Stimuli/Bursts/Bursts/Leah/073.mp3",
       "Stimuli/Bursts/Bursts/Leah/130.mp3",
@@ -25,12 +25,12 @@ var quizQuestions = [
     type: "illustration-face",
     question: "Stimuli/Illustrations/pain.png",
     answers: [
-      "Stimuli/EI Quiz/Pain.jpg",
-      "Stimuli/EI Quiz/Interest.jpg",
-      "Stimuli/EI Quiz/Pride.jpg",
-      "Stimuli/EI Quiz/Surprise.jpg"
+      "Stimuli/EI Quiz/pain.png",
+      "Stimuli/EI Quiz/fear.png",
+      "Stimuli/EI Quiz/shame.png",
+      "Stimuli/EI Quiz/sadness.png"
     ],
-    correctAnswer: "Stimuli/EI Quiz/Pain.jpg"
+    correctAnswer: "Stimuli/EI Quiz/pain.png"
   },
   {
     type: "illustration-voice",
@@ -48,12 +48,12 @@ var quizQuestions = [
     question:
       "Your team won a soccer game, focus on how happy and proud you’d feel! How do you think the losing team feels?",
     answers: [
-      "Stimuli/EI Quiz/Sadness.jpg",
-      "Stimuli/EI Quiz/Pain.jpg",
-      "Stimuli/EI Quiz/Flirtatiousness.jpg",
-      "Stimuli/EI Quiz/Fear.jpg"
+      "Stimuli/EI Quiz/sadness.png",
+      "Stimuli/EI Quiz/pain.png",
+      "Stimuli/EI Quiz/surprise.png",
+      "Stimuli/EI Quiz/fear.png"
     ],
-    correctAnswer: "Stimuli/EI Quiz/Sadness.jpg"
+    correctAnswer: "Stimuli/EI Quiz/sadness.png"
   },
   {
     type: "story-voice",

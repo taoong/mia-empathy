@@ -41,13 +41,20 @@ class AnswerOption extends Component {
           onClick={this.props.onAnswerSelected}
           style={{
             border: "8px solid " + this.props.color[0],
-            background: require("../../" + this.props.answerContent),
+            backgroundSize: "150% 100%",
+            backgroundPosition: "40% 50%",
             backgroundColor:
               this.props.answerContent === this.props.selectedAnswer
                 ? this.props.color[1]
                 : "#FFF"
           }}
-        />
+        >
+          <img
+            className="face-option"
+            src={require("../../" + this.props.answerContent)}
+            alt="Not found!"
+          />
+        </button>
 
         <label className="radioCustomLabel" htmlFor={this.props.answerContent}>
           {/* {this.props.answerContent} */}

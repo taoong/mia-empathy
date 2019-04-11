@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import Question from "./Question";
 import QuestionCount from "./QuestionCount";
 import AnswerOption from "./AnswerOption";
@@ -13,7 +12,6 @@ function Quiz(props) {
   }
 
   function playSound() {
-    console.log(props.question);
     let audio = new Audio(require("../../" + props.question));
     let playPromise = audio.play();
     if (playPromise !== null) {

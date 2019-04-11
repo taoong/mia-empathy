@@ -93,22 +93,24 @@ h4 {
   }
 
   .question-image {
-    margin: 0 auto;
-    height: 40%;
-    width: 40%;
+    margin: 48px auto;
+    max-height: 45vh;
+    height: auto;
+    width: auto;
   }
 
   .question-sound {
     content: "";
     cursor: pointer;
     margin: 0 auto;
-    width: 256px;
-    height: 256px;
+    width: 400px;
+    height: 400px;
     display: block;
     border-radius: 50%;
     background: url("./images/sound_icon.png") no-repeat;
     background-size: 50% 50%;
     background-position: center;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
     &:focus {
       outline: none;
@@ -119,10 +121,11 @@ h4 {
   .next-question {
     cursor: pointer;
     display: block;
-    margin: 24px auto;
-    font-size: 16px;
+    margin: 48px auto;
+    background-color: #fff;
+    font-size: 24px;
     font-weight: 500;
-    padding: 8px 16px;
+    padding: 12px 24px;
     border-radius: 8px;
 
     &:focus {
@@ -143,16 +146,20 @@ h4 {
   padding: 0;
   text-align: center;
 
-  .story {
-    width: 50%;
-    margin: 64px auto;
+  h3 {
     font-size: 24px;
+  }
+
+  .story {
+    width: 70vw;
+    margin: 64px auto;
+    font-size: 40px;
     font-weight: 400;
     line-height: 150%;
   }
 
   strong {
-    font-size: 32px;
+    font-size: 40px;
   }
 }
 
@@ -181,22 +188,31 @@ h4 {
       content: "";
       cursor: pointer;
       margin: 0 8px;
-      width: 128px;
-      height: 128px;
+      width: 144px;
+      height: 144px;
       display: inline-block;
       vertical-align: middle;
       border-radius: 50%;
-      transition: all 0.3s;
+      transition: all 0.1s;
+      overflow: hidden;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
-      &.voice-option {
-        background: url("./images/sound_icon.png") no-repeat;
-        background-size: 30% 30%;
-        background-position: center;
+      .face-option {
+        display: block;
+        max-width: 200px;
+        max-height: 200px;
+        width: auto;
+        height: auto;
+        margin: 0;
+        position: relative;
+        left: -45px;
       }
 
-      &:checked {
-        content: "";
-        background: black no-repeat;
+      &.voice-option {
+        background: url("./images/sound_icon.png");
+        background-size: 30% 30%;
+        background-position: center;
+        background-repeat: no-repeat;
       }
 
       &:focus {
