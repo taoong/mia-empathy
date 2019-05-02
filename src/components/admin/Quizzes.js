@@ -25,12 +25,6 @@ class Quizzes extends Component {
     return audience.charAt(0).toUpperCase() + audience.slice(1);
   };
 
-  processTypeString = type => {
-    let question = type.split("-")[0];
-    let answer = type.split("-")[1];
-    return this.uppercaseFirst(question) + " to " + this.uppercaseFirst(answer);
-  };
-
   renderQuizRows() {
     if (this.state.quizzes.length > 0) {
       const quizzes = this.state.quizzes.map((quiz, index) => (
@@ -38,7 +32,7 @@ class Quizzes extends Component {
           <td>{quiz.id}</td>
           <td>{quiz.data().name}</td>
           <td>{this.uppercaseFirst(quiz.data().audienceType)}</td>
-          <td>{this.processTypeString(quiz.data().type)}</td>
+          <td>{quiz.data().questions.length}</td>
         </tr>
       ));
       return quizzes;
@@ -63,7 +57,7 @@ class Quizzes extends Component {
               <th>ID</th>
               <th>Quiz Name</th>
               <th>Audience Type</th>
-              <th>Question-Answer Type</th>
+              <th>Questions</th>
             </tr>
             {quizzes}
           </tbody>

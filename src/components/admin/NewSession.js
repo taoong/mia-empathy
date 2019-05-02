@@ -10,6 +10,7 @@ class NewSession extends Component {
   state = {
     organization: "",
     type: "",
+    quiz: "",
     datetime: new Date(),
     participants: [],
     showParticipantModal: false,
@@ -22,37 +23,61 @@ class NewSession extends Component {
     participantRace: "",
     goBack: false,
     originalParticipants: [],
+    quizIds: [],
     disabled: false
   };
   sessionRef = firebase
     .firestore()
     .collection("sessions")
     .doc();
+  quizzesRef = firebase.firestore().collection("quizzes");
 
   componentDidMount = () => {
     if (this.props.match.params.id) {
-      let currentComponent = this;
       this.sessionRef = firebase
         .firestore()
         .collection("sessions")
         .doc(this.props.match.params.id);
-
-      this.sessionRef
-        .get()
-        .then(doc => {
-          currentComponent.setState({
-            organization: doc.data().organization,
-            type: doc.data().type,
-            datetime: doc.data().datetime.toDate(),
-            participants: doc.data().participants,
-            participantId: doc.data().participants.length + 1,
-            disabled: doc.data().datetime.toDate() < new Date()
-          });
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      this.fetchSessionData();
     }
+    this.fetchQuizzes();
+  };
+
+  fetchSessionData = () => {
+    let currentComponent = this;
+    this.sessionRef
+      .get()
+      .then(doc => {
+        currentComponent.setState({
+          organization: doc.data().organization,
+          type: doc.data().type,
+          quiz: doc.data().quiz,
+          datetime: doc.data().datetime.toDate(),
+          participants: doc.data().participants,
+          participantId: doc.data().participants.length + 1,
+          disabled: doc.data().datetime.toDate() < new Date()
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  fetchQuizzes = () => {
+    // var quizzes = [];
+    const currentComponent = this;
+    this.quizzesRef
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          currentComponent.setState(prevState => ({
+            quizIds: [...prevState.quizIds, doc.id]
+          }));
+        });
+      })
+      .catch(error => {
+        console.log("Error getting documents: ", error);
+      });
   };
 
   setOrganization = event => {
@@ -61,6 +86,10 @@ class NewSession extends Component {
 
   setType = event => {
     this.setState({ type: event.target.value });
+  };
+
+  setQuiz = event => {
+    this.setState({ quiz: event.target.value });
   };
 
   setDatetime = datetime => {
@@ -157,7 +186,12 @@ class NewSession extends Component {
   };
 
   addSession = () => {
-    if (!this.state.organization || !this.state.type || !this.state.datetime) {
+    if (
+      !this.state.organization ||
+      !this.state.type ||
+      !this.state.quiz ||
+      !this.state.datetime
+    ) {
       alert("All form fields must be filled out!");
       return;
     }
@@ -166,6 +200,7 @@ class NewSession extends Component {
       .set({
         organization: currentComponent.state.organization,
         type: currentComponent.state.type,
+        quiz: currentComponent.state.quiz,
         datetime: currentComponent.state.datetime,
         participants: currentComponent.state.participants
       })
@@ -206,6 +241,12 @@ class NewSession extends Component {
       />
     ));
 
+    const quizIds = this.state.quizIds.map((id, index) => (
+      <option key={index} value={id}>
+        {id}
+      </option>
+    ));
+
     if (this.state.goBack === true) {
       return (
         <Redirect
@@ -233,6 +274,7 @@ class NewSession extends Component {
               value={this.state.organization}
               onChange={this.setOrganization}
             />
+
             <h4 className="form-label">Type</h4>
             <select name="type" value={this.state.type} onChange={this.setType}>
               <option value="" style={{ display: "none" }} />
@@ -240,6 +282,13 @@ class NewSession extends Component {
               <option value="child">Child</option>
               <option value="mixed">Mixed</option>
             </select>
+
+            <h4 className="form-label">Quiz</h4>
+            <select name="quiz" value={this.state.quiz} onChange={this.setQuiz}>
+              <option value="" style={{ display: "none" }} />
+              {quizIds}
+            </select>
+
             <h4 className="form-label">Date and Time</h4>
             <DatePicker
               disabled={
@@ -253,6 +302,7 @@ class NewSession extends Component {
               dateFormat="MMMM d, yyyy h:mm aa"
               timeCaption="time"
             />
+
             <button className="button" onClick={this.addSession}>
               {this.props.match.params.id ? "Update" : "Add"} Session
             </button>

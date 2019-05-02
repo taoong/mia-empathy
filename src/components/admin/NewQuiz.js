@@ -8,18 +8,16 @@ class NewQuiz extends Component {
   state = {
     name: "",
     audienceType: "",
-    questionType: "",
-    answerType: "",
     questions: [],
     showQuestionModal: false,
     showDeleteModal: false,
     questionId: 1,
+    questionAnswerType: "",
     question: "",
     questionAnswer1: "",
     questionAnswer2: "",
     questionAnswer3: "",
     questionAnswer4: "",
-    questionCorrectAnswer: "",
     goBack: false
   };
 
@@ -42,8 +40,6 @@ class NewQuiz extends Component {
           currentComponent.setState({
             name: doc.data().name,
             audienceType: doc.data().audienceType,
-            questionType: doc.data().type.split("-")[0],
-            answerType: doc.data().type.split("-")[1],
             questions: doc.data().questions,
             questionId: doc.data().questions.length + 1
           });
@@ -62,12 +58,8 @@ class NewQuiz extends Component {
     this.setState({ audienceType: event.target.value });
   };
 
-  setQuestionType = event => {
-    this.setState({ questionType: event.target.value });
-  };
-
-  setAnswerType = event => {
-    this.setState({ answerType: event.target.value });
+  setQuestionAnswerType = event => {
+    this.setState({ questionAnswerType: event.target.value });
   };
 
   setQuestion = event => {
@@ -88,10 +80,6 @@ class NewQuiz extends Component {
 
   setQuestionAnswer4 = event => {
     this.setState({ questionAnswer4: event.target.value });
-  };
-
-  setCorrectAnswer = event => {
-    this.setState({ questionCorrectAnswer: event.target.value });
   };
 
   showQuestionModal = () => {
@@ -119,12 +107,12 @@ class NewQuiz extends Component {
 
   addQuestion = () => {
     if (
+      !this.state.questionAnswerType ||
       !this.state.question ||
       !this.state.questionAnswer1 ||
       !this.state.questionAnswer2 ||
       !this.state.questionAnswer3 ||
-      !this.state.questionAnswer4 ||
-      !this.state.questionCorrectAnswer
+      !this.state.questionAnswer4
     ) {
       alert("All form fields must be filled out!");
       return;
@@ -132,6 +120,7 @@ class NewQuiz extends Component {
 
     let newQuestion = {
       id: this.state.questionId,
+      type: this.state.questionAnswerType,
       question: this.state.question,
       answers: [
         this.state.questionAnswer1,
@@ -139,18 +128,18 @@ class NewQuiz extends Component {
         this.state.questionAnswer3,
         this.state.questionAnswer4
       ],
-      correctAnswer: this.state.questionCorrectAnswer
+      correctAnswer: this.state.questionAnswer1
     };
 
     this.setState(prevState => ({
       questions: [...prevState.questions, newQuestion],
       questionId: prevState.questionId + 1,
+      questionAnswerType: "",
       question: "",
       questionAnswer1: "",
       questionAnswer2: "",
       questionAnswer3: "",
-      questionAnswer4: "",
-      questionCorrectAnswer: ""
+      questionAnswer4: ""
     }));
 
     this.hideQuestionsModal();
@@ -168,13 +157,7 @@ class NewQuiz extends Component {
   };
 
   addQuiz = () => {
-    if (
-      !this.state.name ||
-      !this.state.audienceType ||
-      !this.state.questionType ||
-      !this.state.answerType ||
-      !this.state.questions
-    ) {
+    if (!this.state.name || !this.state.audienceType || !this.state.questions) {
       alert("All form fields must be filled out!");
       return;
     }
@@ -184,10 +167,6 @@ class NewQuiz extends Component {
       .set({
         name: currentComponent.state.name,
         audienceType: currentComponent.state.audienceType,
-        type:
-          currentComponent.state.questionType +
-          "-" +
-          currentComponent.state.answerType,
         questions: currentComponent.state.questions
       })
       .then(function() {
@@ -220,6 +199,7 @@ class NewQuiz extends Component {
       <Question
         key={key}
         id={q.id}
+        type={q.type}
         question={q.question}
         correctAnswer={q.correctAnswer}
         delete={this.deleteQuestion}
@@ -271,11 +251,7 @@ class NewQuiz extends Component {
           <div className="form-right">
             <div className="header-div">
               <h4 className="form-label">Questions ({questions.length})</h4>
-              <button
-                className="add-button"
-                onClick={this.showQuestionModal}
-                disabled={!this.state.questionType || !this.state.answerType}
-              >
+              <button className="add-button" onClick={this.showQuestionModal}>
                 &#10010;
               </button>
             </div>
@@ -289,15 +265,32 @@ class NewQuiz extends Component {
           submitText={"Submit"}
         >
           <h2>Add Question</h2>
+
+          <h4 className="form-label">Question-Answer Type</h4>
+          <select
+            name="type"
+            value={this.state.questionAnswerType}
+            onChange={this.setQuestionAnswerType}
+          >
+            <option value="" style={{ display: "none" }} />
+            <option value="voice-face">Voice to face</option>
+            <option value="face-voice">Face to voice</option>
+            <option value="illustration-face">Illustration to face</option>
+            <option value="illustration-voice">Illustration to voice</option>
+            <option value="story-face">Story to face</option>
+            <option value="story-voice">Story to voice</option>
+          </select>
+
           <h4 className="form-label">Question</h4>
           <input
             type="text"
             value={this.state.question}
             onChange={this.setQuestion}
           />
+
           <div className="form-field-container">
             <div className="form-left secondary">
-              <h4 className="form-label">Answer 1</h4>
+              <h4 className="form-label">Answer 1 (Correct)</h4>
               <input
                 type="text"
                 value={this.state.questionAnswer1}
@@ -313,6 +306,7 @@ class NewQuiz extends Component {
               />
             </div>
           </div>
+
           <div className="form-field-container">
             <div className="form-left secondary">
               <h4 className="form-label">Answer 3</h4>
@@ -331,12 +325,6 @@ class NewQuiz extends Component {
               />
             </div>
           </div>
-          <h4 className="form-label">Correct Answer</h4>
-          <input
-            type="text"
-            value={this.state.questionCorrectAnswer}
-            onChange={this.setCorrectAnswer}
-          />
         </Modal>
         <Modal
           show={this.state.showDeleteModal}
