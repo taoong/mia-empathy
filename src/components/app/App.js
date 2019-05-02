@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Identification from "./Identification";
-import quizQuestions from "../../testQuestions";
 import Quiz from "./Quiz";
 import Result from "./Result";
 import firebase from "../../Firebase";
+// import quizQuestions from "../../testQuestions";
 
 class App extends Component {
   constructor(props) {
@@ -11,10 +11,12 @@ class App extends Component {
 
     this.responses = firebase.firestore().collection("responses");
     this.sessionsRef = firebase.firestore().collection("sessions");
+    this.quizzesRef = firebase.firestore().collection("quizzes");
     this.state = {
       session: null,
       sessionId: null,
       quizId: "001",
+      quizQuestions: [],
       quizType: "",
       participant: null,
       questionId: -1,
@@ -30,34 +32,39 @@ class App extends Component {
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
+    let currentSession = await this.getCurrentSession();
+    this.setState({
+      session: currentSession,
+      sessionId: currentSession.id,
+      quizId: currentSession.data().quiz
+    });
+    let quizQuestions = await this.getQuizQuestions();
+    this.setState({ quizQuestions: quizQuestions });
     this.restartQuiz();
-    this.getCurrentSession();
   }
 
-  getCurrentSession() {
-    let currentComponent = this;
-    this.sessionsRef
+  async getCurrentSession() {
+    let sessionRef = await this.sessionsRef
       .where("datetime", "<", new Date())
       .orderBy("datetime", "desc")
       .limit(1)
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(function(doc) {
-          currentComponent.setState({ session: doc, sessionId: doc.id });
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      .get();
+    return sessionRef.docs[0];
+  }
+
+  async getQuizQuestions() {
+    let quizRef = await this.quizzesRef.doc(this.state.quizId).get();
+    return quizRef.data().questions;
   }
 
   restartQuiz = () => {
-    const shuffledAnswerOptions = quizQuestions.map(question =>
+    const shuffledAnswerOptions = this.state.quizQuestions.map(question =>
       this.shuffleArray(question.answers)
     );
     this.setState({
-      question: quizQuestions[0].question,
+      question: this.state.quizQuestions[0].question,
+      questionType: this.state.quizQuestions[0].type,
       questionId: -1,
       answerOptions: shuffledAnswerOptions[0],
       selectedAnswer: "",
@@ -89,7 +96,9 @@ class App extends Component {
 
   setParticipantAnswer(answer) {
     // TO MODIFY:
-    if (answer === quizQuestions[this.state.questionId].correctAnswer) {
+    if (
+      answer === this.state.quizQuestions[this.state.questionId].correctAnswer
+    ) {
       this.setState(state => ({
         score: state.score + 1
       }));
@@ -104,13 +113,13 @@ class App extends Component {
   }
 
   setNextQuestion = () => {
-    if (this.state.questionId !== quizQuestions.length - 1) {
+    if (this.state.questionId !== this.state.quizQuestions.length - 1) {
       const questionId = this.state.questionId + 1;
       this.setState({
         questionId: questionId,
-        question: quizQuestions[questionId].question,
-        questionType: quizQuestions[questionId].type,
-        answerOptions: quizQuestions[questionId].answers,
+        question: this.state.quizQuestions[questionId].question,
+        questionType: this.state.quizQuestions[questionId].type,
+        answerOptions: this.state.quizQuestions[questionId].answers,
         selectedAnswer: "",
         color: this.randomColor()
       });
@@ -145,8 +154,7 @@ class App extends Component {
   setParticipant = p => {
     this.setState({
       participant: p,
-      questionId: 0,
-      questionType: quizQuestions[0].type
+      questionId: 0
     });
   };
 
@@ -183,7 +191,7 @@ class App extends Component {
         questionId={this.state.questionId}
         question={this.state.question}
         questionType={this.state.questionType}
-        questionTotal={quizQuestions.length}
+        questionTotal={this.state.quizQuestions.length}
         onAnswerSelected={this.handleAnswerSelected}
         nextQuestion={this.setNextQuestion}
         color={this.state.color}
@@ -196,7 +204,7 @@ class App extends Component {
       <Result
         quizResult={this.state.score}
         restartQuiz={this.restartQuiz}
-        total={quizQuestions.length}
+        total={this.state.quizQuestions.length}
         answers={this.state.answers}
         kiosk={this.state.kiosk}
       />
