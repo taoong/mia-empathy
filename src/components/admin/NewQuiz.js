@@ -264,34 +264,9 @@ class NewQuiz extends Component {
               <option value="child">Child</option>
               <option value="mixed">Mixed</option>
             </select>
-            <h4 className="form-label">Question Type</h4>
-            <select
-              name="type"
-              value={this.state.questionType}
-              onChange={this.setQuestionType}
-            >
-              <option value="" style={{ display: "none" }} />
-              <option value="text">Text</option>
-              <option value="face">Face</option>
-              <option value="body">Body</option>
-              <option value="sound">Sound</option>
-              <option value="drawing">Drawing</option>
-              <option value="story">Story</option>
-            </select>
-            <h4 className="form-label">Answer Type</h4>
-            <select
-              name="type"
-              value={this.state.answerType}
-              onChange={this.setAnswerType}
-            >
-              <option value="" style={{ display: "none" }} />
-              <option value="text">Text</option>
-              <option value="face">Face</option>
-              <option value="body">Body</option>
-              <option value="sound">Sound</option>
-              <option value="drawing">Drawing</option>
-              <option value="story">Story</option>
-            </select>
+            <button className="button" onClick={this.addQuiz}>
+              {this.props.match.params.id ? "Update" : "Add"} Quiz
+            </button>
           </div>
           <div className="form-right">
             <div className="header-div">
@@ -307,9 +282,6 @@ class NewQuiz extends Component {
             {questions}
           </div>
         </div>
-        <button className="button" onClick={this.addQuiz}>
-          {this.props.match.params.id ? "Update" : "Add"} Quiz
-        </button>
         <Modal
           show={this.state.showQuestionModal}
           handleClose={this.hideQuestionsModal}

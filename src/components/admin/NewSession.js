@@ -162,7 +162,6 @@ class NewSession extends Component {
       return;
     }
     const currentComponent = this;
-
     this.sessionRef
       .set({
         organization: currentComponent.state.organization,
@@ -254,6 +253,9 @@ class NewSession extends Component {
               dateFormat="MMMM d, yyyy h:mm aa"
               timeCaption="time"
             />
+            <button className="button" onClick={this.addSession}>
+              {this.props.match.params.id ? "Update" : "Add"} Session
+            </button>
           </div>
           <div className="form-right">
             <div className="header-div">
@@ -271,9 +273,6 @@ class NewSession extends Component {
             {participants}
           </div>
         </div>
-        <button className="button" onClick={this.addSession}>
-          {this.props.match.params.id ? "Update" : "Add"} Session
-        </button>
         <Modal
           show={this.state.showParticipantModal}
           handleClose={this.hideParticipantModal}

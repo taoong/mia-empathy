@@ -41,10 +41,6 @@ class Identification extends Component {
     } else if (!this.state.quizType) {
       alert("Before/after input can't be blank!");
     } else {
-      // TO REMOVE:
-      this.props.setParticipant(null);
-      this.props.setQuizType(this.state.quizType);
-      return;
       var participant = null;
       let promise = new Promise((resolve, reject) => {
         this.props.session.data().participants.forEach(p => {

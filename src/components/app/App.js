@@ -115,37 +115,30 @@ class App extends Component {
         color: this.randomColor()
       });
     } else {
-      // TO REMOVE:
+      let responseRef = this.responses.doc(
+        this.state.sessionId + this.state.participant.id
+      );
+      if (this.state.quizType === "pre") {
+        responseRef.set({
+          firstname: this.state.participant.firstname,
+          lastname: this.state.participant.lastname,
+          age: this.state.participant.age,
+          gender: this.state.participant.gender,
+          race: this.state.participant.race,
+          session: this.state.sessionId,
+          quiz: this.state.quizId,
+          datetime: new Date(),
+          pre: this.state.answers
+        });
+      } else {
+        responseRef.update({
+          post: this.state.answers
+        });
+      }
+
       this.setState({
         finished: true
       });
-
-      return;
-
-      // let responseRef = this.responses.doc(
-      //   this.state.sessionId + this.state.participant.id
-      // );
-      // if (this.state.quizType === "pre") {
-      //   responseRef.set({
-      //     firstname: this.state.participant.firstname,
-      //     lastname: this.state.participant.lastname,
-      //     age: this.state.participant.age,
-      //     gender: this.state.participant.gender,
-      //     race: this.state.participant.race,
-      //     session: this.state.sessionId,
-      //     quiz: this.state.quizId,
-      //     datetime: new Date(),
-      //     pre: this.state.answers
-      //   });
-      // } else {
-      //   responseRef.update({
-      //     post: this.state.answers
-      //   });
-      // }
-
-      // this.setState({
-      //   finished: true
-      // });
     }
   };
 
