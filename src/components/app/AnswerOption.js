@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
-
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 class AnswerOption extends Component {
   constructor(props) {
     super(props);
@@ -79,6 +80,11 @@ class AnswerOption extends Component {
                 ? this.props.color[1]
                 : "#FFF"
           }}
+          css={css`
+            &:active {
+              background-color: ${this.props.color[0]} !important;
+            }
+          `}
         />
 
         <label className="radioCustomLabel" htmlFor={this.props.answerContent}>
