@@ -74,6 +74,11 @@ function Quiz(props) {
       <button
         className="next-question"
         style={{ border: "3px solid " + props.color[0] }}
+        css={css`
+          &:active {
+            background-color: ${props.color[1]};
+          }
+        `}
         onClick={props.nextQuestion}
       >
         Continue
