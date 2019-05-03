@@ -1,8 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Question from "./Question";
 import QuestionCount from "./QuestionCount";
 import AnswerOption from "./AnswerOption";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 
 function Quiz(props) {
   function getTypes(props) {
@@ -61,6 +62,11 @@ function Quiz(props) {
         <button
           onClick={playSound}
           className="question-sound"
+          css={css`
+            &:active {
+              background-color: ${props.color[1]};
+            }
+          `}
           style={{ border: "24px solid " + props.color[0] }}
         />
       ) : null}
