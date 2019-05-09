@@ -78,7 +78,7 @@ class Checkin extends Component {
   };
 
   setAge = event => {
-    let age = event.target.value < 113 ? event.target.value : 113;
+    let age = event.target.value < 113 ? event.target.value : "113";
     this.setState({ age: age });
   };
 
@@ -144,7 +144,7 @@ class Checkin extends Component {
       id: this.state.id,
       firstname: this.state.firstName,
       lastname: this.state.lastName,
-      age: this.state.age,
+      age: parseInt(this.state.age),
       gender: this.state.gender,
       race: this.state.race
     };

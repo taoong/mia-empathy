@@ -35,6 +35,15 @@ class Identification extends Component {
     });
   }
 
+  async findParticipant() {
+    this.props.session.data().checked_in.forEach(p => {
+      if (p.id === this.state.participantId) {
+        return p;
+      }
+    });
+    return Error("Can't find participant");
+  }
+
   handleSubmit = () => {
     if (!this.state.participantId) {
       alert("Participant ID input can't be blank!");
@@ -43,7 +52,7 @@ class Identification extends Component {
     } else {
       var participant = null;
       let promise = new Promise((resolve, reject) => {
-        this.props.session.data().participants.forEach(p => {
+        this.props.session.data().checked_in.forEach(p => {
           if (p.id === this.state.participantId) {
             participant = p;
             resolve();
@@ -77,7 +86,9 @@ class Identification extends Component {
           }
         })
         .catch(() => {
-          alert("This Participant ID doesn't exist!");
+          alert(
+            "This Participant ID doesn't exist, or the participant hasn't checked in yet!"
+          );
         });
     }
   };
