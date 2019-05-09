@@ -20,8 +20,7 @@ class NewSession extends Component {
     participantLastName: "",
     goBack: false,
     originalParticipants: [],
-    quizIds: [],
-    disabled: false
+    quizIds: []
   };
   sessionRef = firebase
     .firestore()
@@ -51,8 +50,7 @@ class NewSession extends Component {
           quiz: doc.data().quiz,
           datetime: doc.data().datetime.toDate(),
           participants: doc.data().participants,
-          participantId: doc.data().participants.length + 1,
-          disabled: doc.data().datetime.toDate() < new Date()
+          participantId: doc.data().participants.length + 1
         });
       })
       .catch(error => {
@@ -209,7 +207,6 @@ class NewSession extends Component {
         id={p.id}
         name={p.firstname + " " + p.lastname}
         delete={this.deleteParticipant}
-        disabled={this.state.disabled}
       />
     ));
 
@@ -263,9 +260,6 @@ class NewSession extends Component {
 
             <h4 className="form-label">Date and Time</h4>
             <DatePicker
-              disabled={
-                this.state.participants.length > 0 && this.state.disabled
-              }
               selected={this.state.datetime}
               onChange={this.setDatetime}
               showTimeSelect
@@ -287,7 +281,6 @@ class NewSession extends Component {
               <button
                 className="add-button"
                 onClick={this.showParticipantModal}
-                disabled={this.state.disabled}
               >
                 &#10010;
               </button>
