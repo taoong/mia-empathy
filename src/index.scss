@@ -2,6 +2,7 @@ $grey-1: rgba(0, 0, 0, 0.01);
 $grey-2: rgba(0, 0, 0, 0.02);
 $grey-3: rgba(0, 0, 0, 0.1);
 $grey-4: rgba(0, 0, 0, 0.2);
+$grey-5: rgba(0, 0, 0, 0.5);
 $disabled-text: #999;
 $red-1: rgba(200, 20, 0, 0.8);
 $red-2: rgba(130, 20, 0, 0.2);
@@ -223,8 +224,7 @@ h4 {
 }
 
 /* ----- Identification Component ----- */
-.identification,
-.checkin {
+.identification {
   .intro {
     margin: 16px;
     h2 {
@@ -500,6 +500,7 @@ h4 {
     &:disabled {
       background-color: $grey-3;
       color: $disabled-text;
+      cursor: no-drop;
     }
   }
 
@@ -637,13 +638,39 @@ h4 {
 /* ----- Checkin Component ----- */
 #checkin {
   background-color: $grey-2;
-  margin: 15vh auto;
+  margin: 12vh auto;
   padding: 32px;
   display: flex;
   flex-wrap: wrap;
   width: 360px;
   border: 2px rgba(0, 0, 0, 0.2) solid;
   border-radius: 4px;
+
+  .button {
+    margin-right: 4px;
+
+    &.secondary {
+      background-color: $grey-5;
+    }
+  }
+
+  button.link {
+    background: rgba(0, 0, 0, 0);
+    margin: 4px 0 16px;
+    padding: 0;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      color: blue;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 
   input,
   select {
@@ -660,6 +687,7 @@ h4 {
     &:disabled {
       background-color: $grey-3;
       color: $disabled-text;
+      cursor: no-drop;
     }
   }
 
