@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 function Participant(props) {
   return (
     <div className="participant">
-      <div>{"[" + props.id + "]  " + props.name + ", " + props.age}</div>
+      <div>{"[" + props.id + "]  " + props.name}</div>
       <button
         disabled={props.disabled}
         className="close-button"
@@ -19,7 +19,6 @@ function Participant(props) {
 Participant.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  age: PropTypes.string.isRequired,
   delete: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired
 };

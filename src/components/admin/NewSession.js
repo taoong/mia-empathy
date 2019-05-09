@@ -18,9 +18,6 @@ class NewSession extends Component {
     participantId: 1,
     participantFirstName: "",
     participantLastName: "",
-    participantAge: "",
-    participantGender: "",
-    participantRace: "",
     goBack: false,
     originalParticipants: [],
     quizIds: [],
@@ -104,18 +101,6 @@ class NewSession extends Component {
     this.setState({ participantLastName: event.target.value });
   };
 
-  setParticipantAge = event => {
-    this.setState({ participantAge: event.target.value });
-  };
-
-  setParticipantGender = event => {
-    this.setState({ participantGender: event.target.value });
-  };
-
-  setParticipantRace = event => {
-    this.setState({ participantRace: event.target.value });
-  };
-
   showParticipantModal = () => {
     this.setState({ showParticipantModal: true });
   };
@@ -140,13 +125,7 @@ class NewSession extends Component {
   }
 
   addParticipant = () => {
-    if (
-      !this.state.participantFirstName ||
-      !this.state.participantLastName ||
-      !this.state.participantAge ||
-      !this.state.participantGender ||
-      !this.state.participantRace
-    ) {
+    if (!this.state.participantFirstName || !this.state.participantLastName) {
       alert("All form fields must be filled out!");
       return;
     }
@@ -155,9 +134,6 @@ class NewSession extends Component {
       id: this.processId(this.state.participantId),
       firstname: this.state.participantFirstName,
       lastname: this.state.participantLastName,
-      age: this.state.participantAge,
-      gender: this.state.participantGender,
-      race: this.state.participantRace,
       session: this.sessionRef.id
     };
 
@@ -165,10 +141,7 @@ class NewSession extends Component {
       participants: [...prevState.participants, newParticipant],
       participantId: prevState.participantId + 1,
       participantFirstName: "",
-      participantLastName: "",
-      participantAge: "",
-      participantGender: "",
-      participantRace: ""
+      participantLastName: ""
     }));
 
     this.hideParticipantModal();
@@ -235,7 +208,6 @@ class NewSession extends Component {
         key={key}
         id={p.id}
         name={p.firstname + " " + p.lastname}
-        age={p.age}
         delete={this.deleteParticipant}
         disabled={this.state.disabled}
       />
@@ -348,49 +320,6 @@ class NewSession extends Component {
               />
             </div>
           </div>
-          <div className="form-field-container">
-            <div className="form-left secondary">
-              <h4 className="form-label">Age</h4>
-              <input
-                type="number"
-                value={this.state.participantAge}
-                onChange={this.setParticipantAge}
-              />
-            </div>
-            <div className="form-left secondary">
-              <h4 className="form-label">Gender</h4>
-              <select
-                name="type"
-                value={this.state.participantGender}
-                onChange={this.setParticipantGender}
-              >
-                <option value="" style={{ display: "none" }} />
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          <h4 className="form-label">Race</h4>
-          <select
-            name="type"
-            value={this.state.participantRace}
-            onChange={this.setParticipantRace}
-          >
-            <option value="" style={{ display: "none" }} />
-            <option value="hispanic">Hispanic/Latino</option>
-            <option value="white">White (not Hispanic/Latino)</option>
-            <option value="black">Black or African American</option>
-            <option value="pacific islander">
-              Native Hawaiian or Other Pacific Islander
-            </option>
-            <option value="asian">Asian</option>
-            <option value="american indian">
-              American Indian or Alaskan Native
-            </option>
-            <option value="two or more">Two or More Races</option>
-          </select>
         </Modal>
         <Modal
           show={this.state.showDeleteModal}

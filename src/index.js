@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import App from "./components/app/App";
 import Admin from "./components/admin/Admin";
+import Checkin from "./components/app/Checkin";
 import Notfound from "./components/other/Notfound";
 import * as serviceWorker from "./serviceWorker";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
@@ -13,6 +14,7 @@ const routing = (
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/admin" component={Admin} />
+        <Route path="/checkin" component={Checkin} />
         <Route component={Notfound} />
       </Switch>
     </div>
