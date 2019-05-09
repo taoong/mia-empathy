@@ -164,7 +164,6 @@ class App extends Component {
 
   randomColor = () => {
     let colors = [
-      ["#DE405D", "#E58FA0"],
       ["#2848D0", "#A7D8ED"],
       ["#489630", "#B7DC56"],
       ["#EF7F3A", "#F8CD76"],
