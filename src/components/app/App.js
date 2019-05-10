@@ -42,6 +42,7 @@ class App extends Component {
     let quizQuestions = await this.getQuizQuestions();
     this.setState({ quizQuestions: quizQuestions });
     this.restartQuiz();
+    console.log("app");
   }
 
   async getCurrentSession() {
