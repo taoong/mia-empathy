@@ -266,6 +266,10 @@ class Checkin extends Component {
       <div>
         <h2>MIA Empathy Tool Check in</h2>
         <div className="form-field-container">
+          <h4 className="form-label">Assigned Participant ID</h4>
+          <input type="string" value={this.state.id} disabled={true} />
+        </div>
+        <div className="form-field-container">
           <div className="secondary">
             <h4 className="form-label">First name</h4>
             <input type="string" value={this.state.firstName} disabled={true} />
