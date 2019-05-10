@@ -28,21 +28,64 @@ class Question extends Component {
   }
 
   formatQuestion = (type, question, color) => {
-    // TODO: Handle perspective question types using props.questionContent
-
-    let questionType = type.split("-")[0];
-    let answerType = type.split("-")[1];
-    let story = questionType === "story" ? question : null;
-    return (
-      <div>
+    if (type === "voice-face") {
+      return (
         <h3>
-          choose the <strong style={{ color: color[0] }}> {answerType} </strong>{" "}
-          that best matches the{" "}
-          <strong style={{ color: color[0] }}> {questionType} </strong>
+          select the{" "}
+          <strong style={{ color: color[0] }}> facial expression </strong> that
+          best matches the
+          <strong style={{ color: color[0] }}> voice </strong>
         </h3>
-        <h3 className="story">{story}</h3>
-      </div>
-    );
+      );
+    } else if (type === "face-voice") {
+      return (
+        <h3>
+          select the <strong style={{ color: color[0] }}> voice </strong> that
+          best matches the
+          <strong style={{ color: color[0] }}> facial expression </strong>
+        </h3>
+      );
+    } else if (type === "illustration-face") {
+      return (
+        <h3>
+          select the{" "}
+          <strong style={{ color: color[0] }}> facial expression </strong> that
+          best matches the
+          <strong style={{ color: color[0] }}> drawing </strong>
+        </h3>
+      );
+    } else if (type === "illustration-voice") {
+      return (
+        <h3>
+          select the <strong style={{ color: color[0] }}> voice </strong> that
+          best matches the
+          <strong style={{ color: color[0] }}> drawing </strong>
+        </h3>
+      );
+    } else if (type === "story-face") {
+      return (
+        <div>
+          <h3>
+            select the{" "}
+            <strong style={{ color: color[0] }}> facial expression </strong>{" "}
+            that best matches the
+            <strong style={{ color: color[0] }}> story </strong>
+          </h3>
+          <h3 className="story">{question}</h3>
+        </div>
+      );
+    } else if (type === "story-voice") {
+      return (
+        <div>
+          <h3>
+            select the <strong style={{ color: color[0] }}> voice </strong> that
+            best matches the
+            <strong style={{ color: color[0] }}> story </strong>
+          </h3>
+          <h3 className="story">{question}</h3>
+        </div>
+      );
+    }
   };
 
   render() {
