@@ -1,3 +1,4 @@
+import { Component } from "react";
 import PropTypes from "prop-types";
 import Question from "./Question";
 import QuestionCount from "./QuestionCount";
@@ -5,91 +6,103 @@ import AnswerOption from "./AnswerOption";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-function Quiz(props) {
-  function getTypes(props) {
-    let questionType = props.questionType.split("-")[0];
-    let answerType = props.questionType.split("-")[1];
-    return [questionType, answerType];
+class Quiz extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      playedSound: false
+    };
   }
 
-  function playSound() {
-    let audio = new Audio(require("../../" + props.question));
+  getTypes = () => {
+    let questionType = this.props.questionType.split("-")[0];
+    let answerType = this.props.questionType.split("-")[1];
+    return [questionType, answerType];
+  };
+
+  playSound = () => {
+    let audio = new Audio(require("../../" + this.props.question));
     let playPromise = audio.play();
     if (playPromise !== null) {
       playPromise
         .then(() => {
-          console.log("played");
+          this.setState({ playedSound: true });
         })
         .catch(error => {
           console.log(error);
         });
     }
-  }
+  };
 
-  return (
-    <div className="quiz">
-      <QuestionCount
-        questionNumber={props.questionId + 1}
-        total={props.questionTotal}
-      />
-      <Question
-        questionContent={props.question}
-        questionType={props.questionType}
-        questionId={props.questionId}
-        color={props.color}
-      />
-      <ul className="answerOptions">
-        {props.answerOptions.map(answer => (
-          <AnswerOption
-            key={answer}
-            answerType={getTypes(props)[1]}
-            answerContent={answer}
-            selectedAnswer={props.selectedAnswer}
-            onAnswerSelected={props.onAnswerSelected}
-            color={props.color}
+  render() {
+    return (
+      <div className="quiz">
+        <QuestionCount
+          questionNumber={this.props.questionId + 1}
+          total={this.props.questionTotal}
+        />
+        <Question
+          questionContent={this.props.question}
+          questionType={this.props.questionType}
+          questionId={this.props.questionId}
+          color={this.props.color}
+          selectedAnswer={this.props.selectedAnswer !== ""}
+          playedSound={this.state.playedSound}
+        />
+        <ul className="answerOptions">
+          {this.props.answerOptions.map(answer => (
+            <AnswerOption
+              key={answer}
+              answerType={this.getTypes(this.props)[1]}
+              answerContent={answer}
+              selectedAnswer={this.props.selectedAnswer}
+              onAnswerSelected={this.props.onAnswerSelected}
+              color={this.props.color}
+            />
+          ))}
+        </ul>
+        {this.getTypes(this.props)[0] === "face" ||
+        this.getTypes(this.props)[0] === "illustration" ? (
+          <img
+            src={require("../../" + this.props.question)}
+            alt="Not found!"
+            className="question-image"
           />
-        ))}
-      </ul>
-      {getTypes(props)[0] === "face" ||
-      getTypes(props)[0] === "illustration" ? (
-        <img
-          src={require("../../" + props.question)}
-          alt="Not found!"
-          className="question-image"
-        />
-      ) : null}
-      {getTypes(props)[0] === "voice" ? (
-        <button
-          onClick={playSound}
-          className="question-sound"
-          css={css`
-            &:active {
-              background-color: ${props.color[1]};
-            }
-          `}
-          style={{ border: "20px solid " + props.color[0] }}
-        />
-      ) : null}
-      {getTypes(props)[0] === "story" ? (
-        <h3 className="question-story">{props.question}</h3>
-      ) : null}
+        ) : null}
+        {this.getTypes(this.props)[0] === "voice" ? (
+          <button
+            onClick={this.playSound}
+            className="question-sound"
+            css={css`
+              &:active {
+                background-color: ${this.props.color[1]};
+              }
+            `}
+            style={{ border: "20px solid " + this.props.color[0] }}
+          />
+        ) : null}
+        {this.getTypes(this.props)[0] === "story" ? (
+          <h3 className="question-story">{this.props.question}</h3>
+        ) : null}
 
-      {props.selectedAnswer ? (
-        <button
-          className="next-question"
-          style={{ border: "3px solid " + props.color[0] }}
-          css={css`
-            &:active {
-              background-color: ${props.color[1]};
-            }
-          `}
-          onClick={props.nextQuestion}
-        >
-          Continue
-        </button>
-      ) : null}
-    </div>
-  );
+        {this.props.selectedAnswer && this.state.playedSound ? (
+          <button
+            className="next-question"
+            style={{ border: "3px solid " + this.props.color[0] }}
+            css={css`
+              &:active {
+                background-color: ${this.props.color[1]};
+              }
+            `}
+            onClick={this.props.nextQuestion}
+          >
+            Continue
+          </button>
+        ) : null}
+      </div>
+    );
+  }
 }
 
 Quiz.propTypes = {

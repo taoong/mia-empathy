@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import firebase from "../../Firebase";
 
 class Question extends Component {
   constructor(props) {
@@ -9,7 +8,7 @@ class Question extends Component {
     this.state = {
       imageUrl: ""
     };
-    this.storageRef = firebase.storage().ref();
+    // this.storageRef = firebase.storage().ref();
   }
 
   updateImage() {
@@ -29,19 +28,40 @@ class Question extends Component {
 
   formatQuestion = (type, question, color) => {
     if (type === "voice-face") {
+      if (!this.props.playedSound) {
+        return (
+          <h3>
+            press the <strong style={{ color: color[0] }}> sound </strong> icon{" "}
+            <br />
+            to hear the
+            <strong style={{ color: color[0] }}> voice </strong>
+          </h3>
+        );
+      }
       return (
         <h3>
           select the{" "}
-          <strong style={{ color: color[0] }}> facial expression </strong> that
-          best matches the
+          <strong style={{ color: color[0] }}> facial expression </strong>{" "}
+          <br />
+          that best matches the
           <strong style={{ color: color[0] }}> voice </strong>
         </h3>
       );
     } else if (type === "face-voice") {
+      if (!this.props.selectedAnswer) {
+        return (
+          <h3>
+            press the <strong style={{ color: color[0] }}> sound </strong> icons{" "}
+            <br />
+            to hear the
+            <strong style={{ color: color[0] }}> voices </strong>
+          </h3>
+        );
+      }
       return (
         <h3>
-          select the <strong style={{ color: color[0] }}> voice </strong> that
-          best matches the
+          select the <strong style={{ color: color[0] }}> voice </strong> <br />{" "}
+          that best matches the
           <strong style={{ color: color[0] }}> facial expression </strong>
         </h3>
       );
@@ -49,16 +69,26 @@ class Question extends Component {
       return (
         <h3>
           select the{" "}
-          <strong style={{ color: color[0] }}> facial expression </strong> that
-          best matches the
+          <strong style={{ color: color[0] }}> facial expression </strong>{" "}
+          <br /> that best matches the
           <strong style={{ color: color[0] }}> drawing </strong>
         </h3>
       );
     } else if (type === "illustration-voice") {
+      if (!this.props.selectedAnswer) {
+        return (
+          <h3>
+            press the <strong style={{ color: color[0] }}> sound </strong> icons{" "}
+            <br />
+            to hear the
+            <strong style={{ color: color[0] }}> voices </strong>
+          </h3>
+        );
+      }
       return (
         <h3>
-          select the <strong style={{ color: color[0] }}> voice </strong> that
-          best matches the
+          select the <strong style={{ color: color[0] }}> voice </strong> <br />{" "}
+          that best matches the
           <strong style={{ color: color[0] }}> drawing </strong>
         </h3>
       );
@@ -68,17 +98,28 @@ class Question extends Component {
           <h3>
             select the{" "}
             <strong style={{ color: color[0] }}> facial expression </strong>{" "}
+            <br />
             that best matches the
             <strong style={{ color: color[0] }}> story </strong>
           </h3>
         </div>
       );
     } else if (type === "story-voice") {
+      if (!this.props.selectedAnswer) {
+        return (
+          <h3>
+            press the <strong style={{ color: color[0] }}> sound </strong> icons{" "}
+            <br />
+            to hear the
+            <strong style={{ color: color[0] }}> voices </strong>
+          </h3>
+        );
+      }
       return (
         <div>
           <h3>
-            select the <strong style={{ color: color[0] }}> voice </strong> that
-            best matches the
+            select the <strong style={{ color: color[0] }}> voice </strong>{" "}
+            <br /> that best matches the
             <strong style={{ color: color[0] }}> story </strong>
           </h3>
         </div>
@@ -103,7 +144,9 @@ Question.propTypes = {
   questionContent: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
-  color: PropTypes.array.isRequired
+  color: PropTypes.array.isRequired,
+  selectedAnswer: PropTypes.bool.isRequired,
+  playedSound: PropTypes.bool.isRequired
 };
 
 export default Question;
