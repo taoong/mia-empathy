@@ -71,7 +71,6 @@ class Question extends Component {
             that best matches the
             <strong style={{ color: color[0] }}> story </strong>
           </h3>
-          <h3 className="story">{question}</h3>
         </div>
       );
     } else if (type === "story-voice") {
@@ -82,7 +81,6 @@ class Question extends Component {
             best matches the
             <strong style={{ color: color[0] }}> story </strong>
           </h3>
-          <h3 className="story">{question}</h3>
         </div>
       );
     }

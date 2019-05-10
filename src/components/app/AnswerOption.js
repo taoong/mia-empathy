@@ -42,8 +42,6 @@ class AnswerOption extends Component {
           onClick={this.props.onAnswerSelected}
           style={{
             border: "8px solid " + this.props.color[0],
-            backgroundSize: "150% 100%",
-            backgroundPosition: "40% 50%",
             backgroundColor:
               this.props.answerContent === this.props.selectedAnswer
                 ? this.props.color[1]

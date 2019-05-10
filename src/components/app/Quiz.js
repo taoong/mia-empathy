@@ -67,22 +67,27 @@ function Quiz(props) {
               background-color: ${props.color[1]};
             }
           `}
-          style={{ border: "24px solid " + props.color[0] }}
+          style={{ border: "20px solid " + props.color[0] }}
         />
       ) : null}
+      {getTypes(props)[0] === "story" ? (
+        <h3 className="question-story">{props.question}</h3>
+      ) : null}
 
-      <button
-        className="next-question"
-        style={{ border: "3px solid " + props.color[0] }}
-        css={css`
-          &:active {
-            background-color: ${props.color[1]};
-          }
-        `}
-        onClick={props.nextQuestion}
-      >
-        Continue
-      </button>
+      {props.selectedAnswer ? (
+        <button
+          className="next-question"
+          style={{ border: "3px solid " + props.color[0] }}
+          css={css`
+            &:active {
+              background-color: ${props.color[1]};
+            }
+          `}
+          onClick={props.nextQuestion}
+        >
+          Continue
+        </button>
+      ) : null}
     </div>
   );
 }
