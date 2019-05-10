@@ -12,14 +12,6 @@ class Question extends Component {
     this.storageRef = firebase.storage().ref();
   }
 
-  componentDidUpdate() {
-    //this.updateImage();
-  }
-
-  componentDidMount() {
-    //this.updateImage();
-  }
-
   updateImage() {
     // TODO: Figure out if Firebase Storage is an option for uploading photos, else just
     // work with images directly from the project folder
@@ -44,7 +36,7 @@ class Question extends Component {
     return (
       <div>
         <h3>
-          select the <strong style={{ color: color[0] }}> {answerType} </strong>{" "}
+          choose the <strong style={{ color: color[0] }}> {answerType} </strong>{" "}
           that best matches the{" "}
           <strong style={{ color: color[0] }}> {questionType} </strong>
         </h3>
