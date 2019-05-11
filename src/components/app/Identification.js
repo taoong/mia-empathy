@@ -8,7 +8,7 @@ class Identification extends Component {
 
     this.state = {
       participantId: "",
-      quizType: "pre"
+      quizType: ""
     };
 
     this.participantsRef = firebase.firestore().collection("participants");
@@ -53,10 +53,13 @@ class Identification extends Component {
       var participant = null;
       let promise = new Promise((resolve, reject) => {
         this.props.session.data().checked_in.forEach(p => {
-          if (p.id === this.state.participantId) {
-            participant = p;
-            resolve();
-          }
+          // TO MODIFY (for testing):
+          participant = p;
+          resolve();
+          // if (p.id === this.state.participantId) {
+          //   participant = p;
+          //   resolve();
+          // }
         });
         reject();
       });
