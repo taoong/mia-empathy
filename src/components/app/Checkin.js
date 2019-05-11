@@ -8,8 +8,9 @@ class Checkin extends Component {
     this.state = {
       kiosk: false,
       id: "",
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
+      email: "",
       age: "",
       gender: "",
       race: "",
@@ -70,11 +71,15 @@ class Checkin extends Component {
   }
 
   setFirstName = event => {
-    this.setState({ firstName: event.target.value });
+    this.setState({ firstname: event.target.value });
   };
 
   setLastName = event => {
-    this.setState({ lastName: event.target.value });
+    this.setState({ lastname: event.target.value });
+  };
+
+  setEmail = event => {
+    this.setState({ email: event.target.value });
   };
 
   setAge = event => {
@@ -94,8 +99,8 @@ class Checkin extends Component {
     this.setState({
       id: "",
       age: "",
-      firstName: "",
-      lastName: "",
+      firstname: "",
+      lastname: "",
       gender: "",
       race: "",
       page: 1
@@ -116,8 +121,8 @@ class Checkin extends Component {
       if (participants[p].id === this.state.id) {
         found = true;
         this.setState({
-          firstName: participants[p].firstname,
-          lastName: participants[p].lastname
+          firstname: participants[p].firstname,
+          lastname: participants[p].lastname
         });
         break;
       }
@@ -134,7 +139,7 @@ class Checkin extends Component {
   };
 
   async handleSubmit() {
-    if (!this.state.firstName || !this.state.lastName) {
+    if (!this.state.firstname || !this.state.lastname) {
       alert("First/last name inputs can't be blank!");
       return;
     }
@@ -142,8 +147,9 @@ class Checkin extends Component {
     let currentParticipant = {
       kiosk: this.state.kiosk,
       id: this.state.id,
-      firstname: this.state.firstName,
-      lastname: this.state.lastName,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      email: this.state.email,
       age: parseInt(this.state.age),
       gender: this.state.gender,
       race: this.state.race
@@ -169,7 +175,7 @@ class Checkin extends Component {
         </button>
         <div className="form-field-container">
           <h4 className="form-label">Assigned Participant ID</h4>
-          <input type="string" value={this.state.id} onChange={this.setId} />
+          <input type="text" value={this.state.id} onChange={this.setId} />
           <button className="button" onClick={this.handleNext}>
             Next
           </button>
@@ -193,25 +199,33 @@ class Checkin extends Component {
         </button>
         <div className="form-field-container">
           <h4 className="form-label">Participant ID</h4>
-          <input type="string" value={this.state.id} disabled={true} />
+          <input type="text" value={this.state.id} disabled={true} />
         </div>
         <div className="form-field-container">
           <div className="secondary">
             <h4 className="form-label">First name</h4>
             <input
-              type="string"
-              value={this.state.firstName}
+              type="text"
+              value={this.state.firstname}
               onChange={this.setFirstName}
             />
           </div>
           <div className="secondary">
             <h4 className="form-label">Last name</h4>
             <input
-              type="string"
-              value={this.state.lastName}
+              type="text"
+              value={this.state.lastname}
               onChange={this.setLastName}
             />
           </div>
+        </div>
+        <div className="form-field-container">
+          <h4 className="form-label">Email</h4>
+          <input
+            type="text"
+            value={this.state.email}
+            onChange={this.setEmail}
+          />
         </div>
         <div className="form-field-container">
           <div className="secondary">
@@ -267,17 +281,25 @@ class Checkin extends Component {
         <h2>MIA Empathy Tool Check in</h2>
         <div className="form-field-container">
           <h4 className="form-label">Assigned Participant ID</h4>
-          <input type="string" value={this.state.id} disabled={true} />
+          <input type="text" value={this.state.id} disabled={true} />
         </div>
         <div className="form-field-container">
           <div className="secondary">
             <h4 className="form-label">First name</h4>
-            <input type="string" value={this.state.firstName} disabled={true} />
+            <input type="text" value={this.state.firstname} disabled={true} />
           </div>
           <div className="secondary">
             <h4 className="form-label">Last name</h4>
-            <input type="string" value={this.state.lastName} disabled={true} />
+            <input type="text" value={this.state.lastname} disabled={true} />
           </div>
+        </div>
+        <div className="form-field-container">
+          <h4 className="form-label">Email</h4>
+          <input
+            type="email"
+            value={this.state.email}
+            onChange={this.setEmail}
+          />
         </div>
         <div className="form-field-container">
           <div className="secondary">
