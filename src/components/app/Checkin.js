@@ -14,6 +14,7 @@ class Checkin extends Component {
       age: "",
       gender: "",
       race: "",
+      session: null,
       page: 1
     };
 
@@ -23,6 +24,13 @@ class Checkin extends Component {
     this.handleNext = this.handleNext.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.generateId = this.generateId.bind(this);
+  }
+
+  async componentWillMount() {
+    let currentSession = await this.getCurrentSession();
+    this.setState({
+      session: currentSession
+    });
   }
 
   async getCurrentSession() {
@@ -61,6 +69,11 @@ class Checkin extends Component {
       allIds.push(parseInt(currentSession.data().checked_in[c].id));
     }
 
+    // If nobody has checked in yet, just assign 001
+    if (allIds.length === 0) {
+      return "001";
+    }
+
     // Getting the next biggest number and prepending 0's if necessary
     var id = Math.max(...allIds) + 1;
     id = "00" + id.toString();
@@ -68,6 +81,17 @@ class Checkin extends Component {
     id = id.substring(length - 3, length);
 
     return id;
+  }
+
+  getDateTime(timestamp) {
+    const date = timestamp.toDate();
+    return date.toLocaleString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
   }
 
   setFirstName = event => {
@@ -378,7 +402,23 @@ class Checkin extends Component {
     } else {
       page = this.renderPage3();
     }
-    return <div id="checkin">{page}</div>;
+    return (
+      <div id="checkin">
+        {/* <h2>
+          {this.state.session
+            ? this.state.session.data().organization
+            : "Loading session..."}
+        </h2>
+        <div>
+          {this.state.session ? (
+            this.getDateTime(this.state.session.data().datetime)
+          ) : (
+            <br />
+          )}
+        </div> */}
+        {page}
+      </div>
+    );
   }
 }
 

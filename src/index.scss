@@ -10,8 +10,6 @@ $red-2: rgba(130, 20, 0, 0.2);
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
-  overflow: hidden;
   font-family: "system-ui", "Avenir", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -87,6 +85,9 @@ h4 {
   margin: 0;
   padding: 0;
   list-style: none;
+
+  height: 100%;
+  overflow: hidden;
 
   img {
     display: block;
@@ -673,6 +674,7 @@ h4 {
   }
 
   button.link {
+    color: blue;
     background: rgba(0, 0, 0, 0);
     margin: 4px 0 16px;
     padding: 0;
@@ -682,7 +684,7 @@ h4 {
     cursor: pointer;
 
     &:hover {
-      color: blue;
+      color: rgba(0, 0, 250, 0.7);
     }
 
     &:focus {
