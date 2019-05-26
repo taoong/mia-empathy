@@ -28,20 +28,25 @@ class App extends Component {
       score: 0,
       finished: false,
       kiosk: false,
-      color: this.randomColor()
+      color: this.randomColor(),
+      connected: true
     };
   }
 
   async componentWillMount() {
     let currentSession = await this.getCurrentSession();
-    this.setState({
-      session: currentSession,
-      sessionId: currentSession.id,
-      quizId: currentSession.data().quiz
-    });
-    let quizQuestions = await this.getQuizQuestions();
-    this.setState({ quizQuestions: quizQuestions });
-    this.restartQuiz();
+    if (currentSession != null) {
+      this.setState({
+        session: currentSession,
+        sessionId: currentSession.id,
+        quizId: currentSession.data().quiz
+      });
+      let quizQuestions = await this.getQuizQuestions();
+      this.setState({ quizQuestions: quizQuestions });
+      this.restartQuiz();
+    } else {
+      this.setState({ connected: false });
+    }
   }
 
   async getCurrentSession() {
@@ -210,15 +215,33 @@ class App extends Component {
     );
   }
 
+  renderNoConnection() {
+    return (
+      <div className="card-form">
+        There was a problem connecting to the app!
+      </div>
+    );
+  }
+
   renderApp() {
+    // No internet connection screen
+    if (!this.state.connected) {
+      return this.renderNoConnection();
+    }
+
+    // Identification screen
     if (this.state.questionId === -1) {
       return this.renderIdentification();
-    } else {
-      if (this.state.finished) {
-        return this.renderResult();
-      } else {
-        return this.renderQuiz();
-      }
+    }
+
+    // Finish screen
+    if (this.state.finished) {
+      return this.renderResult();
+    }
+
+    // Quiz
+    else {
+      return this.renderQuiz();
     }
   }
 
