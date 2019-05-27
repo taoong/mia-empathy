@@ -26,8 +26,10 @@ class Admin extends Component {
   };
 
   componentDidMount() {
+    // Detect if any user is signed in
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       this.setState({ user: user, isSignedIn: !!user });
+      // Verify if a user is currently signed in, otherwise indicate no user
       if (user != null) {
         this.verify();
       } else {
@@ -65,9 +67,13 @@ class Admin extends Component {
   };
 
   handleInvalidUser() {
+    // No current user signed in
     if (!this.state.isSignedIn) {
       return <div>{this.renderSignIn()}</div>;
-    } else if (this.state.isSignedIn && !this.state.verified) {
+    }
+
+    // The user hasn't been verified
+    if (this.state.isSignedIn && !this.state.verified) {
       this.verify();
       return <div>{this.renderUnverified()}</div>;
     }
@@ -90,72 +96,71 @@ class Admin extends Component {
   }
 
   renderUnverified() {
-    if (this.state.loading) {
-      return <Loading />;
-    } else {
-      return (
-        <div className="card-form">
-          <h3>
-            Your email (
-            {firebase.auth().currentUser
-              ? firebase.auth().currentUser.email
-              : ""}
-            ) has not been verified!
-          </h3>
-          <h5>
-            Please contact taoong@berkeley.edu if you think this is a mistake.
-          </h5>
-          <button onClick={this.signOut}>Sign-out</button>
-        </div>
-      );
-    }
+    return (
+      <div className="card-form">
+        <h3>
+          Your email (
+          {firebase.auth().currentUser ? firebase.auth().currentUser.email : ""}
+          ) has not been verified!
+        </h3>
+        <h5>
+          Please email taoong@berkeley.edu if you think this is a mistake.
+        </h5>
+        <button className="button" onClick={this.signOut}>
+          Sign-out
+        </button>
+      </div>
+    );
   }
 
   renderAdmin() {
-    if (this.state.loading) {
-      return <Loading />;
-    } else {
-      return (
-        <div id="admin">
-          <Nav signout={this.signOut} />
-          <Route exact path={this.props.match.path} component={AdminHome} />
-          <Route
-            exact
-            path={`${this.props.match.path}/sessions`}
-            component={Sessions}
-          />
-          <Route
-            path={`${this.props.match.path}/sessions/new`}
-            component={NewSession}
-          />
-          <Route
-            path={`${this.props.match.path}/sessions/edit/:id`}
-            component={NewSession}
-          />
-          <Route
-            exact
-            path={`${this.props.match.path}/quizzes`}
-            component={Quizzes}
-          />
-          <Route
-            path={`${this.props.match.path}/quizzes/new`}
-            component={NewQuiz}
-          />
-          <Route
-            path={`${this.props.match.path}/quizzes/edit/:id`}
-            component={NewQuiz}
-          />
-        </div>
-      );
-    }
+    return (
+      <div id="admin">
+        <Nav signout={this.signOut} />
+        <Route exact path={this.props.match.path} component={AdminHome} />
+        <Route
+          exact
+          path={`${this.props.match.path}/sessions`}
+          component={Sessions}
+        />
+        <Route
+          path={`${this.props.match.path}/sessions/new`}
+          component={NewSession}
+        />
+        <Route
+          path={`${this.props.match.path}/sessions/edit/:id`}
+          component={NewSession}
+        />
+        <Route
+          exact
+          path={`${this.props.match.path}/quizzes`}
+          component={Quizzes}
+        />
+        <Route
+          path={`${this.props.match.path}/quizzes/new`}
+          component={NewQuiz}
+        />
+        <Route
+          path={`${this.props.match.path}/quizzes/edit/:id`}
+          component={NewQuiz}
+        />
+      </div>
+    );
   }
 
   render() {
+    // Loading...
     if (this.state.loading) {
       return <div>{this.renderLoading()}</div>;
-    } else if (!this.state.isSignedIn || !this.state.verified) {
+    }
+
+    // Invalid user screen
+    if (!this.state.isSignedIn || !this.state.verified) {
       return <div>{this.handleInvalidUser()}</div>;
-    } else {
+    }
+
+    // Admin panel
+    else {
       return <div>{this.renderAdmin()}</div>;
     }
   }
