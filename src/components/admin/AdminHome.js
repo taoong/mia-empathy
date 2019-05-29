@@ -3,7 +3,19 @@ class AdminHome extends Component {
   render() {
     return (
       <div id="admin-home">
-        <h1>Admin Home</h1>
+        <section id="recent-sessions">
+          <h2>Recent Sessions</h2>
+          <div className="row">
+            <div className="card">
+              <h4 className="card-title">MIA User Test</h4>
+              <h6 className="card-date">May 11, 2019, 3:30PM</h6>
+            </div>
+            <div className="card">
+              <h4 className="card-title">MIA User Test</h4>
+              <h6 className="card-date">May 11, 2019, 3:30PM</h6>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }

@@ -346,8 +346,29 @@ h4 {
   }
 }
 
+/* ----- Admin Home Component ----- */
+#admin-home {
+  margin: 32px 64px;
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+
+    .card {
+      height: 225px;
+      width: 15vw;
+      min-width: 150px;
+      margin: 0 40px 40px 0;
+      padding: 24px;
+      border-radius: 10px;
+      -webkit-box-shadow: 1px 3px 10px -1px rgba(125, 125, 125, 1);
+      -moz-box-shadow: 1px 3px 10px -1px rgba(125, 125, 125, 1);
+      box-shadow: 1px 3px 10px -1px rgba(125, 125, 125, 1);
+    }
+  }
+}
+
 /* ----- Sessions/Quizzes Component ----- */
-#admin-home,
 #sessions,
 #quizzes {
   margin: 32px 64px;

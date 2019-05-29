@@ -14,6 +14,10 @@ class Nav extends Component {
         </Link>
 
         <div className="nav-links">
+          <Link className="nav-link" to="/admin">
+            Dashboard
+          </Link>
+
           <Link className="nav-link" to="/admin/sessions">
             Sessions
           </Link>
