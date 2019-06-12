@@ -38,10 +38,6 @@ class Quiz extends Component {
   render() {
     return (
       <div className="quiz">
-        <QuestionCount
-          questionNumber={this.props.questionId + 1}
-          total={this.props.questionTotal}
-        />
         <Question
           questionContent={this.props.question}
           questionType={this.props.questionType}
@@ -100,6 +96,10 @@ class Quiz extends Component {
             Continue
           </button>
         ) : null}
+        <QuestionCount
+          questionNumber={this.props.questionId + 1}
+          total={this.props.questionTotal}
+        />
       </div>
     );
   }

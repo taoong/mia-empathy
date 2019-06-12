@@ -2,11 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function QuestionCount(props) {
-  return (
-    <div className="questionCount">
-      Question <span>{props.questionNumber}</span> of <span>{props.total}</span>
-    </div>
-  );
+  let circles = [];
+  for (var i = 1; i <= props.total; i++) {
+    if (i === props.questionNumber) {
+      circles.push(<div className="progress-circle dark" />);
+    } else {
+      circles.push(<div className="progress-circle light" />);
+    }
+  }
+  return <div className="questionCount">{circles}</div>;
 }
 
 QuestionCount.propTypes = {
