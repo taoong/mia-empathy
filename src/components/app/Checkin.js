@@ -406,7 +406,7 @@ class Checkin extends Component {
       <div id="checkin">
         {/* <h2>
           {this.state.session
-            ? this.state.session.data().organization
+            ? this.state.session.data().sessionName
             : "Loading session..."}
         </h2>
         <div>

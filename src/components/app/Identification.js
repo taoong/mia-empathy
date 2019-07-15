@@ -105,7 +105,7 @@ class Identification extends Component {
     return (
       <div>
         <h2>
-          {this.props.session ? session.organization : "Loading session..."}
+          {this.props.session ? session.sessionName : "Loading session..."}
         </h2>
         <h4>
           {this.props.session ? this.getDateTime(session.datetime) : <br />}

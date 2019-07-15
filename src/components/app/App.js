@@ -118,6 +118,7 @@ class App extends Component {
   }
 
   setNextQuestion = () => {
+    // If it is not the last question, go to the next question
     if (this.state.questionId !== this.state.quizQuestions.length - 1) {
       const questionId = this.state.questionId + 1;
       this.setState({
@@ -128,7 +129,9 @@ class App extends Component {
         selectedAnswer: "",
         color: this.randomColor()
       });
-    } else {
+    }
+    // If it is the last question, move to checkin
+    else {
       let responseRef = this.responses.doc(
         this.state.sessionId + this.state.participant.id
       );

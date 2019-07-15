@@ -36,7 +36,7 @@ class Sessions extends Component {
     if (this.state.sessions != null && this.state.sessions.length > 0) {
       const sessions = this.state.sessions.map((session, index) => (
         <tr key={index} onClick={() => this.editSession(session.id)}>
-          <td>{session.data().organization}</td>
+          <td>{session.data().sessionName}</td>
           <td>{this.getDateTime(session.data().datetime)}</td>
           <td>{session.data().participants.length}</td>
         </tr>
@@ -59,7 +59,7 @@ class Sessions extends Component {
         <table>
           <tbody>
             <tr>
-              <th>Organization Name</th>
+              <th>Session Name</th>
               <th>Scheduled Date/Time</th>
               <th>No. Participants</th>
             </tr>

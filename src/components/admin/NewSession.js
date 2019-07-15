@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 class NewSession extends Component {
   state = {
-    organization: "",
+    sessionName: "",
     type: "",
     quiz: "",
     datetime: new Date(),
@@ -45,7 +45,7 @@ class NewSession extends Component {
       .get()
       .then(doc => {
         currentComponent.setState({
-          organization: doc.data().organization,
+          sessionName: doc.data().sessionName,
           type: doc.data().type,
           quiz: doc.data().quiz,
           datetime: doc.data().datetime.toDate(),
@@ -75,8 +75,8 @@ class NewSession extends Component {
       });
   };
 
-  setOrganization = event => {
-    this.setState({ organization: event.target.value });
+  setSessionName = event => {
+    this.setState({ sessionName: event.target.value });
   };
 
   setType = event => {
@@ -158,7 +158,7 @@ class NewSession extends Component {
 
   addSession = () => {
     if (
-      !this.state.organization ||
+      !this.state.sessionName ||
       !this.state.type ||
       !this.state.quiz ||
       !this.state.datetime
@@ -169,7 +169,7 @@ class NewSession extends Component {
     const currentComponent = this;
     this.sessionRef
       .set({
-        organization: currentComponent.state.organization,
+        sessionName: currentComponent.state.sessionName,
         type: currentComponent.state.type,
         quiz: currentComponent.state.quiz,
         datetime: currentComponent.state.datetime,
@@ -237,11 +237,11 @@ class NewSession extends Component {
         </div>
         <div className="form-field-container">
           <div className="form-left">
-            <h4 className="form-label">Organization Name</h4>
+            <h4 className="form-label">Session Name</h4>
             <input
               type="text"
-              value={this.state.organization}
-              onChange={this.setOrganization}
+              value={this.state.sessionName}
+              onChange={this.setSessionName}
             />
 
             <h4 className="form-label">Type</h4>
