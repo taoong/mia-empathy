@@ -18,6 +18,12 @@ class NewSession extends Component {
     participantId: 1,
     participantFirstName: "",
     participantLastName: "",
+    participantEmail: "",
+    participantAge: "",
+    participantGender: "",
+    participantOtherGender: "",
+    participantRace: "",
+    participantZipcode: "",
     goBack: false,
     originalParticipants: [],
     quizIds: []
@@ -99,6 +105,30 @@ class NewSession extends Component {
     this.setState({ participantLastName: event.target.value });
   };
 
+  setParticipantEmail = event => {
+    this.setState({ participantEmail: event.target.value });
+  };
+
+  setParticipantAge = event => {
+    this.setState({ participantAge: event.target.value });
+  };
+
+  setParticipantGender = event => {
+    this.setState({ participantGender: event.target.value });
+  };
+
+  setParticipantOtherGender = event => {
+    this.setState({ participantOtherGender: event.target.value });
+  };
+
+  setParticipantRace = event => {
+    this.setState({ participantRace: event.target.value });
+  };
+
+  setParticipantZipcode = event => {
+    this.setState({ participantZipcode: event.target.value });
+  };
+
   showParticipantModal = () => {
     this.setState({ showParticipantModal: true });
   };
@@ -123,15 +153,34 @@ class NewSession extends Component {
   }
 
   addParticipant = () => {
-    if (!this.state.participantFirstName || !this.state.participantLastName) {
+    if (
+      !this.state.participantFirstName ||
+      !this.state.participantLastName ||
+      !this.state.participantEmail ||
+      !this.state.participantAge ||
+      !this.state.participantGender ||
+      !this.state.participantRace ||
+      !this.state.participantZipcode
+    ) {
       alert("All form fields must be filled out!");
       return;
     }
+
+    // Getting other gender input if there is a need to specify
+    let gender =
+      this.state.participantGender === "other"
+        ? this.state.participantOtherGender
+        : this.state.participantGender;
 
     let newParticipant = {
       id: this.processId(this.state.participantId),
       firstname: this.state.participantFirstName,
       lastname: this.state.participantLastName,
+      email: this.state.participantEmail,
+      age: this.state.participantAge,
+      gender: gender,
+      race: this.state.participantRace,
+      zipcode: this.state.participantZipcode,
       session: this.sessionRef.id
     };
 
@@ -139,7 +188,12 @@ class NewSession extends Component {
       participants: [...prevState.participants, newParticipant],
       participantId: prevState.participantId + 1,
       participantFirstName: "",
-      participantLastName: ""
+      participantLastName: "",
+      participantEmail: "",
+      participantAge: "",
+      participantGender: "",
+      participantRace: "",
+      participantZipcode: ""
     }));
 
     this.hideParticipantModal();
@@ -310,6 +364,93 @@ class NewSession extends Component {
                 type="text"
                 value={this.state.participantLastName}
                 onChange={this.setParticipantLastName}
+              />
+            </div>
+          </div>
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Email</h4>
+              <input
+                type="email"
+                value={this.state.participantEmail}
+                onChange={this.setParticipantEmail}
+              />
+            </div>
+          </div>
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Age</h4>
+              <input
+                type="number"
+                value={this.state.participantAge}
+                onChange={this.setParticipantAge}
+              />
+            </div>
+            <div className="form-left secondary">
+              <h4 className="form-label">Race/Ethnicity</h4>
+              <select
+                name="type"
+                value={this.state.participantRace}
+                onChange={this.setParticipantRace}
+              >
+                <option value="" style={{ display: "none" }} />
+                <option value="white">White/Caucasian</option>
+                <option value="black">Black/African-American</option>
+                <option value="hispanic">Hispanic</option>
+                <option value="latinx">Latino/a</option>
+                <option value="east asian">
+                  East Asian (e.g., Chinese, Japanese, Vietnamese)
+                </option>
+                <option value="south asian">
+                  South Asian (e.g., Indian, Pakistani, Burmese)
+                </option>
+                <option value="american indian">
+                  American Indian or Alaskan Native
+                </option>
+                <option value="pacific islander">
+                  Pacific Islander or Native Hawaiian
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Gender</h4>
+              <select
+                name="type"
+                value={this.state.participantGender}
+                onChange={this.setParticipantGender}
+              >
+                <option value="" style={{ display: "none" }} />
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="nonbinary">Nonbinary</option>
+                <option value="other">
+                  Different identity (please specify)
+                </option>
+              </select>
+            </div>
+            {this.state.participantGender === "other" ? (
+              <div className="form-left secondary other">
+                <h4 className="form-label">Other gender</h4>
+                <input
+                  type="text"
+                  value={this.state.participantOtherGender}
+                  onChange={this.setParticipantOtherGender}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+          </div>
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Zip code</h4>
+              <input
+                type="number"
+                value={this.state.zipcode}
+                onChange={this.setParticipantZipcode}
               />
             </div>
           </div>
