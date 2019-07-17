@@ -35,15 +35,6 @@ class Identification extends Component {
     });
   }
 
-  async findParticipant() {
-    this.props.session.data().checked_in.forEach(p => {
-      if (p.id === this.state.participantId) {
-        return p;
-      }
-    });
-    return Error("Can't find participant");
-  }
-
   handleSubmit = () => {
     if (!this.state.participantId) {
       alert("Participant ID input can't be blank!");
