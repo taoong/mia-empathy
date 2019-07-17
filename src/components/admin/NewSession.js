@@ -18,12 +18,13 @@ class NewSession extends Component {
     participantId: 1,
     participantFirstName: "",
     participantLastName: "",
-    participantEmail: "",
-    participantAge: "",
     participantGender: "",
     participantOtherGender: "",
     participantRace: "",
+    participantOtherRace: "",
+    participantAge: "",
     participantZipcode: "",
+    participantEmail: "",
     goBack: false,
     originalParticipants: [],
     quizIds: []
@@ -105,14 +106,6 @@ class NewSession extends Component {
     this.setState({ participantLastName: event.target.value });
   };
 
-  setParticipantEmail = event => {
-    this.setState({ participantEmail: event.target.value });
-  };
-
-  setParticipantAge = event => {
-    this.setState({ participantAge: event.target.value });
-  };
-
   setParticipantGender = event => {
     this.setState({ participantGender: event.target.value });
   };
@@ -125,8 +118,20 @@ class NewSession extends Component {
     this.setState({ participantRace: event.target.value });
   };
 
+  setParticipantOtherRace = event => {
+    this.setState({ participantOtherRace: event.target.value });
+  };
+
+  setParticipantAge = event => {
+    this.setState({ participantAge: event.target.value });
+  };
+
   setParticipantZipcode = event => {
     this.setState({ participantZipcode: event.target.value });
+  };
+
+  setParticipantEmail = event => {
+    this.setState({ participantEmail: event.target.value });
   };
 
   showParticipantModal = () => {
@@ -369,24 +374,6 @@ class NewSession extends Component {
           </div>
           <div className="form-field-container">
             <div className="form-left secondary">
-              <h4 className="form-label">Email</h4>
-              <input
-                type="email"
-                value={this.state.participantEmail}
-                onChange={this.setParticipantEmail}
-              />
-            </div>
-          </div>
-          <div className="form-field-container">
-            <div className="form-left secondary">
-              <h4 className="form-label">Age</h4>
-              <input
-                type="number"
-                value={this.state.participantAge}
-                onChange={this.setParticipantAge}
-              />
-            </div>
-            <div className="form-left secondary">
               <h4 className="form-label">Race/Ethnicity</h4>
               <select
                 name="type"
@@ -410,8 +397,23 @@ class NewSession extends Component {
                 <option value="pacific islander">
                   Pacific Islander or Native Hawaiian
                 </option>
+                <option value="other">
+                  Not listed here or prefer to self-describe
+                </option>
               </select>
             </div>
+            {this.state.participantRace === "other" ? (
+              <div className="form-left secondary other">
+                <h4 className="form-label">Other race</h4>
+                <input
+                  type="text"
+                  value={this.state.participantOtherRace}
+                  onChange={this.setParticipantOtherRace}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
           </div>
 
           <div className="form-field-container">
@@ -444,13 +446,33 @@ class NewSession extends Component {
               <div />
             )}
           </div>
+
           <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Age</h4>
+              <input
+                type="number"
+                value={this.state.participantAge}
+                onChange={this.setParticipantAge}
+              />
+            </div>
             <div className="form-left secondary">
               <h4 className="form-label">Zip code</h4>
               <input
                 type="number"
                 value={this.state.zipcode}
                 onChange={this.setParticipantZipcode}
+              />
+            </div>
+          </div>
+
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Email</h4>
+              <input
+                type="email"
+                value={this.state.participantEmail}
+                onChange={this.setParticipantEmail}
               />
             </div>
           </div>
