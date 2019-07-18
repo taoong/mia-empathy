@@ -18,7 +18,6 @@ class Checkin extends Component {
       page: 1
     };
 
-    this.participantsRef = firebase.firestore().collection("participants");
     this.sessionsRef = firebase.firestore().collection("sessions");
 
     this.handleNext = this.handleNext.bind(this);

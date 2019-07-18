@@ -15,15 +15,13 @@ class Result extends Component {
       participantAge: "",
       participantZipcode: "",
       participantEmail: "",
-      disabledFirstName: "",
-      disabledLastName: "",
-      disabledGender: "",
-      disabledOtherGender: "",
-      disabledRace: "",
-      disabledOtherRace: "",
-      disabledAge: "",
-      disabledZipcode: "",
-      disabledEmail: "",
+      disabledFirstName: false,
+      disabledLastName: false,
+      disabledGender: false,
+      disabledRace: false,
+      disabledAge: false,
+      disabledZipcode: false,
+      disabledEmail: false,
       filledInfo: false,
       score: null
     };
@@ -54,53 +52,86 @@ class Result extends Component {
   // Fetches participant data.
   // If data already exists, make those inputs disabled.
   fetchParticipantData = () => {
-    if (this.props.participant) {
-      if (this.props.participant.firstname) {
+    let p = this.props.participant;
+    if (p) {
+      if (p.firstname) {
         this.setState({
           disabledFirstName: true,
-          participantFirstName: this.props.participant.firstname
+          participantFirstName: p.firstname
         });
       }
 
-      if (this.props.participant.lastname) {
+      if (p.lastname) {
         this.setState({
           disabledLastName: true,
-          participantLastName: this.props.participant.lastname
+          participantLastName: p.lastname
         });
       }
 
-      if (this.props.participant.gender) {
-        this.setState({
-          disabledGender: true,
-          participantGender: this.props.participant.gender
-        });
+      if (p.gender) {
+        // Check if gender is self-specified
+        if (
+          p.gender !== "male" &&
+          p.gender !== "female" &&
+          p.gender !== "nonbinary"
+        ) {
+          this.setState({
+            disabledGender: true,
+            participantGender: "other",
+            participantOtherGender: p.gender
+          });
+        } else {
+          this.setState({
+            disabledGender: true,
+            participantGender: p.gender
+          });
+        }
       }
 
-      if (this.props.participant.race) {
-        this.setState({
-          disabledRace: true,
-          participantRace: this.props.participant.race
-        });
+      if (p.race) {
+        // Check if race is self-specified
+        if (
+          p.race !== "white" &&
+          p.race !== "black" &&
+          p.race !== "hispanic" &&
+          p.race !== "latinx" &&
+          p.race !== "east asian" &&
+          p.race !== "south asian" &&
+          p.race !== "american indian" &&
+          p.race !== "pacific islander"
+        ) {
+          this.setState({
+            disabledRace: true,
+            participantRace: "other",
+            participantOtherRace: p.race
+          });
+        } else {
+          this.setState({
+            disabledRace: true,
+            participantRace: p.race
+          });
+        }
       }
 
-      if (this.props.participant.age) {
+      if (p.age) {
         this.setState({
           disabledAge: true,
-          participantAge: this.props.participant.age
+          participantAge: p.age
         });
       }
 
-      if (this.props.participant.zipcode) {
+      if (p.zipcode) {
         this.setState({
           disabledZipcode: true,
-          participantZipcode: this.props.participant.zipcode
+          participantZipcode: p.zipcode
         });
+        console.log(p.zipcode);
       }
 
-      if (this.props.participant.email) {
+      if (p.email) {
         this.setState({
           disabledEmail: true,
-          participantEmail: this.props.participant.email
+          participantEmail: p.email
         });
       }
     }
@@ -131,8 +162,7 @@ class Result extends Component {
   };
 
   setParticipantAge = event => {
-    let age = event.target.value < 113 ? event.target.value : "113";
-    this.setState({ participantAge: age });
+    this.setState({ participantAge: event.target.value });
   };
 
   setParticipantZipcode = event => {
@@ -143,6 +173,33 @@ class Result extends Component {
     this.setState({ participantEmail: event.target.value });
   };
 
+  submitParticipantInfo = () => {
+    // Getting other gender input if there is a need to specify
+    let gender =
+      this.state.participantGender === "other"
+        ? this.state.participantOtherGender
+        : this.state.participantGender;
+
+    // Getting other race input if there is a need to specify
+    let race =
+      this.state.participantRace === "other"
+        ? this.state.participantOtherRace
+        : this.state.participantRace;
+
+    let newParticipant = {
+      id: this.props.participant.id,
+      firstname: this.state.participantFirstName,
+      lastname: this.state.participantLastName,
+      email: this.state.participantEmail,
+      age: this.state.participantAge,
+      gender: gender,
+      race: race,
+      zipcode: this.state.participantZipcode
+    };
+
+    this.props.submitParticipantInfo(newParticipant);
+  };
+
   renderResult() {
     // Pre-quiz: show end screen
     if (this.props.quizType === "pre" || this.state.filledInfo) {
@@ -150,7 +207,7 @@ class Result extends Component {
         <div>
           <h2>You've finished the quiz!</h2>
           <button className="button" onClick={this.props.restartQuiz}>
-            Submit
+            Return to starting screen
           </button>
         </div>
       );
@@ -159,7 +216,7 @@ class Result extends Component {
     else if (this.props.quizType === "post") {
       return (
         <div>
-          <h2>Please fill out your participant information</h2>
+          <h2>Please confirm your participant information</h2>
           <div className="form-field-container">
             <div className="form-left secondary">
               <h5 className="form-label">First Name</h5>
@@ -206,7 +263,7 @@ class Result extends Component {
                   type="text"
                   value={this.state.participantOtherGender}
                   onChange={this.setParticipantOtherGender}
-                  disabled={this.state.disabledOtherGender}
+                  disabled={this.state.disabledGender}
                 />
               </div>
             ) : (
@@ -252,7 +309,7 @@ class Result extends Component {
                   type="text"
                   value={this.state.participantOtherRace}
                   onChange={this.setParticipantOtherRace}
-                  disabled={this.state.disabledOtherRace}
+                  disabled={this.state.disabledRace}
                 />
               </div>
             ) : (
@@ -273,8 +330,8 @@ class Result extends Component {
             <div className="form-left secondary">
               <h5 className="form-label">Zip code</h5>
               <input
-                type="number"
-                value={this.state.zipcode}
+                type="text"
+                value={this.state.participantZipcode}
                 onChange={this.setParticipantZipcode}
                 disabled={this.state.disabledZipcode}
               />
@@ -293,7 +350,7 @@ class Result extends Component {
             </div>
           </div>
 
-          <button className="button" onClick={this.props.restartQuiz}>
+          <button className="button" onClick={this.submitParticipantInfo}>
             Submit
           </button>
         </div>
@@ -317,7 +374,8 @@ Result.propTypes = {
   answers: PropTypes.array.isRequired,
   kiosk: PropTypes.bool.isRequired,
   quizType: PropTypes.string.isRequired,
-  participant: PropTypes.object.isRequired
+  participant: PropTypes.object.isRequired,
+  submitParticipantInfo: PropTypes.func.isRequired
 };
 
 export default Result;

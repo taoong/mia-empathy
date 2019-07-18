@@ -5,9 +5,9 @@ function QuestionCount(props) {
   let circles = [];
   for (var i = 1; i <= props.total; i++) {
     if (i === props.questionNumber) {
-      circles.push(<div className="progress-circle dark" />);
+      circles.push(<div key={i} className="progress-circle dark" />);
     } else {
-      circles.push(<div className="progress-circle light" />);
+      circles.push(<div key={i} className="progress-circle light" />);
     }
   }
   return <div className="questionCount">{circles}</div>;

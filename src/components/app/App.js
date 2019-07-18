@@ -137,11 +137,7 @@ class App extends Component {
       );
       if (this.state.quizType === "pre") {
         responseRef.set({
-          firstname: this.state.participant.firstname,
-          lastname: this.state.participant.lastname,
-          age: this.state.participant.age,
-          gender: this.state.participant.gender,
-          race: this.state.participant.race,
+          pid: this.state.participant.id,
           session: this.state.sessionId,
           quiz: this.state.quizId,
           datetime: new Date(),
@@ -170,7 +166,13 @@ class App extends Component {
     this.setState({ quizType: quizType });
   };
 
-  submitParticipantInfo = info => {};
+  submitParticipantInfo = new_p => {
+    // this.sessionsRef.doc(this.sessionId).
+
+    alert("You've completed the quiz!");
+
+    this.restartQuiz();
+  };
 
   randomColor = () => {
     let colors = [
@@ -218,6 +220,7 @@ class App extends Component {
         kiosk={this.state.kiosk}
         participant={this.state.participant}
         quizType={this.state.quizType}
+        submitParticipantInfo={this.submitParticipantInfo}
       />
     );
   }
@@ -232,6 +235,7 @@ class App extends Component {
         kiosk={this.state.kiosk}
         participant={this.state.participant}
         quizType={"post"}
+        submitParticipantInfo={this.submitParticipantInfo}
       />
       // <div className="card-form">
       //   There was a problem connecting to the app! Please try again later.

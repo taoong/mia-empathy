@@ -158,16 +158,8 @@ class NewSession extends Component {
   }
 
   addParticipant = () => {
-    if (
-      !this.state.participantFirstName ||
-      !this.state.participantLastName ||
-      !this.state.participantEmail ||
-      !this.state.participantAge ||
-      !this.state.participantGender ||
-      !this.state.participantRace ||
-      !this.state.participantZipcode
-    ) {
-      alert("All form fields must be filled out!");
+    if (!this.state.participantFirstName || !this.state.participantLastName) {
+      alert("First and last name form fields must be filled out!");
       return;
     }
 
@@ -466,7 +458,7 @@ class NewSession extends Component {
             <div className="form-left secondary">
               <h4 className="form-label">Zip code</h4>
               <input
-                type="number"
+                type="text"
                 value={this.state.zipcode}
                 onChange={this.setParticipantZipcode}
               />
