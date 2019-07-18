@@ -43,14 +43,11 @@ class Identification extends Component {
     } else {
       var participant = null;
       let promise = new Promise((resolve, reject) => {
-        this.props.session.data().checked_in.forEach(p => {
-          // TO MODIFY (for testing):
-          participant = p;
-          resolve();
-          // if (p.id === this.state.participantId) {
-          //   participant = p;
-          //   resolve();
-          // }
+        this.props.session.data().participants.forEach(p => {
+          if (p.id === this.state.participantId) {
+            participant = p;
+            resolve();
+          }
         });
         reject();
       });
@@ -80,9 +77,7 @@ class Identification extends Component {
           }
         })
         .catch(() => {
-          alert(
-            "This Participant ID doesn't exist, or the participant hasn't checked in yet!"
-          );
+          alert("This Participant ID doesn't exist!");
         });
     }
   };

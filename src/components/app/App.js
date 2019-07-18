@@ -130,7 +130,7 @@ class App extends Component {
         color: this.randomColor()
       });
     }
-    // If it is the last question, move to checkin
+    // If it is the last question, end the quiz
     else {
       let responseRef = this.responses.doc(
         this.state.sessionId + this.state.participant.id
@@ -233,12 +233,12 @@ class App extends Component {
     }
 
     // Identification screen
-    if (this.state.questionId === -1) {
+    else if (this.state.questionId === -1) {
       return this.renderIdentification();
     }
 
     // Finish screen
-    if (this.state.finished) {
+    else if (this.state.finished) {
       return this.renderResult();
     }
 
