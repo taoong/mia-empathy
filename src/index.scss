@@ -11,8 +11,7 @@ $red-2: rgba(130, 20, 0, 0.2);
 body {
   margin: 0;
   padding: 0;
-  font-family: "system-ui", "Avenir", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-family: "system-ui", "Avenir", "Roboto", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,6 +24,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 h4 {
   font-weight: 500;
+}
+
+h4 {
+  font-weight: 600;
 }
 
 .container {
@@ -73,27 +76,86 @@ h4 {
 }
 
 /* ----- Result Component ----- */
-.result {
-  position: absolute;
-  top: 25%;
-  -webkit-transform: translateY(-25%);
-  transform: translateY(-25%);
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  padding: 1.5rem 2.5rem;
+
+#result {
+  background-color: $grey-2;
+  margin: 8vh auto;
+  padding: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: left;
+  width: 480px;
+  border: 2px rgba(0, 0, 0, 0.2) solid;
+  border-radius: 4px;
+
+  .button {
+    margin-right: 4px;
+
+    &.secondary {
+      background-color: $grey-5;
+    }
+  }
+
+  button.link {
+    color: blue;
+    background: rgba(0, 0, 0, 0);
+    margin: 4px 0 16px;
+    padding: 0;
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      color: rgba(0, 0, 250, 0.7);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 
   h4 {
-    margin: 0 auto 0 1em;
     align-self: flex-start;
   }
 
-  ul {
-    text-align: left;
-    margin-bottom: 32px;
+  input,
+  select {
+    background-color: $grey-1;
+    margin: 4px 0 22px 0;
+    padding: 8px 8px;
+    font-size: 16px;
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 2px rgba(0, 0, 0, 0.2) solid;
+
+    &:disabled {
+      background-color: $grey-3;
+      cursor: no-drop;
+    }
+  }
+
+  .form-field-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .secondary {
+      min-width: 162px;
+      flex: 1;
+
+      &:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .form-label {
+    margin-bottom: 0;
+    margin-top: 8px;
   }
 }
-
 /* ----- Quiz Component ----- */
 .quiz {
   margin: 0;

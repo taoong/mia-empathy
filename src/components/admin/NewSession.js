@@ -177,6 +177,12 @@ class NewSession extends Component {
         ? this.state.participantOtherGender
         : this.state.participantGender;
 
+    // Getting other race input if there is a need to specify
+    let race =
+      this.state.participantRace === "other"
+        ? this.state.participantOtherRace
+        : this.state.participantRace;
+
     let newParticipant = {
       id: this.processId(this.state.participantId),
       firstname: this.state.participantFirstName,
@@ -184,7 +190,7 @@ class NewSession extends Component {
       email: this.state.participantEmail,
       age: this.state.participantAge,
       gender: gender,
-      race: this.state.participantRace,
+      race: race,
       zipcode: this.state.participantZipcode,
       session: this.sessionRef.id
     };
@@ -372,6 +378,38 @@ class NewSession extends Component {
               />
             </div>
           </div>
+
+          <div className="form-field-container">
+            <div className="form-left secondary">
+              <h4 className="form-label">Gender</h4>
+              <select
+                name="type"
+                value={this.state.participantGender}
+                onChange={this.setParticipantGender}
+              >
+                <option value="" style={{ display: "none" }} />
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="nonbinary">Nonbinary</option>
+                <option value="other">
+                  Different identity (please specify)
+                </option>
+              </select>
+            </div>
+            {this.state.participantGender === "other" ? (
+              <div className="form-left secondary other">
+                <h4 className="form-label">Other gender</h4>
+                <input
+                  type="text"
+                  value={this.state.participantOtherGender}
+                  onChange={this.setParticipantOtherGender}
+                />
+              </div>
+            ) : (
+              <div />
+            )}
+          </div>
+
           <div className="form-field-container">
             <div className="form-left secondary">
               <h4 className="form-label">Race/Ethnicity</h4>
@@ -409,37 +447,6 @@ class NewSession extends Component {
                   type="text"
                   value={this.state.participantOtherRace}
                   onChange={this.setParticipantOtherRace}
-                />
-              </div>
-            ) : (
-              <div />
-            )}
-          </div>
-
-          <div className="form-field-container">
-            <div className="form-left secondary">
-              <h4 className="form-label">Gender</h4>
-              <select
-                name="type"
-                value={this.state.participantGender}
-                onChange={this.setParticipantGender}
-              >
-                <option value="" style={{ display: "none" }} />
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="nonbinary">Nonbinary</option>
-                <option value="other">
-                  Different identity (please specify)
-                </option>
-              </select>
-            </div>
-            {this.state.participantGender === "other" ? (
-              <div className="form-left secondary other">
-                <h4 className="form-label">Other gender</h4>
-                <input
-                  type="text"
-                  value={this.state.participantOtherGender}
-                  onChange={this.setParticipantOtherGender}
                 />
               </div>
             ) : (

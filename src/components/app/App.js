@@ -3,7 +3,6 @@ import Identification from "./Identification";
 import Quiz from "./Quiz";
 import Result from "./Result";
 import firebase from "../../Firebase";
-// import quizQuestions from "../../testQuestions";
 
 class App extends Component {
   constructor(props) {
@@ -27,6 +26,7 @@ class App extends Component {
       answers: [],
       score: 0,
       finished: false,
+      endScreen: true,
       kiosk: false,
       color: this.randomColor(),
       connected: true
@@ -170,6 +170,8 @@ class App extends Component {
     this.setState({ quizType: quizType });
   };
 
+  submitParticipantInfo = info => {};
+
   randomColor = () => {
     let colors = [
       ["#2848D0", "#A7D8ED"],
@@ -214,15 +216,26 @@ class App extends Component {
         total={this.state.quizQuestions.length}
         answers={this.state.answers}
         kiosk={this.state.kiosk}
+        participant={this.state.participant}
+        quizType={this.state.quizType}
       />
     );
   }
 
   renderNoConnection() {
     return (
-      <div className="card-form">
-        There was a problem connecting to the app!
-      </div>
+      <Result
+        quizResult={this.state.score}
+        restartQuiz={this.restartQuiz}
+        total={this.state.quizQuestions.length}
+        answers={this.state.answers}
+        kiosk={this.state.kiosk}
+        participant={this.state.participant}
+        quizType={"post"}
+      />
+      // <div className="card-form">
+      //   There was a problem connecting to the app! Please try again later.
+      // </div>
     );
   }
 
