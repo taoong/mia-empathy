@@ -306,7 +306,6 @@ class NewSession extends Component {
               <option value="" style={{ display: "none" }} />
               <option value="adult">Adult</option>
               <option value="child">Child</option>
-              <option value="mixed">Mixed</option>
             </select>
 
             <h4 className="form-label">Quiz</h4>

@@ -216,7 +216,7 @@ class Result extends Component {
     else if (this.props.quizType === "post") {
       return (
         <div>
-          <h2>Please confirm your participant information</h2>
+          <h2>Please complete your participant information</h2>
           <div className="form-field-container">
             <div className="form-left secondary">
               <h5 className="form-label">First Name</h5>

@@ -242,7 +242,6 @@ class NewQuiz extends Component {
               <option value="" style={{ display: "none" }} />
               <option value="adult">Adult</option>
               <option value="child">Child</option>
-              <option value="mixed">Mixed</option>
             </select>
             <button className="button" onClick={this.addQuiz}>
               {this.props.match.params.id ? "Update" : "Add"} Quiz
