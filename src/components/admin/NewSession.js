@@ -264,6 +264,7 @@ class NewSession extends Component {
         id={p.id}
         name={p.firstname + " " + p.lastname}
         delete={this.deleteParticipant}
+        disabled={false}
       />
     ));
 

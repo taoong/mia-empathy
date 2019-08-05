@@ -125,7 +125,6 @@ class Result extends Component {
           disabledZipcode: true,
           participantZipcode: p.zipcode
         });
-        console.log(p.zipcode);
       }
 
       if (p.email) {

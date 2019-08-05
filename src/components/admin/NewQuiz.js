@@ -25,7 +25,12 @@ class NewQuiz extends Component {
     .firestore()
     .collection("quizzes")
     .doc();
+  quizzesRef = firebase.firestore().collection("quizzes");
 
+  /**
+   * Fetches data from existing quiz if editing,
+   * otherwise generates the next consecutive ID for a new quiz.
+   */
   componentDidMount = () => {
     if (this.props.match.params.id) {
       let currentComponent = this;
@@ -45,11 +50,25 @@ class NewQuiz extends Component {
           });
         })
         .catch(error => {
-          console.log(error);
+          console.log(error + ": Couldn't fetch quiz data");
         });
+    } else {
+      var count = 1;
+      this.quizzesRef.get().then(snapshot => {
+        snapshot.forEach(() => {
+          count += 1;
+        });
+        this.quizRef = firebase
+          .firestore()
+          .collection("quizzes")
+          .doc(this.processId(count));
+      });
     }
   };
 
+  /**
+   * Setter function for quiz name.
+   */
   setName = event => {
     this.setState({ name: event.target.value });
   };
