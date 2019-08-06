@@ -15,6 +15,10 @@ class Quiz extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.setState({ playedSound: false });
+  };
+
   getTypes = () => {
     let questionType = this.props.questionType.split("-")[0];
     let answerType = this.props.questionType.split("-")[1];
@@ -82,7 +86,10 @@ class Quiz extends Component {
           <h3 className="question-story">{this.props.question}</h3>
         ) : null}
 
-        {this.props.selectedAnswer && this.state.playedSound ? (
+        {this.props.selectedAnswer &&
+        !(
+          !this.state.playedSound && this.getTypes(this.props)[0] === "voice"
+        ) ? (
           <button
             className="next-question"
             style={{ border: "3px solid " + this.props.color[0] }}
