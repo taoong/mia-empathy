@@ -167,27 +167,21 @@ class App extends Component {
   };
 
   submitParticipantInfo = new_p => {
-    var oldParticipants = this.state.session.data().participants;
-    for (var p in oldParticipants) {
-      console.log(p);
-      console.log(this.state.participant.id);
+    var participants = this.state.session.data().participants;
+    participants.forEach(p => {
       if (p.id === this.state.participant.id) {
-        console.log(p.id);
+        let index = participants.indexOf(p);
+        participants.splice(index, 1, new_p);
       }
-    }
+    });
 
-    // this.state.session.get().then(doc => {
-    //   if (doc.exists) {
-    //     console.log("Document data:", doc.data());
-    //   } else {
-    //     // doc.data() will be undefined in this case
-    //     console.log("No such document!");
-    //   }
-    // });
+    this.sessionsRef
+      .doc(this.state.sessionId)
+      .set({ participants: participants }, { merge: true });
 
     alert("You've completed the quiz!");
 
-    // this.restartQuiz();
+    this.restartQuiz();
   };
 
   randomColor = () => {
