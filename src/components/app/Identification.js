@@ -16,14 +16,27 @@ class Identification extends Component {
     this.sessionsRef = firebase.firestore().collection("sessions");
   }
 
+  /**
+   * Updates state with the quiz type.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuizType = event => {
     this.setState({ quizType: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's ID.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantId = event => {
     this.setState({ participantId: event.target.value });
   };
 
+  /**
+   * Converts a timestamp object into a readable datetime string.
+   * @param {Object} timestamp - A Javascript Date object representing a timestamp.
+   * @returns {string} A readable datetime string. (e.g. August 1, 2019, 10:59 AM)
+   */
   getDateTime(timestamp) {
     const date = timestamp.toDate();
     return date.toLocaleString("en-US", {
@@ -35,12 +48,20 @@ class Identification extends Component {
     });
   }
 
+  /**
+   * Verifies the inputted participant ID and quiz type, and starts the quiz if everything looks right.
+   */
   handleSubmit = () => {
+    // Makes sure a participant ID was inputted
     if (!this.state.participantId) {
       alert("Participant ID input can't be blank!");
-    } else if (!this.state.quizType) {
+    }
+
+    // Makes sure a quiz type was selected
+    else if (!this.state.quizType) {
       alert("Before/after input can't be blank!");
     } else {
+      // Create a variable to point to if the inputted ID was found
       var participant = null;
       let promise = new Promise((resolve, reject) => {
         this.props.session.data().participants.forEach(p => {
@@ -51,8 +72,10 @@ class Identification extends Component {
         });
         reject();
       });
+      // If the participant ID was found, start the quiz and update the parent component state appropriately
       promise
         .then(() => {
+          // If the quizType is "post", make sure that the participant has already completed the "pre" test
           if (this.state.quizType === "post") {
             let responseRef = this.responsesRef.doc(
               this.props.session.id + this.state.participantId
@@ -65,6 +88,7 @@ class Identification extends Component {
                   this.props.setQuizType(this.state.quizType);
                 }
               })
+              // Don't let the quiz start if the "pre" test wasn't completed
               .catch(() => {
                 alert(
                   "This Participant ID hasn't completed the before exhibit test yet!"
@@ -76,12 +100,17 @@ class Identification extends Component {
             this.props.setQuizType(this.state.quizType);
           }
         })
+        // Don't let the quiz start if the participant ID is invalid
         .catch(() => {
           alert("This Participant ID doesn't exist!");
         });
     }
   };
 
+  /**
+   * Renders the name and datetime of the most recent session.
+   * @returns {JSX} The name and datetime of the most recent session.
+   */
   renderSessionDetails = () => {
     var session = null;
     if (this.props.session) {
@@ -100,6 +129,10 @@ class Identification extends Component {
     );
   };
 
+  /**
+   * Renders the Identification component.
+   * @returns {JSX} The Identification component.
+   */
   render() {
     return (
       <div className="identification card-form">
@@ -134,6 +167,9 @@ class Identification extends Component {
   }
 }
 
+/**
+ * Props passed down from the App component.
+ */
 Identification.propTypes = {
   setParticipant: PropTypes.func.isRequired,
   setQuizType: PropTypes.func.isRequired
