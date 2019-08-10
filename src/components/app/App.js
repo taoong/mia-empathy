@@ -104,7 +104,7 @@ class App extends Component {
 
   /**
    * Shuffles an array's elements; used for shuffling answer options in the quiz.
-   * @param {Array} a The original, unshuffled array.
+   * @param {Array} a - The original, unshuffled array.
    * @returns {Array} The shuffled array.
    */
   shuffleArray(a) {
@@ -125,7 +125,7 @@ class App extends Component {
 
   /**
    * Event handler for answer selection.
-   * @param {Event} event Contains selected answer.
+   * @param {Event} event - Contains selected answer.
    */
   handleAnswerSelected = event => {
     this.setParticipantAnswer(event.currentTarget.value);
@@ -133,7 +133,7 @@ class App extends Component {
 
   /**
    * Updates state using the selected answer.
-   * @param {String} answer The selected answer.
+   * @param {String} answer - The selected answer.
    */
   setParticipantAnswer(answer) {
     // If the correct answer was selected, add 1 to the score
@@ -197,7 +197,7 @@ class App extends Component {
 
   /**
    * Setter method for the current participant.
-   * @param {Object} p The current participant.
+   * @param {Object} p - The current participant.
    */
   setParticipant = p => {
     this.setState({
@@ -208,7 +208,7 @@ class App extends Component {
 
   /**
    * Setter method for the current quiz type.
-   * @param {Object} quizType The current quiz type.
+   * @param {Object} quizType - The current quiz type.
    */
   setQuizType = quizType => {
     this.setState({ quizType: quizType });
@@ -216,7 +216,7 @@ class App extends Component {
 
   /**
    * Writes inputted participant information to Firebase.
-   * @param {object} new_p The object containing new updated participant information.
+   * @param {object} new_p - The object containing new updated participant information.
    */
   submitParticipantInfo = new_p => {
     var participants = this.state.session.data().participants;

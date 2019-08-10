@@ -49,8 +49,9 @@ class Result extends Component {
     this.fetchParticipantData();
   };
 
-  // Fetches participant data.
-  // If data already exists, make those inputs disabled.
+  /**
+   * Fetches participant data. If data already exists, make those inputs disabled.
+   */
   fetchParticipantData = () => {
     let p = this.props.participant;
     if (p) {
@@ -136,42 +137,81 @@ class Result extends Component {
     }
   };
 
+  /**
+   * Updates state with the participant's first name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantFirstName = event => {
     this.setState({ participantFirstName: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's last name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantLastName = event => {
     this.setState({ participantLastName: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's gender.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantGender = event => {
     this.setState({ participantGender: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's gender if an "other" value was inputted.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantOtherGender = event => {
     this.setState({ participantOtherGender: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's race.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantRace = event => {
     this.setState({ participantRace: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's race if an "other value was inputted".
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantOtherRace = event => {
     this.setState({ participantOtherRace: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's age.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantAge = event => {
     this.setState({ participantAge: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's zipcode.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantZipcode = event => {
     this.setState({ participantZipcode: event.target.value });
   };
 
+  /**
+   * Updates state with the participant's email.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantEmail = event => {
     this.setState({ participantEmail: event.target.value });
   };
 
+  /**
+   * Passing all participant data back to the App component to post to Firebase.
+   */
   submitParticipantInfo = () => {
     // Getting other gender input if there is a need to specify
     let gender =
@@ -199,6 +239,10 @@ class Result extends Component {
     this.props.submitParticipantInfo(newParticipant);
   };
 
+  /**
+   * Determines whether to show an end screen or a form to input user data.
+   * @returns {JSX} The result component.
+   */
   renderResult() {
     // Pre-quiz: show end screen
     if (this.props.quizType === "pre" || this.state.filledInfo) {
@@ -357,6 +401,10 @@ class Result extends Component {
     }
   }
 
+  /**
+   * A wrapper for renderResult.
+   * @returns {JSX} The result component.
+   */
   render() {
     return (
       <div id="result" className="card-form">
