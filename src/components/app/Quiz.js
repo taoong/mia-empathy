@@ -112,6 +112,9 @@ class Quiz extends Component {
   }
 }
 
+/**
+ * Props passed down from the App component.
+ */
 Quiz.propTypes = {
   selectedAnswer: PropTypes.string.isRequired,
   answerOptions: PropTypes.array.isRequired,

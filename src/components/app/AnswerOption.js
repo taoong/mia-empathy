@@ -129,6 +129,9 @@ class AnswerOption extends Component {
   }
 }
 
+/**
+ * Props passed down from the Quiz component.
+ */
 AnswerOption.propTypes = {
   answerType: PropTypes.string.isRequired,
   answerContent: PropTypes.string.isRequired,

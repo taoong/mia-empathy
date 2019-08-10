@@ -8,9 +8,11 @@ class Question extends Component {
     this.state = {
       imageUrl: ""
     };
-    // this.storageRef = firebase.storage().ref();
   }
 
+  /**
+   * Currently obsolete function used in the case that firebase storage is used for storing media files.
+   */
   updateImage() {
     // TODO: Figure out if Firebase Storage is an option for uploading photos, else just
     // work with images directly from the project folder
@@ -26,7 +28,16 @@ class Question extends Component {
       });
   }
 
-  formatQuestion = (type, question, color) => {
+  /**
+   * Generates the appropriate question content that matches the question type.
+   * @param {string} type - The question-answer type
+   *                        (e.g. voice-face means matching 4 face options to 1 voice).
+   * @param {array} color - An array storing a primary and secondary hex color at
+   *                        indices 0 and 1 respectively.
+   * @returns {JSX} The appropriately worded question.
+   */
+
+  formatQuestion = (type, color) => {
     if (type === "voice-face") {
       if (!this.props.playedSound) {
         return (
@@ -127,19 +138,22 @@ class Question extends Component {
     }
   };
 
+  /**
+   * Renders the question.
+   * @returns {JSX} The question.
+   */
   render() {
     return (
       <div className="question">
-        {this.formatQuestion(
-          this.props.questionType,
-          this.props.questionContent,
-          this.props.color
-        )}
+        {this.formatQuestion(this.props.questionType, this.props.color)}
       </div>
     );
   }
 }
 
+/**
+ * Props passed down from the Quiz component.
+ */
 Question.propTypes = {
   questionContent: PropTypes.string.isRequired,
   questionType: PropTypes.string.isRequired,
