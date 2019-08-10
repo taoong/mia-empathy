@@ -17,7 +17,7 @@ class Identification extends Component {
   }
 
   /**
-   * Updates state with the quiz type.
+   * Event handler that updates state with the quiz type.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setQuizType = event => {
@@ -25,7 +25,7 @@ class Identification extends Component {
   };
 
   /**
-   * Updates state with the participant's ID.
+   * Event handler that updates state with the participant's ID.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantId = event => {
@@ -35,7 +35,7 @@ class Identification extends Component {
   /**
    * Converts a timestamp object into a readable datetime string.
    * @param {Object} timestamp - A Javascript Date object representing a timestamp.
-   * @returns {string} A readable datetime string. (e.g. August 1, 2019, 10:59 AM)
+   * @returns {string} A readable datetime string in en-US format (e.g. August 1, 2019, 10:59 AM).
    */
   getDateTime(timestamp) {
     const date = timestamp.toDate();

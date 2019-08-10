@@ -10,9 +10,13 @@ class AnswerOption extends Component {
       checked: false
     };
 
+    // Create an Audio object storing the audio file passed down as props
     this.audio = new Audio(require("../../" + this.props.answerContent));
   }
 
+  /**
+   * Plays an audio file passed down as props.
+   */
   playSound = () => {
     let playPromise = this.audio.play();
     if (playPromise !== null) {
@@ -26,11 +30,19 @@ class AnswerOption extends Component {
     }
   };
 
+  /**
+   * Event handler for when the answer option is selected.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   onAnswerSelected = event => {
     this.playSound();
     this.props.onAnswerSelected(event);
   };
 
+  /**
+   * Renders a face answer option.
+   * @returns {JSX} A face answer option.
+   */
   renderFaceOption = () => {
     return (
       <li className="answerOption">
@@ -66,6 +78,10 @@ class AnswerOption extends Component {
     );
   };
 
+  /**
+   * Renders a voice answer option.
+   * @returns {JSX} A voice answer option.
+   */
   renderVoiceOption = () => {
     return (
       <li className="answerOption">
@@ -100,6 +116,10 @@ class AnswerOption extends Component {
     );
   };
 
+  /**
+   * Renders an answer option.
+   * @returns {JSX} An answer option depending on the question type.
+   */
   render() {
     if (this.props.answerType === "voice") {
       return this.renderVoiceOption();

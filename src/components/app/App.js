@@ -132,7 +132,7 @@ class App extends Component {
   };
 
   /**
-   * Updates state using the selected answer.
+   * Event handler that updates state using the selected answer.
    * @param {String} answer - The selected answer.
    */
   setParticipantAnswer(answer) {

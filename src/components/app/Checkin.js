@@ -25,6 +25,9 @@ class Checkin extends Component {
     this.generateId = this.generateId.bind(this);
   }
 
+  /**
+   * Updates state with the current session.
+   */
   async componentWillMount() {
     let currentSession = await this.getCurrentSession();
     this.setState({
@@ -32,6 +35,10 @@ class Checkin extends Component {
     });
   }
 
+  /**
+   * Gets an existing session with a starting time closest to and before the current datetime.
+   * @returns {firebase.firestore.QueryDocumentSnapshot[]} The most recent existing session.
+   */
   async getCurrentSession() {
     let sessionRef = await this.sessionsRef
       .where("datetime", "<", new Date())
@@ -56,7 +63,12 @@ class Checkin extends Component {
     this.setState({ id: event.target.value });
   };
 
+  /**
+   * Generates a participant ID for kiosk participants who haven't been assigned an ID yet.
+   * @returns {string} A unique participant ID.
+   */
   async generateId() {
+    // Get the current session
     let currentSession = await this.getCurrentSession();
 
     // Collecting all ids
@@ -68,12 +80,12 @@ class Checkin extends Component {
       allIds.push(parseInt(currentSession.data().checked_in[c].id));
     }
 
-    // If nobody has checked in yet, just assign 001
+    // If nobody has checked in yet, just assign the ID 001
     if (allIds.length === 0) {
       return "001";
     }
 
-    // Getting the next biggest number and prepending 0's if necessary
+    // Get the next biggest number and prepend 0's if necessary
     var id = Math.max(...allIds) + 1;
     id = "00" + id.toString();
     let length = id.length;
@@ -82,6 +94,11 @@ class Checkin extends Component {
     return id;
   }
 
+  /**
+   * Converts a timestamp object into a readable datetime string.
+   * @param {Object} timestamp - A Javascript Date object representing a timestamp.
+   * @returns {string} A readable datetime string in en-US format (e.g. August 1, 2019, 10:59 AM).
+   */
   getDateTime(timestamp) {
     const date = timestamp.toDate();
     return date.toLocaleString("en-US", {
@@ -118,6 +135,9 @@ class Checkin extends Component {
     this.setState({ race: event.target.value });
   };
 
+  /**
+   * Resets the checkin form by updating component state.
+   */
   restartForm = () => {
     this.setState({
       id: "",

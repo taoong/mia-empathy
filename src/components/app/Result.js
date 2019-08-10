@@ -138,7 +138,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's first name.
+   * Event handler that updates state with the participant's first name.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantFirstName = event => {
@@ -146,7 +146,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's last name.
+   * Event handler that updates state with the participant's last name.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantLastName = event => {
@@ -154,7 +154,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's gender.
+   * Event handler that updates state with the participant's gender.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantGender = event => {
@@ -162,7 +162,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's gender if an "other" value was inputted.
+   * Event handler that updates state with the participant's gender if an "other" value was inputted.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantOtherGender = event => {
@@ -170,7 +170,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's race.
+   * Event handler that updates state with the participant's race.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantRace = event => {
@@ -178,7 +178,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's race if an "other value was inputted".
+   * Event handler that updates state with the participant's race if an "other value was inputted".
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantOtherRace = event => {
@@ -186,7 +186,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's age.
+   * Event handler that updates state with the participant's age.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantAge = event => {
@@ -194,7 +194,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's zipcode.
+   * Event handler that updates state with the participant's zipcode.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantZipcode = event => {
@@ -202,7 +202,7 @@ class Result extends Component {
   };
 
   /**
-   * Updates state with the participant's email.
+   * Event handler that updates state with the participant's email.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setParticipantEmail = event => {
