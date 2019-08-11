@@ -15,16 +15,27 @@ class Quiz extends Component {
     };
   }
 
+  /**
+   * Lifecycle method to set playedSound to false -- used
+   * to set question content accordingly in the Question component.
+   */
   componentDidMount = () => {
     this.setState({ playedSound: false });
   };
 
+  /**
+   * Processes the question type passed down through props as a string into an array.
+   * @returns {array} An array storing the question type and answer type.
+   */
   getTypes = () => {
     let questionType = this.props.questionType.split("-")[0];
     let answerType = this.props.questionType.split("-")[1];
     return [questionType, answerType];
   };
 
+  /**
+   * Plays the audio file passed down as props.
+   */
   playSound = () => {
     let audio = new Audio(require("../../" + this.props.question));
     let playPromise = audio.play();
@@ -39,6 +50,10 @@ class Quiz extends Component {
     }
   };
 
+  /**
+   * Renders the component.
+   * @returns {JSX} The Quiz component.
+   */
   render() {
     return (
       <div className="quiz">
