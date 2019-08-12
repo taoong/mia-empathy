@@ -14,6 +14,9 @@ class Admin extends Component {
   state = { user: null, isSignedIn: false, verified: false, loading: true };
   admins = firebase.firestore().collection("admins");
 
+  /**
+   * Used for configuring FirebaseAuth.
+   */
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
@@ -25,38 +28,54 @@ class Admin extends Component {
     }
   };
 
+  /**
+   * Sets up an auth observer to handle whether a user is signed in.
+   */
   componentDidMount() {
     // Detect if any user is signed in
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       this.setState({ user: user, isSignedIn: !!user });
-      // Verify if a user is currently signed in, otherwise indicate no user
+      // Verify if a user is currently signed in
       if (user != null) {
         this.verify();
-      } else {
+      }
+      // Otherwise, indicate that no user is signed in
+      else {
         this.setState({ isSignedIn: false, verified: false, loading: false });
       }
     });
   }
 
+  /**
+   * Unregisters the Firebase auth observer when the component is unmounted.
+   */
   componentWillUnmount() {
     this.unregisterAuthObserver();
   }
 
+  /**
+   * Signs out the current user.
+   */
   signOut = () => {
     firebase.auth().signOut();
   };
 
+  /**
+   * Checks that the current user exists in the database, then updates state accordingly.
+   */
   verify = () => {
     const currentComponent = this;
     if (firebase.auth().currentUser != null) {
       this.admins
         .where("email", "==", firebase.auth().currentUser.email)
         .get()
-        .then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
+        // If a match for the user email was found in Firebase, update state accordingly
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
             currentComponent.setState({ verified: true });
           });
         })
+        // Set loading to false so that the loading screen isn't rendered
         .then(() => {
           currentComponent.setState({ loading: false });
         })
@@ -66,6 +85,10 @@ class Admin extends Component {
     }
   };
 
+  /**
+   * Directs to the correct render method depending on user status.
+   * @returns {JSX} Sign-in or unverified user screens.
+   */
   handleInvalidUser() {
     // No current user signed in
     if (!this.state.isSignedIn) {
@@ -79,10 +102,18 @@ class Admin extends Component {
     }
   }
 
+  /**
+   * Render method for the loading screen.
+   * @returns {JSX} Loading screen.
+   */
   renderLoading() {
     return <Loading />;
   }
 
+  /**
+   * Renders the sign-in screen.
+   * @returns {JSX} The sign-in screen.
+   */
   renderSignIn() {
     return (
       <div className="card-form">
@@ -95,6 +126,10 @@ class Admin extends Component {
     );
   }
 
+  /**
+   * Renders a card indicating that the user is unverified.
+   * @returns {JSX} Unverified user screen.
+   */
   renderUnverified() {
     return (
       <div className="card-form">
@@ -113,6 +148,10 @@ class Admin extends Component {
     );
   }
 
+  /**
+   * Routing for the admin-side.
+   * @returns {JSX} All admin-side routing for a logged in admin.
+   */
   renderAdmin() {
     return (
       <div id="admin">
@@ -148,6 +187,10 @@ class Admin extends Component {
     );
   }
 
+  /**
+   * Displays different interfaces depending on user status.
+   * @returns {JSX} All possible Admin component screens.
+   */
   render() {
     // Loading...
     if (this.state.loading) {
