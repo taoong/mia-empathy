@@ -1,3 +1,4 @@
+/* Colors */
 $grey-1: rgba(0, 0, 0, 0.01);
 $grey-2: rgba(0, 0, 0, 0.02);
 $grey-3: rgba(0, 0, 0, 0.1);
@@ -8,6 +9,7 @@ $secondary-text: rgba(35, 31, 32, 0.85);
 $red-1: rgba(200, 20, 0, 0.8);
 $red-2: rgba(130, 20, 0, 0.2);
 
+/* General components */
 body {
   margin: 0;
   padding: 0;
@@ -76,7 +78,6 @@ h4 {
 }
 
 /* ----- Result Component ----- */
-
 #result {
   background-color: $grey-2;
   margin: 8vh auto;
