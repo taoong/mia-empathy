@@ -6,6 +6,9 @@ class Sessions extends Component {
   state = { sessions: [] };
   sessionRef = firebase.firestore().collection("sessions");
 
+  /**
+   * Fetches sessions from Firebase.
+   */
   componentDidMount = () => {
     let currentComponent = this;
     this.sessionRef.get().then(function(querySnapshot) {
@@ -17,6 +20,11 @@ class Sessions extends Component {
     });
   };
 
+  /**
+   * Converts a timestamp object into a readable datetime string.
+   * @param {Object} timestamp - A Javascript Date object representing a timestamp.
+   * @returns {string} A readable datetime string in en-US format (e.g. August 1, 2019, 10:59 AM).
+   */
   getDateTime(timestamp) {
     const date = timestamp.toDate();
     return date.toLocaleString("en-US", {
@@ -28,10 +36,18 @@ class Sessions extends Component {
     });
   }
 
+  /**
+   * Redirects to the NewSession component for editing an existing session.
+   * @param {string} id - The session ID.
+   */
   editSession = id => {
     this.props.history.push(`${this.props.match.url}/edit/${id}`);
   };
 
+  /**
+   * Renders the rows/table to display the sessions' data.
+   * @returns {JSX} The table of sessions.
+   */
   renderSessionRows() {
     if (this.state.sessions != null && this.state.sessions.length > 0) {
       const sessions = this.state.sessions.map((session, index) => (
@@ -45,6 +61,10 @@ class Sessions extends Component {
     }
   }
 
+  /**
+   * Renders the "Sessions" tab.
+   * @returns {JSX} The "Sessions" tab.
+   */
   render() {
     const sessions = this.renderSessionRows();
 

@@ -6,6 +6,9 @@ class Quizzes extends Component {
   state = { quizzes: [] };
   quizzesRef = firebase.firestore().collection("quizzes");
 
+  /**
+   * Fetches quizzes from Firebase.
+   */
   componentDidMount = () => {
     let currentComponent = this;
     this.quizzesRef.get().then(function(querySnapshot) {
@@ -17,21 +20,34 @@ class Quizzes extends Component {
     });
   };
 
+  /**
+   * Redirects to the NewQuiz component for editing an existing quiz.
+   * @param {string} id - The quiz ID.
+   */
   editQuiz = id => {
     this.props.history.push(`${this.props.match.url}/edit/${id}`);
   };
 
-  uppercaseFirst = audience => {
-    return audience.charAt(0).toUpperCase() + audience.slice(1);
+  /**
+   * Makes the first letter of a word uppercase.
+   * @prop {string} word - The word to process.
+   * @returns {string} The inputted word with its first letter in uppercase.
+   */
+  uppercaseFirstLetter = word => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
   };
 
+  /**
+   * Renders the rows/table to display the quizzes' data.
+   * @returns {JSX} The table of quizzes.
+   */
   renderQuizRows() {
     if (this.state.quizzes.length > 0) {
       const quizzes = this.state.quizzes.map((quiz, index) => (
         <tr key={index} onClick={() => this.editQuiz(quiz.id)}>
           <td>{quiz.id}</td>
           <td>{quiz.data().name}</td>
-          <td>{this.uppercaseFirst(quiz.data().audienceType)}</td>
+          <td>{this.uppercaseFirstLetter(quiz.data().audienceType)}</td>
           <td>{quiz.data().questions.length}</td>
         </tr>
       ));
@@ -39,6 +55,10 @@ class Quizzes extends Component {
     }
   }
 
+  /**
+   * Renders the "Quizzes" tab.
+   * @returns {JSX} The "Quizzes" tab.
+   */
   render() {
     const quizzes = this.renderQuizRows();
 
@@ -67,4 +87,5 @@ class Quizzes extends Component {
     );
   }
 }
+
 export default Quizzes;

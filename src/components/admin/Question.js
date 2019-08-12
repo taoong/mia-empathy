@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+/**
+ * A horizontal block showing question data.
+ * @param {Object} props - Props passed down from the NewQuiz component.
+ */
 function Question(props) {
   return (
     <div className="new-question">
@@ -14,6 +18,9 @@ function Question(props) {
   );
 }
 
+/**
+ * Props passed down from the NewQuiz component.
+ */
 Question.propTypes = {
   id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
