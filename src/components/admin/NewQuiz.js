@@ -32,13 +32,16 @@ class NewQuiz extends Component {
    * otherwise generates the next consecutive ID for a new quiz.
    */
   componentDidMount = () => {
+    // Editing an existing quiz
     if (this.props.match.params.id) {
       let currentComponent = this;
+      // Create a Firebase reference using the quiz's unique ID
       this.quizRef = firebase
         .firestore()
         .collection("quizzes")
         .doc(this.props.match.params.id);
 
+      // Fill in existing quiz data for form inputs
       this.quizRef
         .get()
         .then(doc => {
@@ -52,12 +55,18 @@ class NewQuiz extends Component {
         .catch(error => {
           console.log(error + ": Couldn't fetch quiz data");
         });
-    } else {
+    }
+
+    // Creating a new quiz
+    else {
+      // Count the number of existing quizzes
       var count = 1;
       this.quizzesRef.get().then(snapshot => {
+        // Get the next available consecutive ID using the number of quizzes
         snapshot.forEach(() => {
           count += 1;
         });
+        // Create a Firebase document using this new unique quiz ID
         this.quizRef = firebase
           .firestore()
           .collection("quizzes")
@@ -67,64 +76,117 @@ class NewQuiz extends Component {
   };
 
   /**
-   * Setter function for quiz name.
+   * Event handler that updates state with the quiz's name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   setName = event => {
     this.setState({ name: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with the quiz's audience type.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setAudienceType = event => {
     this.setState({ audienceType: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with the quiz's answer type.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuestionAnswerType = event => {
     this.setState({ questionAnswerType: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new question.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuestion = event => {
     this.setState({ question: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new question's correct answer.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuestionAnswer1 = event => {
     this.setState({ questionAnswer1: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new question's second answer.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuestionAnswer2 = event => {
     this.setState({ questionAnswer2: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new question's third answer.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuestionAnswer3 = event => {
     this.setState({ questionAnswer3: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new question's fourth answer.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuestionAnswer4 = event => {
     this.setState({ questionAnswer4: event.target.value });
   };
 
+  /**
+   * Shows the modal to add a new question.
+   */
   showQuestionModal = () => {
     this.setState({ showQuestionModal: true });
   };
 
+  /**
+   * Hides the modal to add a new question.
+   */
   hideQuestionsModal = () => {
     this.setState({ showQuestionModal: false });
   };
 
+  /**
+   * Shows the modal to confirm deleting the quiz.
+   */
   showDeleteModal = () => {
     this.setState({ showDeleteModal: true });
   };
 
+  /**
+   * Hides the modal to confirm deleting the quiz.
+   */
   hideDeleteModal = () => {
     this.setState({ showDeleteModal: false });
   };
 
+  /**
+   * Creates a 3 digit ID string by prepending 0s to a unique number.
+   * @param {number} id - A number from 1 to 99.
+   * @returns {string} The 3 digit stringified number with prepended 0s.
+   */
   processId(id) {
+    // Prepending 0s
     id = "00" + id.toString();
+
+    // Cutting off extraneous 0s
     let length = id.length;
     id = id.substring(length - 3, length);
     return id;
   }
 
+  /**
+   * Adds a new question to the quiz.
+   */
   addQuestion = () => {
+    // Checks that all necessary form fields were filled in
     if (
       !this.state.questionAnswerType ||
       !this.state.question ||
@@ -137,6 +199,7 @@ class NewQuiz extends Component {
       return;
     }
 
+    // Creating the question object
     let newQuestion = {
       id: this.state.questionId,
       type: this.state.questionAnswerType,
@@ -150,9 +213,10 @@ class NewQuiz extends Component {
       correctAnswer: this.state.questionAnswer1
     };
 
+    // Adding the new question and resetting state in case of adding a new question later
     this.setState(prevState => ({
       questions: [...prevState.questions, newQuestion],
-      questionId: prevState.questionId + 1,
+      questionId: prevState.questionId + 1, // Incrementing for next question to take consecutive ID
       questionAnswerType: "",
       question: "",
       questionAnswer1: "",
@@ -161,44 +225,64 @@ class NewQuiz extends Component {
       questionAnswer4: ""
     }));
 
+    // Hides the modal
     this.hideQuestionsModal();
   };
 
+  /**
+   * Deletes a question.
+   * @param {number} id - The ID of the question to delete.
+   */
   deleteQuestion = id => {
     var newArray = [...this.state.questions];
+
+    // Remove the question from the array
     newArray = newArray.filter(q => q.id !== id);
+
+    // Change all remaining questions' IDs to be consecutive
     var newId = 1;
     newArray.forEach(question => {
       question.id = newId;
       newId += 1;
     });
+
+    // Save changes and prepare newId for adding new questions
     this.setState({ questions: newArray, questionId: newId });
   };
 
+  /**
+   * Submit the quiz form to add or update a quiz.
+   */
   addQuiz = () => {
+    // Checks that all necessary form fields were filled in
     if (!this.state.name || !this.state.audienceType || !this.state.questions) {
       alert("All form fields must be filled out!");
       return;
     }
-    const currentComponent = this;
 
+    const currentComponent = this;
     this.quizRef
       .set({
         name: currentComponent.state.name,
         audienceType: currentComponent.state.audienceType,
         questions: currentComponent.state.questions
       })
-      .then(function() {
+      .then(() => {
+        // Show the appropriate alert
         currentComponent.props.match.params.id
           ? alert("Quiz updated!")
           : alert("Quiz added!");
+        // Used to redirect to the quizzes tab
         currentComponent.setState({ goBack: true });
       })
-      .catch(function(error) {
+      .catch(error => {
         console.error("Error writing document: ", error);
       });
   };
 
+  /**
+   * Deletes the quiz.
+   */
   deleteQuiz = () => {
     let currentComponent = this;
     this.hideDeleteModal();
@@ -206,6 +290,7 @@ class NewQuiz extends Component {
       .delete()
       .then(() => {
         alert("Quiz deleted!");
+        // Redirects back to the quizzes tab
         currentComponent.setState({ goBack: true });
       })
       .catch(error => {
@@ -213,7 +298,12 @@ class NewQuiz extends Component {
       });
   };
 
+  /**
+   * Renders the new quiz screen.
+   * @returns {JSX} The new/update quiz screen.
+   */
   render() {
+    // Show all existing questions in the quiz
     const questions = this.state.questions.map((q, key) => (
       <Question
         key={key}
@@ -225,6 +315,7 @@ class NewQuiz extends Component {
       />
     ));
 
+    // Used to redirect back to the quizzes tab
     if (this.state.goBack === true) {
       return (
         <Redirect

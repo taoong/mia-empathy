@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class Nav extends Component {
+  /**
+   * Renders the nav bar for the admin-side.
+   */
   render() {
     return (
       <nav className="nav">

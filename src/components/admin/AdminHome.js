@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 class AdminHome extends Component {
+  /**
+   * Renders all content for the home tab.
+   */
   render() {
     return (
       <div id="admin-home">
