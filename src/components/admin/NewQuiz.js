@@ -186,7 +186,7 @@ class NewQuiz extends Component {
    * Adds a new question to the quiz.
    */
   addQuestion = () => {
-    // Checks that all necessary form fields were filled in
+    // Checks that all necessary form fields are filled in
     if (
       !this.state.questionAnswerType ||
       !this.state.question ||
@@ -251,7 +251,7 @@ class NewQuiz extends Component {
   };
 
   /**
-   * Submit the quiz form to add or update a quiz.
+   * Submit the form to add or update a quiz.
    */
   addQuiz = () => {
     // Checks that all necessary form fields were filled in
@@ -303,7 +303,7 @@ class NewQuiz extends Component {
    * @returns {JSX} The new/update quiz screen.
    */
   render() {
-    // Show all existing questions in the quiz
+    // All existing questions in the quiz
     const questions = this.state.questions.map((q, key) => (
       <Question
         key={key}

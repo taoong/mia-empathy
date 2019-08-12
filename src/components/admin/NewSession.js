@@ -35,6 +35,9 @@ class NewSession extends Component {
     .doc();
   quizzesRef = firebase.firestore().collection("quizzes");
 
+  /**
+   * Fetches data if editing an existing session.
+   */
   componentDidMount = () => {
     if (this.props.match.params.id) {
       this.sessionRef = firebase
@@ -46,6 +49,9 @@ class NewSession extends Component {
     this.fetchQuizzes();
   };
 
+  /**
+   * Fetches existing session data from Firebase.
+   */
   fetchSessionData = () => {
     let currentComponent = this;
     this.sessionRef
@@ -65,8 +71,10 @@ class NewSession extends Component {
       });
   };
 
+  /**
+   * Fetches and stores quiz IDs in state to assign to sessions.
+   */
   fetchQuizzes = () => {
-    // var quizzes = [];
     const currentComponent = this;
     this.quizzesRef
       .get()
@@ -82,74 +90,143 @@ class NewSession extends Component {
       });
   };
 
+  /**
+   * Event handler that updates state with the session's name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setSessionName = event => {
     this.setState({ sessionName: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with the session's type (adult/child).
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setType = event => {
     this.setState({ type: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with the session's quiz ID.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setQuiz = event => {
     this.setState({ quiz: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with the session's datetime.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setDatetime = datetime => {
     this.setState({ datetime: datetime });
   };
 
+  /**
+   * Event handler that updates state with a new participant's first name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantFirstName = event => {
     this.setState({ participantFirstName: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's last name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantLastName = event => {
     this.setState({ participantLastName: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's gender.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantGender = event => {
     this.setState({ participantGender: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's gender if an "other" gender was inputted.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantOtherGender = event => {
     this.setState({ participantOtherGender: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's race.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantRace = event => {
     this.setState({ participantRace: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's race if an "other" race was inputted.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantOtherRace = event => {
     this.setState({ participantOtherRace: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's age.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantAge = event => {
     this.setState({ participantAge: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's zipcode.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantZipcode = event => {
     this.setState({ participantZipcode: event.target.value });
   };
 
+  /**
+   * Event handler that updates state with a new participant's email.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
   setParticipantEmail = event => {
     this.setState({ participantEmail: event.target.value });
   };
 
+  /**
+   * Shows the modal to add a new participant.
+   */
   showParticipantModal = () => {
     this.setState({ showParticipantModal: true });
   };
 
+  /**
+   * Hides the modal to add a new participant.
+   */
   hideParticipantModal = () => {
     this.setState({ showParticipantModal: false });
   };
 
+  /**
+   * Shows the modal to confirm deleting the session.
+   */
   showDeleteModal = () => {
     this.setState({ showDeleteModal: true });
   };
 
+  /**
+   * Hides the modal to confirm deleting the session.
+   */
   hideDeleteModal = () => {
     this.setState({ showDeleteModal: false });
   };
 
+  /**
+   * Creates a 3 digit ID string by prepending 0s to a unique number.
+   * @param {number} id - A number from 1 to 99.
+   * @returns {string} The 3 digit stringified number with prepended 0s.
+   */
   processId(id) {
     id = "00" + id.toString();
     let length = id.length;
@@ -157,7 +234,11 @@ class NewSession extends Component {
     return id;
   }
 
+  /**
+   * Adds a new participant to the session.
+   */
   addParticipant = () => {
+    // Checks that all necessary form fields are filled in
     if (!this.state.participantFirstName || !this.state.participantLastName) {
       alert("First and last name form fields must be filled out!");
       return;
@@ -202,6 +283,10 @@ class NewSession extends Component {
     this.hideParticipantModal();
   };
 
+  /**
+   * Deletes a participant.
+   * @param {number} id - The ID of the participant to delete.
+   */
   deleteParticipant = id => {
     var newArray = [...this.state.participants];
     newArray = newArray.filter(p => p.id !== id);
@@ -213,7 +298,11 @@ class NewSession extends Component {
     this.setState({ participants: newArray, participantId: newId });
   };
 
+  /**
+   * Submit the form to add or update a session.
+   */
   addSession = () => {
+    // Checks that all necessary form fields were filled in
     if (
       !this.state.sessionName ||
       !this.state.type ||
@@ -232,17 +321,22 @@ class NewSession extends Component {
         datetime: currentComponent.state.datetime,
         participants: currentComponent.state.participants
       })
-      .then(function() {
+      .then(() => {
+        // Show the appropriate alert
         currentComponent.props.match.params.id
           ? alert("Session updated!")
           : alert("Session added!");
+        // Used to redirect to the quizzes tab
         currentComponent.setState({ goBack: true });
       })
-      .catch(function(error) {
+      .catch(error => {
         console.error("Error writing document: ", error);
       });
   };
 
+  /**
+   * Deletes the quiz.
+   */
   deleteSession = () => {
     let currentComponent = this;
     this.hideDeleteModal();
@@ -250,6 +344,7 @@ class NewSession extends Component {
       .delete()
       .then(() => {
         alert("Session deleted!");
+        // Redirects back to the sessions tab
         currentComponent.setState({ goBack: true });
       })
       .catch(error => {
@@ -257,7 +352,12 @@ class NewSession extends Component {
       });
   };
 
+  /**
+   * Renders the new session screen.
+   * @returns {JSX} The new/update session screen.
+   */
   render() {
+    // All existing participants in the session
     const participants = this.state.participants.map((p, key) => (
       <Participant
         key={key}
@@ -268,12 +368,14 @@ class NewSession extends Component {
       />
     ));
 
+    // IDs of all existing quizzes
     const quizIds = this.state.quizIds.map((id, index) => (
       <option key={index} value={id}>
         {id}
       </option>
     ));
 
+    // Used to redirect back to the sessions tab
     if (this.state.goBack === true) {
       return (
         <Redirect
