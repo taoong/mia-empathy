@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+/**
+ * To show while fetching data from Firebase.
+ */
 class Loading extends Component {
   render() {
     return (

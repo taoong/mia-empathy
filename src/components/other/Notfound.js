@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * To show in place of a 404 error (no connection).
+ */
 class Notfound extends Component {
   render() {
     return (

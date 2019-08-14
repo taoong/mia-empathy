@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+/**
+ * A Modal component.
+ * @param {*} props - Props from a parent component.
+ */
 function Modal(props) {
   const showHideClassname = props.show
     ? "modal display-block"
