@@ -8,7 +8,8 @@ class Identification extends Component {
 
     this.state = {
       participantId: "",
-      quizType: ""
+      quizType: "",
+      kiosk: false
     };
 
     this.participantsRef = firebase.firestore().collection("participants");
@@ -46,6 +47,54 @@ class Identification extends Component {
       hour: "2-digit",
       minute: "2-digit"
     });
+  }
+
+  /**
+   * Changes to or from a kiosk user form.
+   */
+  changeType = () => {
+    // Make sure that the current session has been loaded.
+    if (this.props.session) {
+      this.restartForm();
+      this.setState({ kiosk: !this.state.kiosk });
+    }
+  };
+
+  /**
+   * Resets all form inputs.
+   */
+  restartForm = () => {
+    this.setState({
+      participantId: "",
+      quizType: ""
+    });
+  };
+
+  /**
+   * Generates a participant ID for kiosk participants who haven't been assigned an ID yet.
+   * @returns {string} A unique participant ID.
+   */
+  async generateId() {
+    var session = null;
+    if (this.props.session) {
+      session = this.props.session.data();
+
+      // Counting all ids
+      var count = 0;
+      session.participants.forEach(participant => {
+        count += 1;
+      });
+      console.log("hi2");
+      // Get the next biggest number and prepend 0's if necessary
+      var id = count + 1;
+      id = "00" + id.toString();
+      let length = id.length;
+      id = id.substring(length - 3, length);
+
+      return id;
+    } else {
+      return "001";
+    }
   }
 
   /**
@@ -130,12 +179,12 @@ class Identification extends Component {
   };
 
   /**
-   * Renders the Identification component.
-   * @returns {JSX} The Identification component.
+   * Renders the identification form for non-kiosk participants.
+   * @returns {JSX} Identification form for non-kiosk participants.
    */
-  render() {
+  renderSessionIdentification = () => {
     return (
-      <div className="identification card-form">
+      <div>
         <div className="intro">{this.renderSessionDetails()}</div>
         <div className="radioButtons">
           <label>Before</label>
@@ -159,9 +208,52 @@ class Identification extends Component {
           value={this.state.participantId}
           onChange={this.setParticipantId}
         />
+        <button className="link" onClick={this.changeType}>
+          Click here if you are not with a group or have not received a
+          participant ID
+        </button>
         <button className="button" onClick={this.handleSubmit}>
           Start Quiz
         </button>
+      </div>
+    );
+  };
+
+  /**
+   * Renders the identification form for kiosk participants.
+   * @returns {JSX} Identification form for kiosk participants.
+   */
+  renderKioskIdentification = () => {
+    if (this.state.participantId === "") {
+      this.generateId().then(id => {
+        this.setState({ participantId: id });
+      });
+    }
+
+    return (
+      <div>
+        <h4 className="id">Participant ID:</h4>
+        <input type="text" value={this.state.participantId} disabled />
+        <button className="link" onClick={this.changeType}>
+          Click here if you are a part of a group tour or have a participant ID
+        </button>
+        <button className="button" onClick={this.handleSubmit}>
+          Start Quiz
+        </button>
+      </div>
+    );
+  };
+
+  /**
+   * Renders the Identification component.
+   * @returns {JSX} The Identification component.
+   */
+  render() {
+    return (
+      <div id="identification" className="card-form">
+        {this.state.kiosk
+          ? this.renderKioskIdentification()
+          : this.renderSessionIdentification()}
       </div>
     );
   }
