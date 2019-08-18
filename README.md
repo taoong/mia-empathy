@@ -5,6 +5,12 @@
 This tool is built for Mia to use to measure empathy in participants. It involves a quiz interface which will record quiz data from its users, and an admin interface where administrators of the tool can manage sessions, quizzes, and participant data and export it for further analyses.
 
 
+## Technologies used
+
+- Javascript (React)
+- Firebase
+
+
 ## Building Project
 
 In the project directory, you can run:
