@@ -11,6 +11,9 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 - Firebase
 
 
+## Config files
+
+
 ## Front-end File Structure
 
 `src/`: The React front-end
