@@ -4,7 +4,7 @@ $grey-2: rgba(0, 0, 0, 0.02);
 $grey-3: rgba(0, 0, 0, 0.1);
 $grey-4: rgba(0, 0, 0, 0.2);
 $grey-5: rgba(0, 0, 0, 0.5);
-$disabled-text: #999;
+$disabled-text: rgb(34, 34, 34);
 $secondary-text: rgba(35, 31, 32, 0.85);
 $red-1: rgba(200, 20, 0, 0.8);
 $red-2: rgba(130, 20, 0, 0.2);
@@ -377,6 +377,12 @@ h4 {
     box-sizing: border-box;
     border-radius: 4px;
     border: 2px rgba(0, 0, 0, 0.2) solid;
+
+    &:disabled {
+      background-color: $grey-3;
+      color: $disabled-text;
+      cursor: no-drop;
+    }
   }
 
   button {
@@ -400,6 +406,22 @@ h4 {
         outline: none;
       }
     }
+  }
+
+  .form-field-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .secondary {
+      min-width: 162px;
+      flex: 1;
+    }
+  }
+
+  .form-label {
+    text-align: left;
+    margin-bottom: 0;
+    margin-top: 8px;
   }
 }
 

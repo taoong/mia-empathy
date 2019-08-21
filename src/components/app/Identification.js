@@ -9,6 +9,8 @@ class Identification extends Component {
     this.state = {
       participantId: "",
       quizType: "",
+      firstname: "",
+      lastname: "",
       kiosk: false
     };
 
@@ -31,6 +33,22 @@ class Identification extends Component {
    */
   setParticipantId = event => {
     this.setState({ participantId: event.target.value });
+  };
+
+  /**
+   * Event handler that updates state with the participant's first name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
+  setFirstName = event => {
+    this.setState({ firstname: event.target.value });
+  };
+
+  /**
+   * Event handler that updates state with the participant's last name.
+   * @param {Object} event - The DOM event object used to get the value of the trigger element.
+   */
+  setLastName = event => {
+    this.setState({ lastname: event.target.value });
   };
 
   /**
@@ -84,7 +102,7 @@ class Identification extends Component {
       session.participants.forEach(participant => {
         count += 1;
       });
-      console.log("hi2");
+
       // Get the next biggest number and prepend 0's if necessary
       var id = count + 1;
       id = "00" + id.toString();
@@ -98,18 +116,47 @@ class Identification extends Component {
   }
 
   /**
-   * Verifies the inputted participant ID and quiz type, and starts the quiz if everything looks right.
+   * Creates a new kiosk participant and adds their data to the session, then starts the quiz.
    */
-  handleSubmit = () => {
+  handleSubmitKiosk = () => {
+    let currentParticipant = {
+      kiosk: this.state.kiosk,
+      id: this.state.participantId,
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      session: this.props.session.id,
+      age: "",
+      email: "",
+      gender: "",
+      race: "",
+      zipcode: ""
+    };
+
+    this.sessionsRef.doc(this.props.session.id).update({
+      participants: firebase.firestore.FieldValue.arrayUnion(currentParticipant)
+    });
+
+    this.props.setParticipant(currentParticipant);
+    this.props.setQuizType("pre");
+  };
+
+  /**
+   * Verifies the inputted participant ID and quiz type for a non-kiosk participant,
+   * and starts the quiz if everything looks right.
+   */
+  handleSubmitSession = () => {
     // Makes sure a participant ID was inputted
     if (!this.state.participantId) {
       alert("Participant ID input can't be blank!");
     }
 
     // Makes sure a quiz type was selected
-    else if (!this.state.quizType) {
+    else if (!this.state.quizType && !this.state.kiosk) {
       alert("Before/after input can't be blank!");
-    } else {
+    }
+
+    // All requirements satisfied
+    else {
       // Create a variable to point to if the inputted ID was found
       var participant = null;
       let promise = new Promise((resolve, reject) => {
@@ -121,7 +168,7 @@ class Identification extends Component {
         });
         reject();
       });
-      // If the participant ID was found, start the quiz and update the parent component state appropriately
+      // If the participant ID was found, start the quiz and update the parent component state
       promise
         .then(() => {
           // If the quizType is "post", make sure that the participant has already completed the "pre" test
@@ -212,7 +259,7 @@ class Identification extends Component {
           Click here if you are not with a group or have not received a
           participant ID
         </button>
-        <button className="button" onClick={this.handleSubmit}>
+        <button className="button" onClick={this.handleSubmitSession}>
           Start Quiz
         </button>
       </div>
@@ -232,12 +279,32 @@ class Identification extends Component {
 
     return (
       <div>
-        <h4 className="id">Participant ID:</h4>
+        <h4 className="id">
+          This is your participant ID, you'll need to remember it for later:
+        </h4>
         <input type="text" value={this.state.participantId} disabled />
+        <div className="form-field-container">
+          <div className="form-left secondary">
+            <h4 className="form-label">First Name</h4>
+            <input
+              type="text"
+              value={this.state.firstname}
+              onChange={this.setFirstName}
+            />
+          </div>
+          <div className="form-left secondary">
+            <h4 className="form-label">Last Name</h4>
+            <input
+              type="text"
+              value={this.state.lastname}
+              onChange={this.setLastName}
+            />
+          </div>
+        </div>
         <button className="link" onClick={this.changeType}>
           Click here if you are a part of a group tour or have a participant ID
         </button>
-        <button className="button" onClick={this.handleSubmit}>
+        <button className="button" onClick={this.handleSubmitKiosk}>
           Start Quiz
         </button>
       </div>
