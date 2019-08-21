@@ -2,7 +2,20 @@
 
 # Minneapolis Institude of Art (Mia) Empathy Tool
 
-This tool is built for Mia to use to measure empathy in participants. It involves a quiz interface which will record quiz data from its users, and an admin interface where administrators of the tool can manage sessions, quizzes, and participant data and export it for further analyses.
+This tool is built for Mia to use to measure empathy in participants. It involves a quiz interface which will record quiz data from its users, and an admin interface where administrators of the tool can manage and view sessions, quizzes, and participant data.
+
+
+## Technologies
+
+- Javascript ES6 (React)
+- Firebase
+
+
+## Front-end File Structure
+
+`src/`: The React front-end
+
+### Components
 
 
 ## Building Project
