@@ -10,7 +10,7 @@ class Nav extends Component {
       <nav className="nav">
         <Link to="/admin" className="nav-brand">
           <img
-            src={require("../../images/mia-logo.jpg")}
+            src={require("../../assets/images/mia-logo.jpg")}
             className="nav-logo"
             alt="logo"
           />
