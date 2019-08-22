@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class Question extends Component {
+class Instruction extends Component {
   constructor(props) {
     super(props);
 
@@ -29,7 +29,7 @@ class Question extends Component {
   }
 
   /**
-   * Generates the appropriate question content that matches the question type.
+   * Generates the appropriate instruction that matches the question type.
    * @param {string} type - The question-answer type
    *                        (e.g. voice-face means matching 4 face options to 1 voice).
    * @param {array} color - An array storing a primary and secondary hex color at
@@ -37,7 +37,7 @@ class Question extends Component {
    * @returns {JSX} The appropriately worded question.
    */
 
-  formatQuestion = (type, color) => {
+  formatInstruction = (type, color) => {
     if (type === "voice-face") {
       if (!this.props.playedSound) {
         return (
@@ -145,7 +145,7 @@ class Question extends Component {
   render() {
     return (
       <div className="question">
-        {this.formatQuestion(this.props.questionType, this.props.color)}
+        {this.formatInstruction(this.props.questionType, this.props.color)}
       </div>
     );
   }
@@ -154,8 +154,7 @@ class Question extends Component {
 /**
  * Props passed down from the Quiz component.
  */
-Question.propTypes = {
-  questionContent: PropTypes.string.isRequired,
+Instruction.propTypes = {
   questionType: PropTypes.string.isRequired,
   questionId: PropTypes.number.isRequired,
   color: PropTypes.array.isRequired,
@@ -163,4 +162,4 @@ Question.propTypes = {
   playedSound: PropTypes.bool.isRequired
 };
 
-export default Question;
+export default Instruction;

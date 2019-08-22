@@ -1,6 +1,6 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
-import Question from "./Question";
+import Instruction from "./Instruction";
 import QuestionCount from "./QuestionCount";
 import AnswerOption from "./AnswerOption";
 /** @jsx jsx */
@@ -17,7 +17,7 @@ class Quiz extends Component {
 
   /**
    * Lifecycle method to set playedSound to false -- used
-   * to set question content accordingly in the Question component.
+   * to set instruction content accordingly in the Instruction component.
    */
   componentDidMount = () => {
     this.setState({ playedSound: false });
@@ -57,8 +57,7 @@ class Quiz extends Component {
   render() {
     return (
       <div className="quiz">
-        <Question
-          questionContent={this.props.question}
+        <Instruction
           questionType={this.props.questionType}
           questionId={this.props.questionId}
           color={this.props.color}
