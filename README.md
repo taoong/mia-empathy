@@ -8,7 +8,7 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 ## Technologies
 
 - Javascript ES6 (React)
-- Firebase
+- Firebase (Cloud Firestore)
 
 
 ## Config files
@@ -19,6 +19,24 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 `src/`: The React front-end
 
 ### Components
+
+
+## Adding and managing administrators
+
+The admin-side of this app enables 
+
+
+## Connecting the app to your own database
+
+While this quiz was originally created for use by MIA, you can easily connect the app to your own Firebase database.
+
+Steps:
+1. Create a new Firebase project (or use an existing one) at https://firebase.google.com
+2. In the Firebase project's console, go to the Database tab under the Develop section and make sure Realtime Database is selected instead of Cloud Firestore
+3. Copy the database url shown, which should look like "https://project_ID.firebaseio.com/"
+4. In the config object in `src/Firebase.js`, paste your project's database url in the `databaseURL` value
+
+After building the project locally, you can then access the admin panel and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
 
 
 ## Building Project
@@ -47,6 +65,8 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+If you connected this app to your own Firebase project and have the Firebase CLI installed, you can make use of Firebase hosting by running `firebase deploy`.
 
 ### `npm run eject`
 
