@@ -302,7 +302,8 @@ class Identification extends Component {
           </div>
         </div>
         <button className="link" onClick={this.changeType}>
-          Click here if you are a part of a group tour or have a participant ID
+          Click here if you are a part of a group tour or were given a
+          participant ID
         </button>
         <button className="button" onClick={this.handleSubmitKiosk}>
           Start Quiz
