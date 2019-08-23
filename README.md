@@ -21,9 +21,9 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 
 ## Config files
 
-`firebase.json`: Contains configurations for Firebase.
-`database.rules.json`: Contains Firebase database read/write access rules. 
-`yarn.lock`: Contains dependency management configurations for Yarn.
+- `firebase.json`: Contains configurations for Firebase.
+- `database.rules.json`: Contains Firebase database read/write access rules. 
+- `yarn.lock`: Contains dependency management configurations for Yarn.
 
 
 ## Adding and managing administrators
