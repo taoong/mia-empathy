@@ -13,10 +13,10 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 
 ## Front-end File Structure
 
-`src/`: The React front-end.
-`src/assets/`: Images, sound files, and other resources.
-`src/components/`: React components, separated into `app` and `admin` folders for the user-facing quiz and the admin panel respectively.
-`src/stimuli/`: Resources used for quizzes.
+- `src/`: The React front-end.
+- `src/assets/`: Images, sound files, and other resources.
+- `src/components/`: React components, separated into `app` and `admin` folders for the user-facing quiz and the admin panel respectively.
+- `src/stimuli/`: Resources used for quizzes.
 
 
 ## Config files
