@@ -11,19 +11,26 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 - Firebase (Cloud Firestore)
 
 
-## Config files
-
-
 ## Front-end File Structure
 
-`src/`: The React front-end
+`src/`: The React front-end.
+`src/assets/`: Images, sound files, and other resources.
+`src/components/`: React components, separated into `app` and `admin` folders for the user-facing quiz and the admin panel respectively.
+`src/stimuli/`: Resources used for quizzes.
 
-### Components
+
+## Config files
+
+`firebase.json`: Contains configurations for Firebase.
+`database.rules.json`: Contains Firebase database read/write access rules. 
+`yarn.lock`: Contains dependency management configurations for Yarn.
 
 
 ## Adding and managing administrators
 
-The admin-side of this app enables 
+The admin-side of this app enables creating and managing sessions and quizzes for the app.
+
+To add an admin, in the Firebase console (https://console.firebase.google.com) navigate to the Authentication tab, click **Add user** and key in the sign in details for the new user. Here you can also manage or delete existing users. You can then go to https://mia-empathy.firebaseapp.com/admin and sign in via the Firebase auth interface to access the admin panel.
 
 
 ## Connecting the app to your own database
@@ -31,10 +38,11 @@ The admin-side of this app enables
 While this quiz was originally created for use by MIA, you can easily connect the app to your own Firebase database.
 
 Steps:
-1. Create a new Firebase project (or use an existing one) at https://firebase.google.com
-2. In the Firebase project's console, go to the Database tab under the Develop section and make sure Realtime Database is selected instead of Cloud Firestore
-3. Copy the database url shown, which should look like "https://project_ID.firebaseio.com/"
-4. In the config object in `src/Firebase.js`, paste your project's database url in the `databaseURL` value
+1. Create a new Firebase project (or use an existing one) at https://firebase.google.com.
+2. Go to the Firebase console and select this project.
+3. At the project overview page, select **Add Firebase to your web app**.
+4. Copy the config variable shown in the code snippet.
+5. Replace the config object in `src/Firebase.js` with the copied code.
 
 After building the project locally, you can then access the admin panel and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
 
