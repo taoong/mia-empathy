@@ -30,7 +30,10 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 
 The admin-side of this app enables creating and managing sessions and quizzes for the app.
 
-To add an admin, in the Firebase console (https://console.firebase.google.com) navigate to the Authentication tab, click **Add user** and key in the sign in details for the new user. Here you can also manage or delete existing users. You can then go to https://mia-empathy.firebaseapp.com/admin and sign in via the Firebase auth interface to access the admin panel.
+To add an admin: 
+1. In the Firebase console (https://console.firebase.google.com) navigate to the Authentication tab.
+2. Click **Add user** and key in the sign in details for the new user. Here you can also manage or delete existing users.
+3. Go to https://mia-empathy.firebaseapp.com/admin and sign in via the Firebase auth interface to access the admin panel.
 
 
 ## Connecting the app to your own database
