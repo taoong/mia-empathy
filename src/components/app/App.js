@@ -310,7 +310,8 @@ class App extends Component {
   renderNoConnection() {
     return (
       <div className="card-form">
-        There was a problem connecting to the app! Please try again later.
+        There was a problem connecting to the app! Please make sure you have
+        internet access and there is at least one existing session.
       </div>
     );
   }

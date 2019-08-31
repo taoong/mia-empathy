@@ -139,7 +139,7 @@ class Admin extends Component {
           ) has not been verified!
         </h3>
         <h5>
-          Please email taoong@berkeley.edu if you think this is a mistake.
+          Please email taoong.96@gmail.com if you think this is a mistake.
         </h5>
         <button className="button" onClick={this.signOut}>
           Sign-out
