@@ -37,7 +37,7 @@ Steps:
 4. Choose an app nickname, and leave the option for Firebase Hosting unchecked (you can always add this later).
 5. Under the **Add Firebase SDK** step, copy the contents of the firebaseConfig variable in the code snippet, and replace the config object in `src/Firebase.js` with this code. You can also find this SDK code snippet later in the project settings screen.
 
-After building the project locally, you can then access the admin panel and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
+After building the project locally, you can then [access the admin panel](##accessing the admin panel) and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
 
 
 ## Accessing the admin panel
