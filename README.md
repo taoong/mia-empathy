@@ -91,8 +91,8 @@ The admin-side of this app enables creating and managing sessions and quizzes fo
 To add an admin: 
 1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab and click **Set up sign-in method**.
 2. Enable **Email/Password** and **Google** as Sign-in providers.
-3. Navigate to the Database tab, and set up a **Firestore** database.
-4. Start a collection, and for Collection ID input `admins`, for Document ID generate an Auto-ID, for Field input `email`, for Type leave it as `string`, and for Value input the email that you will use to sign into the admin panel. 
+3. Navigate to the Database tab, and set up a **Firestore** database in **test mode**.
+4. Start a collection, and for **Collection ID** input `admins`, for **Document ID** generate an Auto-ID, for **Field** input `email`, for **Type** leave it as `string`, and for **Value** input the email that you will use to sign into the admin panel, then click **Save**. 
 5. Go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
 
 
