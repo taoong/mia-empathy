@@ -31,7 +31,7 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 While this quiz was originally created for use by MIA, you can easily connect the app to your own Firebase database.
 
 Steps:
-1. Create a new Firebase project (or use an existing one) at https://firebase.google.com.
+1. Create a new [Firebase project](https://firebase.google.com) (or use an existing one).
 2. Go to the project console (if you just created a new one, you should already be here).
 3. Under **Get started by adding Firebase to your app**, select the **Web** option.
 4. Choose an app nickname, and leave the option for Firebase Hosting unchecked (you can always add this later).
@@ -45,7 +45,7 @@ After building the project locally, you can then access the admin panel and star
 The admin-side of this app enables creating and managing sessions and quizzes for the app.
 
 To add an admin: 
-1. In the Firebase console (https://console.firebase.google.com) navigate to the Authentication tab.
+1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab.
 2. Enable **Email/Password** and **Google** as Sign-in providers.
 3. Navigate to the Database tab, and set up a **Firestore** database.
 4. Start a collection, and for Collection ID input `admins`, for Document ID generate an Auto-ID, for Field input `email`, for Type leave it as `string`, and for Value input the email that you will use to sign into the admin panel. 
@@ -79,7 +79,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-If you connected this app to your own Firebase project and have the Firebase CLI installed, you can make use of Firebase hosting by running `firebase deploy`.
+If you connected this app to your own Firebase project and have the [Firebase CLI](https://firebase.google.com/docs/cli) installed, you can make use of Firebase hosting by running `firebase deploy`.
 
 ### `npm run eject`
 
