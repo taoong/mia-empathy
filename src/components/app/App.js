@@ -90,16 +90,20 @@ class App extends Component {
     );
 
     // Resetting state
-    this.setState({
-      question: this.state.quizQuestions[0].question,
-      questionType: this.state.quizQuestions[0].type,
-      questionId: -1, // Identification screen
-      answerOptions: shuffledAnswerOptions[0],
-      selectedAnswer: "",
-      answers: [],
-      score: 0,
-      finished: false
-    });
+    if (this.state.quizQuestions.length) {
+      this.setState({
+        question: this.state.quizQuestions[0].question,
+        questionType: this.state.quizQuestions[0].type,
+        questionId: -1, // Identification screen
+        answerOptions: shuffledAnswerOptions[0],
+        selectedAnswer: "",
+        answers: [],
+        score: 0,
+        finished: false
+      });
+    } else {
+      alert("There are no questions in this quiz!");
+    }
   };
 
   /**
