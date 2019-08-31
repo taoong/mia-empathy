@@ -37,24 +37,16 @@ Steps:
 4. Choose an app nickname, and leave the option for Firebase Hosting unchecked (you can always add this later).
 5. Under the **Add Firebase SDK** step, copy the contents of the firebaseConfig variable in the code snippet, and replace the config object in `src/Firebase.js` with this code. You can also find this SDK code snippet later in the project settings screen.
 
-After building the project locally, you can then [access the admin panel](#accessing-the-admin-panel) and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
-
-
-## Accessing the admin panel
-
-The admin-side of this app enables creating and managing sessions and quizzes for the app.
-
-To add an admin: 
-1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab.
-2. Enable **Email/Password** and **Google** as Sign-in providers.
-3. Navigate to the Database tab, and set up a **Firestore** database.
-4. Start a collection, and for Collection ID input `admins`, for Document ID generate an Auto-ID, for Field input `email`, for Type leave it as `string`, and for Value input the email that you will use to sign into the admin panel. 
-5. Go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
+After [building the project](#building-project) locally, you can then [access the admin panel](#accessing-the-admin-panel) and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
 
 
 ## Building Project
 
 In the project directory, you can run:
+
+### `npm install`
+
+Installs all dependencies for the app. You need to run this before you can run `npm start`.
 
 ### `npm start`
 
@@ -90,6 +82,18 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+
+## Accessing the admin panel
+
+The admin-side of this app enables creating and managing sessions and quizzes for the app.
+
+To add an admin: 
+1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab.
+2. Enable **Email/Password** and **Google** as Sign-in providers.
+3. Navigate to the Database tab, and set up a **Firestore** database.
+4. Start a collection, and for Collection ID input `admins`, for Document ID generate an Auto-ID, for Field input `email`, for Type leave it as `string`, and for Value input the email that you will use to sign into the admin panel. 
+5. Go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
 
 
 ## License
