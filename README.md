@@ -49,7 +49,7 @@ To add an admin:
 2. Enable **Email/Password** and **Google** as Sign-in providers.
 3. Navigate to the Database tab, and set up a **Firestore** database.
 4. Start a collection, and for Collection ID input `admins`, for Document ID generate an Auto-ID, for Field input `email`, for Type leave it as `string`, and for Value input the email that you will use to sign into the admin panel. 
-5. Go to https://mia-empathy.firebaseapp.com/admin and sign in via the Firebase auth interface using the same email you added to the Firestore database.
+5. Go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
 
 
 ## Building Project
