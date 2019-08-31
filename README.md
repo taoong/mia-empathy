@@ -89,7 +89,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 The admin-side of this app enables creating and managing sessions and quizzes for the app.
 
 To add an admin: 
-1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab.
+1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab and click **Set up sign-in method**.
 2. Enable **Email/Password** and **Google** as Sign-in providers.
 3. Navigate to the Database tab, and set up a **Firestore** database.
 4. Start a collection, and for Collection ID input `admins`, for Document ID generate an Auto-ID, for Field input `email`, for Type leave it as `string`, and for Value input the email that you will use to sign into the admin panel. 
