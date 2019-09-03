@@ -42,6 +42,8 @@ After [building the project](#building-project) locally, you can then [access th
 
 ## Building Project
 
+Tested with npm version 6.9.0 and node v10.16.3.
+
 In the project directory, you can run:
 
 ### `npm install`
