@@ -86,7 +86,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Accessing the admin panel
 
-The admin-side of this app enables creating and managing sessions and quizzes for the app.
+The admin-side of this app enables creating and managing sessions and quizzes for the app. See the [User Guide](https://www.notion.so/calblueprint/User-Guide-Documentation-e4d56a8a570f48ddb3184b0cad527357) for an interface walkthrough.
 
 To add an admin: 
 1. In the [Firebase console](https://console.firebase.google.com) navigate to the Authentication tab and click **Set up sign-in method**.
