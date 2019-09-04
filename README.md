@@ -106,8 +106,8 @@ The Empathy Tool is licensed under the Creative Commons Attribution license.
 ## Credits
 
 <p float="left">
-  <img src="https://github.com/taoong/mia-empathy/blob/master/src/assets/images/mellon-logo.jpg" width="100" />
-  <img src="https://github.com/taoong/mia-empathy/blob/master/src/assets/images/mia-logo.jpg" width="100" /> 
+  <img src="https://github.com/taoong/mia-empathy/blob/master/src/assets/images/mellon-logo.jpg" width="240" />
+  <img src="https://github.com/taoong/mia-empathy/blob/master/src/assets/images/mia-logo.jpg" width="240" /> 
 </p>
 
 Major support provided by the Andrew W. Mellon Foundation. Generous support provided by Nivin MacMillan, Kaywin Feldman and Jim Lutz, Hubert Joly, John and Nancy Lindahl, Marianne Short and Raymond Skowyra, Jr., Richard and Jennie Carlson, Ken and Linda Cutler, Alfred and Ingrid Lenz Harrison, Leni and David Moore, Jr., Sheila Morgan, John and Carol Prince, Joan and John Rex, and donors to the 2018 Mia Gala.
