@@ -105,7 +105,6 @@ The Empathy Tool is licensed under the Creative Commons Attribution license.
 
 ## Credits
 
-Andrew Mellon Foundation   |  Minneapolis Art Institute
 :-------------------------:|:-------------------------:
 ![Image of Andrew Mellon logo](https://github.com/taoong/mia-empathy/blob/master/src/assets/images/mellon-logo.jpg)  |  ![Image of MIA logo](https://github.com/taoong/mia-empathy/blob/master/src/assets/images/mia-logo.jpg)
 
