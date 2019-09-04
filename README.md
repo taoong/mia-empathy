@@ -47,14 +47,16 @@ From the [Firebase Console](https://console.firebase.google.com)
 #### Firebase Database Setup:
 
 This provisions your new Firestore database in a Test Mode.
+From the [Firebase Console](https://console.firebase.google.com)
 
-1. Click **Create Database**
-2. Choose **"Start in test mode"**, click **Next**.
-3. Select a Cloud Firestore Location, click **Done**.
-4. Now select, **Start collection**.
-5. **Collection ID** type "admins", click **Next**.
-6. **DocumentID**, leave as *Auto-id*.
-7. For **Field**, type the value "email", **Type** *string*, for **Value** type in the email you used for Authentication.  Click **Save**.
+1. Click **Authentication**
+2. Click **Create Database**
+3. Choose **"Start in test mode"**, click **Next**.
+4. Select a Cloud Firestore Location, click **Done**.
+5. Now select, **Start collection**.
+6. **Collection ID** type "admins", click **Next**.
+7. **DocumentID**, leave as *Auto-id*.
+8. For **Field**, type the value "email", **Type** *string*, for **Value** type in the email you used for Authentication.  Click **Save**.
 
 After [building the project](#building-project) locally, you can then [access the admin panel](#accessing-the-admin-panel) and start writing data to your database by adding  your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
 
@@ -109,7 +111,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 We have also included a sample Docker setup to enable you to run a local copy of the Empathy tool on any computer running Docker Desktop.  
 
-This will still require you follow the steps for setting up a Firebase App and Database. ([See above](#Hosting-your-own-database-(via-Firebase)))
+This will still require you follow the steps for setting up a Firebase App and Database. ([See above](#hosting-your-own-database-via-firebase)))
 
 The following files and configuration can be used to get you started, they should not require editing on your part.
 
