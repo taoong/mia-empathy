@@ -1,0 +1,15 @@
+# Docker Containers for Hive API.
+version: '3.7'
+
+services:
+   frontend:
+      image: mia/empathy
+      build:
+         context: .
+         target: frontend
+      volumes:
+         - .:/usr/src/app
+         - /usr/src/app/node_modules
+      ports:
+         - '3000:3000' 
+      command: npm start
