@@ -23,7 +23,7 @@ This tool is built for Mia to use to measure empathy in participants. It involve
 - `database.rules.json`: Contains Firebase database read/write access rules.
 - `yarn.lock`: Contains dependency management configurations for Yarn.
 
-## Hosting your own database (via Firebase).
+## Hosting your own database (via Firebase)
 ### Setup your own Firebase App and Database
 
 While this quiz was originally created for use by Mia, you can easily connect the app to your own Firebase database.
@@ -105,13 +105,13 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Building and running the App via Docker.
+## Building and running the App via Docker
 
 >[Docker](https://www.docker.com/products/docker-desktop) is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
 
 We have also included a sample Docker setup to enable you to run a local copy of the Empathy tool on any computer running Docker Desktop.  
 
-This will still require you follow the steps for setting up a Firebase App and Database. ([See above](#hosting-your-own-database-via-firebase)))
+This will still require you follow the steps for setting up a Firebase App and Database. ([See above](#hosting-your-own-database-via-firebase))
 
 The following files and configuration can be used to get you started, they should not require editing on your part.
 
@@ -131,14 +131,11 @@ Will stop the Docker container from running.
 
 Will re-build the image if you've edited any of the configuration files or code in the app.
 
-# Administration of the App
+## Administration of the App
 
-The admin-side of this app enables creating and managing sessions and quizzes for the app.
+The admin-side of this app enables creating and managing sessions and quizzes for the app. To access it, go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
+
 ### See the [User Guide](https://www.notion.so/calblueprint/User-Guide-Documentation-e4d56a8a570f48ddb3184b0cad527357) for an interface walkthrough.
-
-## Accessing the admin panel
-
-Go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
 
 ## License
 
