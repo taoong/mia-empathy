@@ -98,6 +98,17 @@ To add an admin:
 5. Go to the `/admin` route (e.g. https://mia-empathy.firebaseapp.com/admin) and sign in via the Firebase auth interface using the same email you added to the Firestore database.
 
 
+## Exporting the Firestore database
+
+While Firebase's Realtime Database supports data import/export, Firestore does not. Instead, `/exportFirestoreDB.js` includes a script that will do this for you in JSON format.
+
+To generate an exported copy of the Firestore database:
+1. Clone the repository.
+2. Open up a terminal window and navigate to the project folder.
+3. Run `node exportFirestoreDB.js` (make sure you have [node](https://nodejs.org/en/download/) installed).
+4. You should now see an `output.json` in the project folder with the exported data in JSON format.
+
+
 ## License
 
 The Empathy Tool is licensed under the Creative Commons Attribution license.
