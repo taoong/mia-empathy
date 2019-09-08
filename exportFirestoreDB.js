@@ -1,6 +1,7 @@
 // Imports
 const admin = require("firebase-admin");
 const fs = require("fs");
+const { Parser } = require("json2csv");
 
 // Loading service account key to access Firestore database
 var serviceAccount = require("./src/serviceAccountKey.json");
@@ -61,7 +62,7 @@ const dump = (dbRef, aux, curr) => {
 };
 
 /**
- * Removes unnecessary "data" and "type" keys inherent in Firestore collections to flatten JSON object.
+ * Restructures and flattens JSON object by removing unnecessary keys.
  * @param {Object} json - Complex, unflattened JSON Object.
  * @returns {Object} - Cleaned JSON Object.
  */
@@ -84,8 +85,80 @@ const cleanData = json => {
       }
     }
   }
+
+  // Changing object value structure into arrays
+  for (collection in json) {
+    var arr = [];
+    for (document in json[collection]) {
+      json[collection][document]["id"] = document;
+      arr.push(json[collection][document]);
+    }
+    json[collection] = arr;
+  }
+
+  // Convert timestamps to datetime strings
+  for (collection in json) {
+    for (var item in json[collection]) {
+      if (json[collection][item].hasOwnProperty("datetime")) {
+        json[collection][item]["datetime"] = getDateTime(
+          json[collection][item]["datetime"]
+        );
+      }
+    }
+  }
+
   delete json.admins; // No need to export admins collection
   return json;
+};
+
+const json2Csv = (json, collection) => {
+  var fields = [];
+  var unwind = [];
+  if (collection === "sessions") {
+    fields = ["id", "quiz", "sessionName", "type", "datetime", "participants"];
+    unwind = [
+      "participants",
+      "participants.id",
+      "participants.firstname",
+      "participants.lastname",
+      "participants.gender",
+      "participants.race",
+      "participants.age",
+      "participants.zipcode",
+      "participants.email"
+    ];
+  } else if (collection === "quizzes") {
+    fields = ["id", "name", "audienceType", "questions"];
+    unwind = [
+      "questions",
+      "questions.type",
+      "questions.question",
+      "questions.correctAnswer",
+      "questions.answers"
+    ];
+  } else {
+    fields = ["id", "pid", "quiz", "session", "datetime", "pre", "post"];
+  }
+
+  const json2csvParser = new Parser({ fields, unwind: unwind });
+  const csv = json2csvParser.parse(json);
+  return csv;
+};
+
+/**
+ * Converts a timestamp object into a readable datetime string.
+ * @param {Object} timestamp - A Javascript Date object representing a timestamp.
+ * @returns {string} A readable datetime string in en-US format (e.g. August 1, 2019, 10:59 AM).
+ */
+const getDateTime = timestamp => {
+  const date = timestamp.toDate();
+  return date.toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 };
 
 // Calling dump with schema and output answer
@@ -94,10 +167,31 @@ let answer = {};
 dump(db, aux, answer)
   .then(answer => {
     cleanData(answer);
+    //console.log(answer);
 
-    fs.writeFile("output.json", JSON.stringify(answer, null, 2), err => {
+    /** Uncomment the lines below to also allow exporting in JSON format  */
+    // fs.writeFile("output.json", JSON.stringify(answer, null, 2), err => {
+    //   if (err) throw err;
+    //   else console.log("Exported to output.json");
+    // });
+
+    let sessions = json2Csv(answer["sessions"], "sessions");
+    let quizzes = json2Csv(answer["quizzes"], "quizzes");
+    let responses = json2Csv(answer["responses"], "responses");
+
+    fs.writeFile("sessions.csv", sessions, err => {
       if (err) throw err;
-      else console.log("Exported to output.json");
+      else console.log("Exported to sessions.csv");
+    });
+
+    fs.writeFile("quizzes.csv", quizzes, err => {
+      if (err) throw err;
+      else console.log("Exported to quizzes.csv");
+    });
+
+    fs.writeFile("responses.csv", responses, err => {
+      if (err) throw err;
+      else console.log("Exported to responses.csv");
     });
   })
   .catch(error => {
