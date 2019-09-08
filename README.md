@@ -100,13 +100,13 @@ To add an admin:
 
 ## Exporting the Firestore database
 
-While Firebase's Realtime Database supports data import/export, Firestore does not. Instead, `/exportFirestoreDB.js` includes a script that will do this for you in JSON format.
+While Firebase's Realtime Database supports data import/export, Firestore does not. Instead, `exportFirestoreDB.js` includes a script that will do this in CSV format.
 
 To generate an exported copy of the Firestore database:
 1. Clone the repository.
 2. Open up a terminal window and navigate to the project folder.
 3. Run `node exportFirestoreDB.js` (make sure you have [node](https://nodejs.org/en/download/) installed).
-4. You should now see an `output.json` in the project folder with the exported data in JSON format.
+4. You should now see three CSV output files in the project folder, separated into `sessions.csv`, `quizzes.csv`, and `responses.csv`.
 
 
 ## License
