@@ -57,34 +57,35 @@ const fs = require("fs");
 
 /**
  * Removes unnecessary "data" and "type" keys inherent in Firestore collections to flatten JSON object.
- * @param {Object} json - Complex, uncleaned JSON Object.
- * @returns {Object} - Flattened JSON Object.
+ * @param {Object} json - Complex, unflattened JSON Object.
+ * @returns {Object} - Cleaned JSON Object.
  */
-const flattenData = json => {
-  // First round of flattening
-  for (var key in json) {
-    if (json[key].hasOwnProperty("data") && typeof json[key] == "object") {
-      json[key] = json[key]["data"];
+const cleanData = json => {
+  // Flattens collections
+  for (var collection in json) {
+    if (
+      json[collection].hasOwnProperty("data") &&
+      typeof json[collection] == "object"
+    ) {
+      json[collection] = json[collection]["data"];
     }
-  }
-  /** Second round of flattening, because Firebase seems to add
-   *  "data" and "type" keys for the first document in each collection. */
-  for (var key in json) {
-    for (var key2 in json[key]) {
+    // Flattens documents in each collection
+    for (var document in json[collection]) {
       if (
-        json[key][key2].hasOwnProperty("data") &&
-        typeof json[key] == "object"
+        json[collection][document].hasOwnProperty("data") &&
+        typeof json[collection] == "object"
       ) {
-        json[key][key2] = json[key][key2]["data"];
+        json[collection][document] = json[collection][document]["data"];
       }
     }
   }
+  delete json.admins; // No need to export admins collection
   return json;
 };
 
 dump(db, aux, answer)
   .then(answer => {
-    flattenData(answer);
+    cleanData(answer);
 
     fs.writeFile("output.json", JSON.stringify(answer, null, 2), err => {
       if (err) throw err;
