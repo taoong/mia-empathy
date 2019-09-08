@@ -1,10 +1,13 @@
+// Imports
 const admin = require("firebase-admin");
+const fs = require("fs");
 
+// Loading service account key to access Firestore database
 var serviceAccount = require("./src/serviceAccountKey.json");
-
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
+var db = admin.firestore();
 
 const schema = {
   admins: {},
@@ -13,7 +16,12 @@ const schema = {
   sessions: {}
 };
 
-var db = admin.firestore();
+/**
+ * Fetches the entire Firestore database located at dbRef.
+ * @param {firebase.database.Reference} dbRef - Reference to the Firestore database.
+ * @param {Object} aux - The JSON schema.
+ * @param {Object} curr - The outputted JSON is dumped here.
+ */
 const dump = (dbRef, aux, curr) => {
   return Promise.all(
     Object.keys(aux).map(collection => {
@@ -51,9 +59,6 @@ const dump = (dbRef, aux, curr) => {
     return curr;
   });
 };
-let aux = { ...schema };
-let answer = {};
-const fs = require("fs");
 
 /**
  * Removes unnecessary "data" and "type" keys inherent in Firestore collections to flatten JSON object.
@@ -83,6 +88,9 @@ const cleanData = json => {
   return json;
 };
 
+// Calling dump with schema and output answer
+let aux = { ...schema };
+let answer = {};
 dump(db, aux, answer)
   .then(answer => {
     cleanData(answer);
