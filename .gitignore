@@ -23,4 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/serviceAccountKey.json
-output.json
+quizzes.csv
+responses.csv
+sessions.csv
