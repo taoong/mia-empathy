@@ -117,24 +117,24 @@ const json2Csv = (json, collection) => {
   if (collection === "sessions") {
     fields = ["id", "quiz", "sessionName", "type", "datetime", "participants"];
     unwind = [
-      "participants",
-      "participants.id",
-      "participants.firstname",
-      "participants.lastname",
-      "participants.gender",
-      "participants.race",
-      "participants.age",
-      "participants.zipcode",
-      "participants.email"
+      "participants"
+      // "participants.id",
+      // "participants.firstname",
+      // "participants.lastname",
+      // "participants.gender",
+      // "participants.race",
+      // "participants.age",
+      // "participants.zipcode",
+      // "participants.email"
     ];
   } else if (collection === "quizzes") {
     fields = ["id", "name", "audienceType", "questions"];
     unwind = [
-      "questions",
-      "questions.type",
-      "questions.question",
-      "questions.correctAnswer",
-      "questions.answers"
+      "questions"
+      // "questions.type",
+      // "questions.question",
+      // "questions.correctAnswer",
+      // "questions.answers"
     ];
   } else {
     fields = ["id", "pid", "quiz", "session", "datetime", "pre", "post"];
