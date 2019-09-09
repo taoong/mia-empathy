@@ -81,6 +81,20 @@ class App extends Component {
   }
 
   /**
+   * Updates the session. Used for when a kiosk participant gets added.
+   */
+  async updateSession() {
+    let currentSession = await this.getCurrentSession();
+
+    // If a session can be retrieved, update the session
+    if (currentSession != null) {
+      this.setState({
+        session: currentSession
+      });
+    }
+  }
+
+  /**
    * Moves user back to identification screen and resets state.
    */
   restartQuiz = () => {
@@ -196,6 +210,8 @@ class App extends Component {
       this.setState({
         finished: true
       });
+
+      this.updateSession();
     }
   };
 
