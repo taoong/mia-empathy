@@ -409,6 +409,15 @@ class Result extends Component {
     return (
       <div id="result" className="card-form">
         {this.renderResult()}
+        <div className="credits">
+          Major support provided by the Andrew W. Mellon Foundation. Generous
+          support provided by Nivin MacMillan, Kaywin Feldman and Jim Lutz,
+          Hubert Joly, John and Nancy Lindahl, Marianne Short and Raymond
+          Skowyra, Jr., Richard and Jennie Carlson, Ken and Linda Cutler, Alfred
+          and Ingrid Lenz Harrison, Leni and David Moore, Jr., Sheila Morgan,
+          John and Carol Prince, Joan and John Rex, and donors to the 2018 Mia
+          Gala.
+        </div>
       </div>
     );
   }

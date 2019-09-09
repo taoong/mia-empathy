@@ -156,6 +156,12 @@ h4 {
     margin-bottom: 0;
     margin-top: 8px;
   }
+
+  .credits {
+    margin-top: 24px;
+    font-size: 10px;
+    color: $secondary-text;
+  }
 }
 /* ----- Quiz Component ----- */
 .quiz {
@@ -342,7 +348,7 @@ h4 {
 
 /* ----- Identification Component ----- */
 #identification {
-  margin-top: 20vh;
+  margin-top: 16vh;
 
   .intro {
     margin: 16px;
@@ -422,6 +428,12 @@ h4 {
     text-align: left;
     margin-bottom: 0;
     margin-top: 8px;
+  }
+
+  .credits {
+    margin-top: 24px;
+    font-size: 10px;
+    color: $secondary-text;
   }
 }
 
