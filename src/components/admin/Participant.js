@@ -6,11 +6,7 @@ import PropTypes from "prop-types";
  * @param {Object} props - Props passed down from the NewSession component.
  */
 function Participant(props) {
-  return (
-    <div className="participant">
-      <div>{"[" + props.id + "]  " + props.name}</div>
-    </div>
-  );
+  return <div>{"[" + props.id + "]  " + props.name}</div>;
 }
 
 /**

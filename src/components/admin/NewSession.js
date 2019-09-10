@@ -411,8 +411,8 @@ class NewSession extends Component {
   render() {
     // All existing participants in the session
     const participants = this.state.participants.map((p, key) => (
-      <div key={key}>
-        <div onClick={() => this.editParticipant(key)}>
+      <div className="participant" key={key}>
+        <div className="content" onClick={() => this.editParticipant(key)}>
           <Participant id={p.id} name={p.firstname + " " + p.lastname} />
         </div>
         <button
