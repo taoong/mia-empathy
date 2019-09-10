@@ -15,6 +15,7 @@ class NewSession extends Component {
     participants: [],
     showParticipantModal: false,
     showDeleteModal: false,
+    participantKey: null,
     participantId: 1,
     participantFirstName: "",
     participantLastName: "",
@@ -205,7 +206,11 @@ class NewSession extends Component {
    * Hides the modal to add a new participant.
    */
   hideParticipantModal = () => {
-    this.setState({ showParticipantModal: false });
+    this.setState({
+      showParticipantModal: false,
+      participantKey: null,
+      participantId: this.getLatestId()
+    });
   };
 
   /**
@@ -268,9 +273,29 @@ class NewSession extends Component {
       session: this.sessionRef.id
     };
 
+    if (this.state.participantKey != null) {
+      this.setState(state => {
+        const participants = state.participants.map((item, j) => {
+          if (j === this.state.participantKey) {
+            return newParticipant;
+          } else {
+            return item;
+          }
+        });
+        return {
+          participants
+        };
+      });
+    } else {
+      this.setState(prevState => ({
+        participants: [...prevState.participants, newParticipant]
+      }));
+    }
+
+    // Resetting participant input values
     this.setState(prevState => ({
-      participants: [...prevState.participants, newParticipant],
-      participantId: prevState.participantId + 1,
+      participantKey: null,
+      participantId: this.getLatestId(),
       participantFirstName: "",
       participantLastName: "",
       participantEmail: "",
@@ -279,8 +304,23 @@ class NewSession extends Component {
       participantRace: "",
       participantZipcode: ""
     }));
-
     this.hideParticipantModal();
+  };
+
+  editParticipant = id => {
+    let participant = this.state.participants[id];
+    this.setState({
+      participantKey: id,
+      participantId: parseInt(participant.id),
+      participantFirstName: participant.firstname,
+      participantLastName: participant.lastname,
+      participantEmail: participant.email,
+      participantAge: participant.age,
+      participantGender: participant.gender,
+      participantRace: participant.race,
+      participantZipcode: participant.zipcode
+    });
+    this.showParticipantModal();
   };
 
   /**
@@ -295,7 +335,19 @@ class NewSession extends Component {
       participant.id = this.processId(newId);
       newId += 1;
     });
-    this.setState({ participants: newArray, participantId: newId });
+    this.setState({
+      participants: newArray,
+      participantKey: null,
+      participantId: newId
+    });
+  };
+
+  getLatestId = () => {
+    var newId = 1;
+    this.state.participants.forEach(participant => {
+      newId += 1;
+    });
+    return newId;
   };
 
   /**
@@ -359,13 +411,17 @@ class NewSession extends Component {
   render() {
     // All existing participants in the session
     const participants = this.state.participants.map((p, key) => (
-      <Participant
-        key={key}
-        id={p.id}
-        name={p.firstname + " " + p.lastname}
-        delete={this.deleteParticipant}
-        disabled={false}
-      />
+      <div key={key}>
+        <div onClick={() => this.editParticipant(key)}>
+          <Participant id={p.id} name={p.firstname + " " + p.lastname} />
+        </div>
+        <button
+          className="close-button"
+          onClick={() => this.deleteParticipant(p.id)}
+        >
+          &#10005;
+        </button>
+      </div>
     ));
 
     // IDs of all existing quizzes
