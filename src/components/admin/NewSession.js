@@ -274,9 +274,11 @@ class NewSession extends Component {
     };
 
     let modifyParticipants = new Promise((resolve, reject) => {
+      // Editing a specific participant
       if (this.state.participantKey != null) {
         this.setState(state => {
           const participants = state.participants.map((item, j) => {
+            // Find the participant that was edited and replace it with the new information
             if (j === this.state.participantKey) {
               return newParticipant;
             } else {
@@ -287,7 +289,10 @@ class NewSession extends Component {
             participants
           };
         });
-      } else {
+      }
+
+      // Creating a new participant
+      else {
         this.setState(prevState => ({
           participants: [...prevState.participants, newParticipant]
         }));
@@ -312,6 +317,10 @@ class NewSession extends Component {
     });
   };
 
+  /**
+   * Edits a participant.
+   * @param {number} id - The ID of the participant to edit.
+   */
   editParticipant = id => {
     let participant = this.state.participants[id];
     this.setState({
@@ -345,14 +354,6 @@ class NewSession extends Component {
       participantKey: null,
       participantId: newId
     });
-  };
-
-  getLatestId = () => {
-    var newId = 1;
-    this.state.participants.forEach(participant => {
-      newId += 1;
-    });
-    return newId;
   };
 
   /**
