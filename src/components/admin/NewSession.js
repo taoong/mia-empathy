@@ -309,7 +309,6 @@ class NewSession extends Component {
         participantZipcode: ""
       }));
       this.hideParticipantModal();
-      console.log(this.getLatestId());
     });
   };
 
