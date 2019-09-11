@@ -273,38 +273,44 @@ class NewSession extends Component {
       session: this.sessionRef.id
     };
 
-    if (this.state.participantKey != null) {
-      this.setState(state => {
-        const participants = state.participants.map((item, j) => {
-          if (j === this.state.participantKey) {
-            return newParticipant;
-          } else {
-            return item;
-          }
+    let modifyParticipants = new Promise((resolve, reject) => {
+      if (this.state.participantKey != null) {
+        this.setState(state => {
+          const participants = state.participants.map((item, j) => {
+            if (j === this.state.participantKey) {
+              return newParticipant;
+            } else {
+              return item;
+            }
+          });
+          return {
+            participants
+          };
         });
-        return {
-          participants
-        };
-      });
-    } else {
-      this.setState(prevState => ({
-        participants: [...prevState.participants, newParticipant]
-      }));
-    }
+      } else {
+        this.setState(prevState => ({
+          participants: [...prevState.participants, newParticipant]
+        }));
+      }
+      resolve();
+    });
 
     // Resetting participant input values
-    this.setState(prevState => ({
-      participantKey: null,
-      participantId: this.getLatestId(),
-      participantFirstName: "",
-      participantLastName: "",
-      participantEmail: "",
-      participantAge: "",
-      participantGender: "",
-      participantRace: "",
-      participantZipcode: ""
-    }));
-    this.hideParticipantModal();
+    modifyParticipants.then(() => {
+      this.setState(prevState => ({
+        participantKey: null,
+        participantId: this.getLatestId(),
+        participantFirstName: "",
+        participantLastName: "",
+        participantEmail: "",
+        participantAge: "",
+        participantGender: "",
+        participantRace: "",
+        participantZipcode: ""
+      }));
+      this.hideParticipantModal();
+      console.log(this.getLatestId());
+    });
   };
 
   editParticipant = id => {
