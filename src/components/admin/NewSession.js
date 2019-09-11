@@ -209,7 +209,7 @@ class NewSession extends Component {
     this.setState({
       showParticipantModal: false,
       participantKey: null,
-      participantId: this.getLatestId()
+      participantId: this.state.participants.length + 1
     });
   };
 
@@ -299,7 +299,7 @@ class NewSession extends Component {
     modifyParticipants.then(() => {
       this.setState(prevState => ({
         participantKey: null,
-        participantId: this.getLatestId(),
+        participantId: this.state.participants.length + 1,
         participantFirstName: "",
         participantLastName: "",
         participantEmail: "",
