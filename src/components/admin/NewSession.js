@@ -519,7 +519,9 @@ class NewSession extends Component {
           handleSubmit={this.addParticipant}
           submitText={"Submit"}
         >
-          <h2>Add Participant</h2>
+          <h2>
+            {this.state.participantKey != null ? "Edit" : "Add"} Participant
+          </h2>
           <div className="form-field-container">
             <div className="form-left secondary">
               <h4 className="form-label">First Name</h4>

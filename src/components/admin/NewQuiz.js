@@ -151,7 +151,11 @@ class NewQuiz extends Component {
    * Hides the modal to add a new question.
    */
   hideQuestionsModal = () => {
-    this.setState({ showQuestionModal: false });
+    this.setState({
+      showQuestionModal: false,
+      questionKey: null,
+      questionId: this.state.questions.length + 1
+    });
   };
 
   /**
@@ -431,7 +435,7 @@ class NewQuiz extends Component {
           handleSubmit={this.addQuestion}
           submitText={"Submit"}
         >
-          <h2>Add Question</h2>
+          <h2>{this.state.questionKey != null ? "Edit" : "Add"} Question</h2>
 
           <h4 className="form-label">Question-Answer Type</h4>
           <select
