@@ -11,6 +11,7 @@ class NewQuiz extends Component {
     questions: [],
     showQuestionModal: false,
     showDeleteModal: false,
+    questionKey: null,
     questionId: 1,
     questionAnswerType: "",
     question: "",
@@ -230,6 +231,25 @@ class NewQuiz extends Component {
   };
 
   /**
+   * Edits a question.
+   * @param {number} key - The index of the question to edit.
+   */
+  editQuestion = key => {
+    let question = this.state.questions[key];
+    this.setState({
+      questionKey: key,
+      questionId: parseInt(question.id),
+      questionAnswerType: question.type,
+      question: question.question,
+      questionAnswer1: question.answers[0],
+      questionAnswer2: question.answers[1],
+      questionAnswer3: question.answers[2],
+      questionAnswer4: question.answers[3]
+    });
+    this.showQuestionModal();
+  };
+
+  /**
    * Deletes a question.
    * @param {number} id - The ID of the question to delete.
    */
@@ -305,14 +325,22 @@ class NewQuiz extends Component {
   render() {
     // All existing questions in the quiz
     const questions = this.state.questions.map((q, key) => (
-      <Question
-        key={key}
-        id={q.id}
-        type={q.type}
-        question={q.question}
-        correctAnswer={q.correctAnswer}
-        delete={this.deleteQuestion}
-      />
+      <div className="new-question" key={key}>
+        <button
+          className="close-button"
+          onClick={() => this.deleteQuestion(q.id)}
+        >
+          &#10005;
+        </button>
+        <div className="content" onClick={() => this.editQuestion(key)}>
+          <Question
+            id={q.id}
+            type={q.type}
+            question={q.question}
+            correctAnswer={q.correctAnswer}
+          />
+        </div>
+      </div>
     ));
 
     // Used to redirect back to the quizzes tab
