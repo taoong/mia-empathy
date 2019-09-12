@@ -226,7 +226,6 @@ class NewQuiz extends Component {
       questionAnswer4: ""
     }));
 
-    // Hides the modal
     this.hideQuestionsModal();
   };
 

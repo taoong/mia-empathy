@@ -302,7 +302,7 @@ class NewSession extends Component {
 
     // Resetting participant input values
     modifyParticipants.then(() => {
-      this.setState(prevState => ({
+      this.setState({
         participantKey: null,
         participantId: this.state.participants.length + 1,
         participantFirstName: "",
@@ -312,19 +312,19 @@ class NewSession extends Component {
         participantGender: "",
         participantRace: "",
         participantZipcode: ""
-      }));
+      });
       this.hideParticipantModal();
     });
   };
 
   /**
    * Edits a participant.
-   * @param {number} id - The ID of the participant to edit.
+   * @param {number} key - The index of the participant to edit.
    */
-  editParticipant = id => {
-    let participant = this.state.participants[id];
+  editParticipant = key => {
+    let participant = this.state.participants[key];
     this.setState({
-      participantKey: id,
+      participantKey: key,
       participantId: parseInt(participant.id),
       participantFirstName: participant.firstname,
       participantLastName: participant.lastname,
