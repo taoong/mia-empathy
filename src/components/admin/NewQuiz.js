@@ -214,19 +214,47 @@ class NewQuiz extends Component {
       correctAnswer: this.state.questionAnswer1
     };
 
-    // Adding the new question and resetting state in case of adding a new question later
-    this.setState(prevState => ({
-      questions: [...prevState.questions, newQuestion],
-      questionId: prevState.questionId + 1, // Incrementing for next question to take consecutive ID
-      questionAnswerType: "",
-      question: "",
-      questionAnswer1: "",
-      questionAnswer2: "",
-      questionAnswer3: "",
-      questionAnswer4: ""
-    }));
+    let modifyQuestions = new Promise((resolve, reject) => {
+      // Editing a specific question
+      if (this.state.questionKey != null) {
+        this.setState(state => {
+          const questions = state.questions.map((item, j) => {
+            // Find the question that was edited and replace it with the new information
+            if (j === this.state.questionKey) {
+              return newQuestion;
+            } else {
+              return item;
+            }
+          });
+          return {
+            questions
+          };
+        });
+      }
 
-    this.hideQuestionsModal();
+      // Creating a new question
+      else {
+        this.setState(prevState => ({
+          questions: [...prevState.questions, newQuestion]
+        }));
+      }
+      resolve();
+    });
+
+    // Resetting question input values
+    modifyQuestions.then(() => {
+      this.setState({
+        questionKey: null,
+        questionId: this.state.questions.length + 1, // Incrementing for next question to take consecutive ID
+        questionAnswerType: "",
+        question: "",
+        questionAnswer1: "",
+        questionAnswer2: "",
+        questionAnswer3: "",
+        questionAnswer4: ""
+      });
+      this.hideQuestionsModal();
+    });
   };
 
   /**
@@ -265,8 +293,11 @@ class NewQuiz extends Component {
       newId += 1;
     });
 
-    // Save changes and prepare newId for adding new questions
-    this.setState({ questions: newArray, questionId: newId });
+    this.setState({
+      questions: newArray,
+      questionKey: null,
+      questionId: newId
+    });
   };
 
   /**

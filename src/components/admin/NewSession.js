@@ -304,7 +304,7 @@ class NewSession extends Component {
     modifyParticipants.then(() => {
       this.setState({
         participantKey: null,
-        participantId: this.state.participants.length + 1,
+        participantId: this.state.participants.length + 1, // Incrementing for next participant to take consecutive ID
         participantFirstName: "",
         participantLastName: "",
         participantEmail: "",
@@ -343,7 +343,11 @@ class NewSession extends Component {
    */
   deleteParticipant = id => {
     var newArray = [...this.state.participants];
+
+    // Remove the question from the array
     newArray = newArray.filter(p => p.id !== id);
+
+    // Change all remaining participants' IDs to be consecutive
     var newId = 1;
     newArray.forEach(participant => {
       participant.id = this.processId(newId);
