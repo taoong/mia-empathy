@@ -57,7 +57,7 @@ From the [Firebase Console](https://console.firebase.google.com)
 7. **DocumentID**, leave as _Auto-id_.
 8. For **Field**, type the value "email", **Type** _string_, for **Value** type in the email you used for Authentication. Click **Save**.
 
-After [building the project](#building-project) locally, you can then [access the admin panel](#accessing-the-admin-panel) and start writing data to your database by adding your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
+After [building the project](#building-project) locally, you can then [access the admin panel](#administration-of-the-app) and start writing data to your database by adding your own sessions and quizzes. You can view this data both in the app and in your Firebase console in the Cloud Firestore database.
 
 ## Building Project
 
