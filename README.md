@@ -48,8 +48,8 @@ From the [Firebase Console](https://console.firebase.google.com)
 This provisions your new Firestore database in a Test Mode.
 From the [Firebase Console](https://console.firebase.google.com)
 
-1. Click **Authentication**
-2. Click **Create Database**
+1. Click **Authentication**.
+2. Click **Create Database**.
 3. Choose **"Start in test mode"**, click **Next**.
 4. Select a Cloud Firestore Location, click **Done**.
 5. Now select, **Start collection**.
@@ -121,10 +121,16 @@ While Firebase's Realtime Database supports data import/export, Firestore does n
 
 To generate an exported copy of the Firestore database:
 
-1. Clone the repository.
-2. Open up a terminal window and navigate to the project folder.
-3. Run `node exportFirestoreDB.js` (make sure you have [node](https://nodejs.org/en/download/) installed).
-4. You should now see three CSV output files in the project folder, separated into `sessions.csv`, `quizzes.csv`, and `responses.csv`.
+1. Go to the [Firebase Console](https://console.firebase.google.com). Make sure you have [set up your own Firebase Project](#setup-your-own-firebase-app-and-database), or if you are a part of MIA, have an account with project access.
+2. Find the settings icon in the top left and navigate to **Users and permissions**.
+3. Click the **Service accounts** tab.
+4. Click **Generate new private key**.
+5. Clone the repository.
+6. Place the generated private key into the repository's `src/` subdirectory.
+7. Rename the private key to `serviceAccountKey.json`.
+8. Open up a terminal window and navigate to the project folder (the main one, not `src/`).
+9. Run `node exportFirestoreDB.js` (make sure you have [node](https://nodejs.org/en/download/) installed, and that you have run `npm install` beforehand).
+10. You should now see three CSV output files in the project folder, separated into `sessions.csv`, `quizzes.csv`, and `responses.csv`.
 
 ## License
 
