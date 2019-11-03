@@ -28,7 +28,7 @@ class Checkin extends Component {
   /**
    * Updates state with the current session.
    */
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     let currentSession = await this.getCurrentSession();
     this.setState({
       session: currentSession

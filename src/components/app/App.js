@@ -36,7 +36,7 @@ class App extends Component {
   /**
    * Asynchrononously fetches the most recent session and updates the view accordingly.
    */
-  async componentWillMount() {
+  async UNSAFE_componentWillMount() {
     // Fetches most recent session
     let currentSession = await this.getCurrentSession();
 
