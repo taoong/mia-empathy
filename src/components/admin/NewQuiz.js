@@ -33,6 +33,7 @@ class NewQuiz extends Component {
    * otherwise generates the next consecutive ID for a new quiz.
    */
   componentDidMount = () => {
+    console.log("MOUNTED");
     // Editing an existing quiz
     if (this.props.match.params.id) {
       let currentComponent = this;
@@ -61,17 +62,23 @@ class NewQuiz extends Component {
     // Creating a new quiz
     else {
       // Count the number of existing quizzes
-      var count = 1;
+      var lastId = "000";
+      var missingId;
       this.quizzesRef.get().then(snapshot => {
         // Get the next available consecutive ID using the number of quizzes
-        snapshot.forEach(() => {
-          count += 1;
+        snapshot.forEach(quiz => {
+          if (parseInt(quiz.id) !== parseInt(lastId) + 1 && missingId == null) {
+            missingId = parseInt(lastId) + 1;
+          } else {
+            lastId = quiz.id;
+          }
         });
         // Create a Firebase document using this new unique quiz ID
+        const newQuizId = missingId == null ? parseInt(lastId) + 1 : missingId;
         this.quizRef = firebase
           .firestore()
           .collection("quizzes")
-          .doc(this.processId(count));
+          .doc(this.processId(newQuizId));
       });
     }
   };
