@@ -37,7 +37,7 @@ class Quiz extends Component {
    * Plays the audio file passed down as props.
    */
   playSound = () => {
-    let audio = new Audio(require("../../" + this.props.question));
+    let audio = new Audio(require("../../stimuli/" + this.props.question));
     let playPromise = audio.play();
     if (playPromise !== null) {
       playPromise
@@ -79,7 +79,7 @@ class Quiz extends Component {
         {this.getTypes(this.props)[0] === "face" ||
         this.getTypes(this.props)[0] === "illustration" ? (
           <img
-            src={require("../../" + this.props.question)}
+            src={require("../../stimuli/" + this.props.question)}
             alt="Not found!"
             className="question-image"
           />
