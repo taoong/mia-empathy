@@ -11,7 +11,9 @@ class AnswerOption extends Component {
     };
 
     // Create an Audio object storing the audio file passed down as props
-    this.audio = new Audio(require("../../" + this.props.answerContent));
+    this.audio = new Audio(
+      require("../../stimuli/" + this.props.answerContent)
+    );
   }
 
   /**
@@ -66,7 +68,7 @@ class AnswerOption extends Component {
         >
           <img
             className="face-option"
-            src={require("../../" + this.props.answerContent)}
+            src={require("../../stimuli/" + this.props.answerContent)}
             alt="Not found!"
           />
         </button>
