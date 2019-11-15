@@ -451,8 +451,8 @@ class NewQuiz extends Component {
             onChange={this.setQuestionAnswerType}
           >
             <option value="" style={{ display: "none" }} />
-            <option value="voice-face">Voice to face</option>
             <option value="face-voice">Face to voice</option>
+            <option value="voice-face">Voice to face</option>
             <option value="illustration-face">Illustration to face</option>
             <option value="illustration-voice">Illustration to voice</option>
             <option value="story-face">Story to face</option>
