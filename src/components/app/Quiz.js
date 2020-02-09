@@ -51,6 +51,23 @@ class Quiz extends Component {
   };
 
   /**
+   * Gets an appropriate font size depending on how long a question is.
+   * @param {number} questionLength - The number of characters in a question.
+   * @returns {string} The appropriate font size.
+   */
+  getFontSize = questionLength => {
+    if (questionLength < 200) {
+      return "36px";
+    } else if (questionLength < 275) {
+      return "32px";
+    } else if (questionLength < 350) {
+      return "28px";
+    } else {
+      return "26px";
+    }
+  };
+
+  /**
    * Renders the component.
    * @returns {JSX} The Quiz component.
    */
@@ -97,7 +114,12 @@ class Quiz extends Component {
           />
         ) : null}
         {this.getTypes(this.props)[0] === "story" ? (
-          <h3 className="question-story">{this.props.question}</h3>
+          <h3
+            className="question-story"
+            style={{ fontSize: this.getFontSize(this.props.question.length) }}
+          >
+            {this.props.question}
+          </h3>
         ) : null}
 
         {this.props.selectedAnswer &&
