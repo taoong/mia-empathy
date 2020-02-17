@@ -11,7 +11,8 @@ class Quiz extends Component {
     super(props);
 
     this.state = {
-      playedSound: false
+      playedSound: false,
+      audioPlayer: new Audio()
     };
   }
 
@@ -20,7 +21,7 @@ class Quiz extends Component {
    * to set instruction content accordingly in the Instruction component.
    */
   componentDidMount = () => {
-    this.setState({ playedSound: false });
+    this.setState({ playedSound: false, audioPlayer: new Audio() });
   };
 
   /**
@@ -35,19 +36,31 @@ class Quiz extends Component {
 
   /**
    * Plays the audio file passed down as props.
+   * @param {string} audioFile - The path to the audio file to be played.
    */
-  playSound = () => {
-    let audio = new Audio(require("../../stimuli/" + this.props.question));
-    let playPromise = audio.play();
-    if (playPromise !== null) {
-      playPromise
-        .then(() => {
-          this.setState({ playedSound: true });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+  playSound = async audioFile => {
+    // Stop any sound that is currently playing, if any.
+    this.state.audioPlayer.pause();
+
+    let setupAudioPromise = new Promise((resolve, reject) => {
+      this.setState({
+        audioPlayer: new Audio(require("../../stimuli/" + audioFile))
+      });
+      resolve();
+    });
+
+    setupAudioPromise.then(() => {
+      let playPromise = this.state.audioPlayer.play();
+      if (playPromise !== null) {
+        playPromise
+          .then(() => {
+            this.setState({ playedSound: true });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+    });
   };
 
   /**
@@ -90,6 +103,7 @@ class Quiz extends Component {
               selectedAnswer={this.props.selectedAnswer}
               onAnswerSelected={this.props.onAnswerSelected}
               color={this.props.color}
+              playSound={this.playSound}
             />
           ))}
         </ul>
@@ -103,7 +117,7 @@ class Quiz extends Component {
         ) : null}
         {this.getTypes(this.props)[0] === "voice" ? (
           <button
-            onClick={this.playSound}
+            onClick={() => this.playSound(this.props.question)}
             className="question-sound"
             css={css`
               &:active {

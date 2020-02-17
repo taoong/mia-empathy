@@ -435,7 +435,8 @@ Result.propTypes = {
   kiosk: PropTypes.bool.isRequired,
   quizType: PropTypes.string.isRequired,
   participant: PropTypes.object.isRequired,
-  submitParticipantInfo: PropTypes.func.isRequired
+  submitParticipantInfo: PropTypes.func.isRequired,
+  session: PropTypes.object.isRequired
 };
 
 export default Result;

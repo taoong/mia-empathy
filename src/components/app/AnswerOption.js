@@ -9,35 +9,14 @@ class AnswerOption extends Component {
     this.state = {
       checked: false
     };
-
-    // Create an Audio object storing the audio file passed down as props
-    this.audio = new Audio(
-      require("../../stimuli/" + this.props.answerContent)
-    );
   }
-
-  /**
-   * Plays an audio file passed down as props.
-   */
-  playSound = () => {
-    let playPromise = this.audio.play();
-    if (playPromise !== null) {
-      playPromise
-        .then(() => {
-          console.log("played");
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-  };
 
   /**
    * Event handler for when the answer option is selected.
    * @param {Object} event - The DOM event object used to get the value of the trigger element.
    */
   onAnswerSelected = event => {
-    this.playSound();
+    this.props.playSound(this.props.answerContent);
     this.props.onAnswerSelected(event);
   };
 
@@ -139,7 +118,8 @@ AnswerOption.propTypes = {
   answerContent: PropTypes.string.isRequired,
   selectedAnswer: PropTypes.string.isRequired,
   onAnswerSelected: PropTypes.func.isRequired,
-  color: PropTypes.array.isRequired
+  color: PropTypes.array.isRequired,
+  playSound: PropTypes.func.isRequired
 };
 
 export default AnswerOption;
