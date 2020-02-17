@@ -319,6 +319,7 @@ class App extends Component {
         participant={this.state.participant}
         quizType={this.state.quizType}
         submitParticipantInfo={this.submitParticipantInfo}
+        session={this.state.session}
       />
     );
   }

@@ -245,7 +245,11 @@ class Result extends Component {
    */
   renderResult() {
     // Pre-quiz: show end screen
-    if (this.props.quizType === "pre" || this.state.filledInfo) {
+    if (
+      this.props.quizType === "pre" ||
+      this.props.session.type === "child" ||
+      this.state.filledInfo
+    ) {
       return (
         <div>
           <h2>You've finished the quiz!</h2>
