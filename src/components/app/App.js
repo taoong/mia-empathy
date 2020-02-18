@@ -77,6 +77,38 @@ class App extends Component {
    */
   async getQuizQuestions() {
     let quizRef = await this.quizzesRef.doc(this.state.quizId).get();
+
+    // Preload resources
+    quizRef.data().questions.forEach(q => {
+      let fileFormat = q.question.slice(q.question.length - 3).toLowerCase();
+      // Question images
+      if (fileFormat === "jpg" || fileFormat === "png") {
+        const img = new Image();
+        img.src = require("../../stimuli/" + q.question);
+      }
+
+      // Question sounds
+      else if (fileFormat === "mp3") {
+        const sound = new Audio();
+        sound.src = require("../../stimuli/" + q.question);
+      }
+
+      q.answers.forEach(a => {
+        let fileFormat = a.slice(a.length - 3).toLowerCase();
+        // Answer images
+        if (fileFormat === "jpg" || fileFormat === "png") {
+          const img = new Image();
+          img.src = require("../../stimuli/" + a);
+        }
+
+        // Answer sounds
+        else if (fileFormat === "mp3") {
+          const sound = new Audio();
+          sound.src = require("../../stimuli/" + a);
+        }
+      });
+    });
+
     return quizRef.data().questions;
   }
 
